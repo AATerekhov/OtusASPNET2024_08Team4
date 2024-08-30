@@ -1,2 +1,5 @@
 # OtusASPNET2024_08Team4
 Training project Habit tracker
+authors:
+_______
+https://t.me/terekhov8 - Terekhov Artem
