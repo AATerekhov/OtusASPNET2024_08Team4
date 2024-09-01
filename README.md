@@ -5,3 +5,4 @@ _______
 https://t.me/terekhov8 - Terekhov Artem
 https://t.me/tplml - Yauhen Ilyushenka
 https://t.me/t_nickname - Kulagin Vladimir
+https://t.me/Minigalei  - Ainur Minigaliev 
