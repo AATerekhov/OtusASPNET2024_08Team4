@@ -1,0 +1,6 @@
+@Broadcaster_HostAddress = http://localhost:5094
+
+GET {{Broadcaster_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
