@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0" version="24.7.17" pages="4">
   <diagram id="WgKm5aPA7eGvCOIk3O1L" name="Общая схема">
-    <mxGraphModel dx="4495" dy="3845" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="5860" dy="4593" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="eG_LWGnBc4wd9t22VQL4-3" value="Контур" parent="0" />
@@ -694,7 +694,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="CVOU2VqVyT1nX11SGkDV" name="Архитектура Сервиса">
-    <mxGraphModel dx="920" dy="2582" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel grid="0" page="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="msLdLi1MWJTzPmo5Qjvm-151" value="рамка" parent="0" />
@@ -1213,8 +1213,8 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="RDfllKJjbFbBu1mwI3Uu" name="Шаблон таблиц">
-    <mxGraphModel dx="7114" dy="4162" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+  <diagram id="RDfllKJjbFbBu1mwI3Uu" name="Таблицы">
+    <mxGraphModel dx="5640" dy="2796" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="bXB3YKK5IIHfKsSLaCvX-384" value="Контур" parent="0" />
