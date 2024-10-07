@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diary", "Diary\Diary.csproj", "{FD2CFA1D-3B25-475A-A7E9-F81CB2CD632C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diary", "Diary\Diary.csproj", "{FD2CFA1D-3B25-475A-A7E9-F81CB2CD632C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{74F71A4F-84FC-4E09-AB04-C65506211429}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Entities", "Domain.Entities\Domain.Entities.csproj", "{8D245DAB-3082-4AD6-89FF-0AEE71BE6666}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{FD2CFA1D-3B25-475A-A7E9-F81CB2CD632C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD2CFA1D-3B25-475A-A7E9-F81CB2CD632C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD2CFA1D-3B25-475A-A7E9-F81CB2CD632C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D245DAB-3082-4AD6-89FF-0AEE71BE6666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D245DAB-3082-4AD6-89FF-0AEE71BE6666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D245DAB-3082-4AD6-89FF-0AEE71BE6666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D245DAB-3082-4AD6-89FF-0AEE71BE6666}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8D245DAB-3082-4AD6-89FF-0AEE71BE6666} = {74F71A4F-84FC-4E09-AB04-C65506211429}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92FFDC1D-DAA7-495B-8A9F-82C36BB553C7}
