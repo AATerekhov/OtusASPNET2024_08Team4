@@ -1,4 +1,4 @@
-namespace SantaClaus_sBag
+namespace SantasBag
 {
     public class WeatherForecast
     {
