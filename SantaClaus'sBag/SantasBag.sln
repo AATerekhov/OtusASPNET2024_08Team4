@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SantasBag", "SantaClaus'sBag\SantasBag.csproj", "{B3560934-4683-4586-9A8E-EF207D5406AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SantasBag.Core", "SantasBag.Core\SantasBag.Core.csproj", "{CD1E3D68-3826-44AB-BE65-9B1004EEBEAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B3560934-4683-4586-9A8E-EF207D5406AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3560934-4683-4586-9A8E-EF207D5406AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3560934-4683-4586-9A8E-EF207D5406AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD1E3D68-3826-44AB-BE65-9B1004EEBEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD1E3D68-3826-44AB-BE65-9B1004EEBEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD1E3D68-3826-44AB-BE65-9B1004EEBEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD1E3D68-3826-44AB-BE65-9B1004EEBEAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
