@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using SantasBag;
 
-namespace SantaClaus_sBag.Controllers
+namespace SantasBag.Controllers
 {
     [ApiController]
     [Route("[controller]")]
