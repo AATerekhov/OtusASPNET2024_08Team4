@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diary", "Diary\Diary.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{74F71A4F-84FC-4E09-AB04-C65506211429}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Entities", "Domain.Entities\Domain.Entities.csproj", "{8D245DAB-3082-4AD6-89FF-0AEE71BE6666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Entities", "Domain.Entities\Domain.Entities.csproj", "{8D245DAB-3082-4AD6-89FF-0AEE71BE6666}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{ECEF82E5-CEAC-408D-8F2E-BDB682AA0820}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{6C7F9769-05A6-485C-B02A-D812C37573B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +32,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{74F71A4F-84FC-4E09-AB04-C65506211429} = {ECEF82E5-CEAC-408D-8F2E-BDB682AA0820}
 		{8D245DAB-3082-4AD6-89FF-0AEE71BE6666} = {74F71A4F-84FC-4E09-AB04-C65506211429}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
