@@ -1042,7 +1042,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="X8upa2JKI1YHV4uY2OCx" name="Таблица оценок">
-    <mxGraphModel dx="1638" dy="898" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="583" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1927" dy="1056" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="583" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="q7vadQdqr0RTG70euUaB-0" />
         <mxCell id="q7vadQdqr0RTG70euUaB-1" parent="q7vadQdqr0RTG70euUaB-0" />
@@ -1103,7 +1103,7 @@
             <mxRectangle width="256" height="82" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="q7vadQdqr0RTG70euUaB-13" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;M&lt;/font&gt;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;strokeWidth=17;fontFamily=Comic Sans MS;fontSize=22;fontStyle=1" parent="q7vadQdqr0RTG70euUaB-11" vertex="1">
+        <mxCell id="q7vadQdqr0RTG70euUaB-13" value="L" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;strokeWidth=17;fontFamily=Comic Sans MS;fontSize=22;fontStyle=1" parent="q7vadQdqr0RTG70euUaB-11" vertex="1">
           <mxGeometry x="256" width="251" height="82" as="geometry">
             <mxRectangle width="251" height="82" as="alternateBounds" />
           </mxGeometry>
@@ -1126,7 +1126,7 @@
             <mxRectangle width="256" height="60" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="q7vadQdqr0RTG70euUaB-17" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;M&lt;/font&gt;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;strokeWidth=17;fontFamily=Comic Sans MS;fontSize=22;fontStyle=1" parent="q7vadQdqr0RTG70euUaB-15" vertex="1">
+        <mxCell id="q7vadQdqr0RTG70euUaB-17" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;L&lt;/font&gt;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;strokeWidth=17;fontFamily=Comic Sans MS;fontSize=22;fontStyle=1" parent="q7vadQdqr0RTG70euUaB-15" vertex="1">
           <mxGeometry x="256" width="251" height="60" as="geometry">
             <mxRectangle width="251" height="60" as="alternateBounds" />
           </mxGeometry>
