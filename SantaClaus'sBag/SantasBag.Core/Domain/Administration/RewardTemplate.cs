@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SantasBag.Core.Domain.Administration
 {
-    internal class RewardTemplate: BaseEntity 
+    public class RewardTemplate: BaseEntity 
     {
         public required string Name { get; set; }
         public string? Description { get; set; }

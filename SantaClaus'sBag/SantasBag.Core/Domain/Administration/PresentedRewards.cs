@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SantasBag.Core.Domain.Administration
 {
-    internal class PresentedRewards
+    public class PresentedRewards
     {
         public required RewardedDto reward;
         public required Guid buyer;
