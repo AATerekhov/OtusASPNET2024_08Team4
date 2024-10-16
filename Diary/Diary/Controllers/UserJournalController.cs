@@ -7,11 +7,8 @@ namespace Diary.Controllers
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class UserJournalController : Controller
+    public class UserJournalController
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
     }
 }
