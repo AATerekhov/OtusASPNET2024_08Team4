@@ -13,8 +13,8 @@ namespace Diary.Core.Domain.UserJournals
         public Guid RelatedEntityId { get; set; }
         public required string EventDescription { get; set; }
         public DateTime CreatedDate { get; set; }
-        public EventTypes EventTypes { get; set; }
-        public RelatedEntityTypes RelatedEntityTypes { get; set; }
+        public EventType EventTypes { get; set; }
+        public RelatedEntityType RelatedEntityTypes { get; set; }
         public required UserJournal UserJournal { get; set; }
     }
 }

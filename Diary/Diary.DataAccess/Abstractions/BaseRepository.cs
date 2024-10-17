@@ -26,7 +26,7 @@ namespace Diary.DataAccess.Abstractions
         /// <param name="id">Id сущности.</param>
         /// <param name="cancellationToken">токен отмены</param>
         /// <returns> Cущность. </returns>
-        public virtual async Task<T> GetByIdAsync(CancellationToken cancellationToken, Guid id)
+        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _entitySet.FindAsync(id);
         }
@@ -59,7 +59,7 @@ namespace Diary.DataAccess.Abstractions
         /// <param name="entity"> Сущность для добавления. </param>
         /// <param name="cancellationToken"> токен отмены</param>
         /// <returns> Добавленная сущность. </returns>
-        public virtual async Task<T> AddAsync(CancellationToken cancellationToken, T entity)
+        public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken)
         {
             return (await _entitySet.AddAsync(entity)).Entity;
         }
@@ -67,9 +67,9 @@ namespace Diary.DataAccess.Abstractions
         /// <summary>
         /// Добавить в базу массив сущностей.
         /// </summary>
-        /// <param name="cancellationToken"> токен отмены</param>
         /// <param name="entities"> Массив сущностей. </param>
-        public virtual async Task AddRangeAsync(CancellationToken cancellationToken, ICollection<T> entities)
+        /// <param name="cancellationToken"> токен отмены</param>
+        public virtual async Task AddRangeAsync(ICollection<T> entities, CancellationToken cancellationToken)
         {
             if (entities == null || !entities.Any())
             {

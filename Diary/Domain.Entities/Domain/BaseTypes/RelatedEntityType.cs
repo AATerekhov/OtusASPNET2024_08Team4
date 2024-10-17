@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Diary.Core.Domain.BaseTypes
 {
-    public enum EventTypes
+    public enum RelatedEntityType
     {
-        PerformingAHabit,
-        ReceivingTheReward,
-        ReceivingTheFine,
-        MissedTheHabit
+        Habit,
+        Reward,
+        Fine
     }
 }

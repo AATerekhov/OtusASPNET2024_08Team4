@@ -12,14 +12,14 @@ namespace Diary.Core.Abstractions
     {
         Task<List<T>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking);
         IQueryable<T> GetAll(bool asNoTracking);
-        Task<T> GetByIdAsync(CancellationToken cancellationToken, Guid id);
-        Task<T> AddAsync(CancellationToken cancellationToken,T entity);
+        Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<T> AddAsync(T entity, CancellationToken cancellationToken);
 
         bool Delete(Guid id);
 
         void Update(T entity);
 
-        Task AddRangeAsync(CancellationToken cancellationToken, ICollection<T> entities);
+        Task AddRangeAsync(ICollection<T> entities, CancellationToken cancellationToken);
 
         Task SaveChangesAsync(CancellationToken cancellationToken);
 
