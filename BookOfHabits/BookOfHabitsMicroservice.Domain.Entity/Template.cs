@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BookOfHabitsMicroservice.Domain.Entity
 {
-    internal class Template
+    public class Template
     {
+
     }
 }

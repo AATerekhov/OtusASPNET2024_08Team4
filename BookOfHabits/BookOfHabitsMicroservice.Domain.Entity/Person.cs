@@ -8,8 +8,8 @@ namespace BookOfHabitsMicroservice.Domain.Entity
     {
         private readonly ICollection<Habit> _habits = [];
         private readonly ICollection<Room> _rooms = [];
-        public IReadOnlyCollection<Habit> AttendedLessons => [.. _habits];
-        public IReadOnlyCollection<Room> RecievedGrades => [.. _rooms];
+        public IReadOnlyCollection<Habit> AttendedLessons => [.._habits];
+        public IReadOnlyCollection<Room> RecievedGrades => [.._rooms];
         public PersonName Name { get; private set; }
         public Person(Guid id, PersonName name) : base(id)
         {
