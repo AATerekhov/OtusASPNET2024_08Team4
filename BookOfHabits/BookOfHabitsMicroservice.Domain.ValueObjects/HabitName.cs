@@ -2,9 +2,9 @@
 
 namespace BookOfHabitsMicroservice.Domain.ValueObjects
 {
-    public class PersonName : KeyName
+    public class HabitName: KeyName
     {
-        public PersonName(string name) : base(name)
+        public HabitName(string name):base(name)
         {
         }
     }
