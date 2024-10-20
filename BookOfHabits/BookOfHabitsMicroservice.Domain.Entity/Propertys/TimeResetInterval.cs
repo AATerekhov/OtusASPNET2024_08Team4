@@ -9,11 +9,11 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
         public bool IsEveryDay { get; }
         public TimeOnly TimeTheDay  { get; }
         public bool IsWeekday { get; }
-        public WeekDays WeekDays { get; }
+        public WeekDay WeekDays { get; }
         public bool IsOnceAMonth { get; }
         public int NumberDayOfTheMonth { get; }
 
-        public TimeResetInterval(Guid id,Habit habit, bool isEveryDay, TimeOnly timeTheDay, bool isWeekday, WeekDays weekDays, bool isOnceAMonth, int numberDayOfTheMonth)
+        public TimeResetInterval(Guid id,Habit habit, bool isEveryDay, TimeOnly timeTheDay, bool isWeekday, WeekDay weekDays, bool isOnceAMonth, int numberDayOfTheMonth)
             :base(id, "TimeResetInterval")
         {
             Habit = habit;
@@ -24,7 +24,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
             IsOnceAMonth = isOnceAMonth;
             NumberDayOfTheMonth = numberDayOfTheMonth;
         }
-        public TimeResetInterval(Habit habit, bool isEveryDay, TimeOnly timeTheDay, bool isWeekday, WeekDays weekDays, bool isOnceAMonth, int numberDayOfTheMonth)
+        public TimeResetInterval(Habit habit, bool isEveryDay, TimeOnly timeTheDay, bool isWeekday, WeekDay weekDays, bool isOnceAMonth, int numberDayOfTheMonth)
             :this(Guid.NewGuid(),habit, isEveryDay, timeTheDay, isWeekday, weekDays,isOnceAMonth,numberDayOfTheMonth)
         {                
         }
