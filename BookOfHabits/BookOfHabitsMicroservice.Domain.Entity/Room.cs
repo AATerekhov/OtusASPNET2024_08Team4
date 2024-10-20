@@ -11,14 +11,13 @@ namespace BookOfHabitsMicroservice.Domain.Entity
     public class Room : Entity<Guid>
     {
         private readonly ICollection<Habit> _habits = [];
-        private readonly ICollection<Coins> _coins = [];
+        private readonly ICollection<Coins> _bags = [];
         public IReadOnlyCollection<Habit> SuggestedHabits => [.. _habits];
-        public IReadOnlyCollection<Coins> AssignedCoins => [.. _coins];
+        public IReadOnlyCollection<Coins> AssignedCoins => [.. _bags];
         public Person Manager { get; }
         public RoomName Name { get; }
         public DateTime CreateDate { get; }
         public DateTime UpdateDate { get; }
-
         public Room(Guid id, Person manager, RoomName name, DateTime createDate, DateTime updateDate)
             :base(id)
         {
