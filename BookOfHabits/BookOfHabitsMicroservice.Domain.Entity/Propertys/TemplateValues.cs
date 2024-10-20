@@ -4,7 +4,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class TemplateValues : Property
     {
-        public Template Template { get; }
+        public Template Template { get; protected set; }
         public string Status { get; } //List
         public string TitleValue { get; }
         public string TitleCheck { get; }
@@ -30,10 +30,12 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
         {
                 
         }
+
         protected TemplateValues(Template template)
-            :base(Guid.NewGuid(), "TemplateValues")
+            : base(Guid.NewGuid(), "TemplateValues")
         {
             Template = template;
         }
+        public void UseInTheTemplate(Template template) => Template = template;
     }
 }
