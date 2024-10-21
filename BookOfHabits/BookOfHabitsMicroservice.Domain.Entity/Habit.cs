@@ -14,11 +14,11 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public HabitCard HabitCard { get; }
         public Room Room { get; }
         public Coins? Coins { get; protected set; }
-        public OptionHabit Options { get; }
+        public HabitOptions Options { get; }
         public Delay Delay { get; }
         public TimeResetInterval  TimeResetInterval { get; }
         public Repetition Repetition { get; }
-        public Habit(Guid id,HabitCard habitCard, Room room, OptionHabit options, Delay delay, TimeResetInterval timeResetInterval, Repetition repetition)
+        public Habit(Guid id,HabitCard habitCard, Room room, HabitOptions options, Delay delay, TimeResetInterval timeResetInterval, Repetition repetition)
             :base(id)   
         {
             HabitCard = habitCard;
@@ -28,7 +28,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             TimeResetInterval = timeResetInterval;
             Repetition = repetition;
         }
-        public Habit(HabitCard habitCard, Room room, OptionHabit options, Delay delay, TimeResetInterval timeResetInterval, Repetition repetition)
+        public Habit(HabitCard habitCard, Room room, HabitOptions options, Delay delay, TimeResetInterval timeResetInterval, Repetition repetition)
             : this(Guid.NewGuid(), habitCard, room, options, delay, timeResetInterval, repetition)
         { 
         

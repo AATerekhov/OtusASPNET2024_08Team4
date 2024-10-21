@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BookOfHabitsMicroservice.Domain.Entity.Enums
 {
     [Flags]
-    public enum OptionTemplate
+    public enum TemplateOptions
     {
         None = 0,
         Status = 1,

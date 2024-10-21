@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 namespace BookOfHabitsMicroservice.Domain.Entity.Enums
 {
     [Flags]
-    public enum OptionCoins
+    public enum HabitOptions
     {
         None = 0,
-        FallingLevel = 1,
-        AutoPayment = 2,
-        CheckingLimit = 4,
-        CheckingReport = 8
+        Delayed =1,
+        Reset = 2,
+        Repetition = 4,
     }
 }
