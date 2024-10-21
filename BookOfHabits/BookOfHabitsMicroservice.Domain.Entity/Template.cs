@@ -11,15 +11,15 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public IReadOnlyCollection<HabitCard> ImplementingСards => [.. _habitCards];
         public TemplateName TemplateName { get; }
         public TemplateValues TemplateValues { get; }
-        public OptionTemplate Options { get; }
-        public Template(Guid id, TemplateName templateName, TemplateValues templateValues, OptionTemplate optionTemplate ) :base(id)
+        public TemplateOptions Options { get; }
+        public Template(Guid id, TemplateName templateName, TemplateValues templateValues, TemplateOptions optionTemplate ) :base(id)
         {
             TemplateName = templateName;
             templateValues.UseInTheTemplate(this);
             TemplateValues = templateValues;
             Options = optionTemplate;
         }
-        public Template(TemplateName templateName, TemplateValues templateValues, OptionTemplate optionTemplate) 
+        public Template(TemplateName templateName, TemplateValues templateValues, TemplateOptions optionTemplate) 
             :this(Guid.NewGuid(), templateName, templateValues,optionTemplate)
         {
                 

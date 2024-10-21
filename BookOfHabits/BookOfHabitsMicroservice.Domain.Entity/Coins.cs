@@ -12,13 +12,13 @@ namespace BookOfHabitsMicroservice.Domain.Entity
     {
         public Room Room { get; }
         public Habit Habit { get; }
-        public OptionCoins Options { get; }
+        public CoinsOptions Options { get; }
         public int CostOfWinning { get; }
         public int Forfeit { get; }
         public int Start { get; }
         public int Falls { get; }
 
-        public Coins(Guid id,Room room, Habit habit, OptionCoins options, int costOfWinning, int forfeit, int start, int falls)
+        public Coins(Guid id,Room room, Habit habit, CoinsOptions options, int costOfWinning, int forfeit, int start, int falls)
             :base(id)
         {
             Room = room;
@@ -29,7 +29,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             Start = start;
             Falls = falls;
         }
-        public Coins(Room room, Habit habit, OptionCoins options, int costOfWinning, int forfeit, int start, int falls)
+        public Coins(Room room, Habit habit, CoinsOptions options, int costOfWinning, int forfeit, int start, int falls)
             :this(Guid.NewGuid(), room, habit, options, costOfWinning, forfeit, start, falls)
         {
                 

@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 namespace BookOfHabitsMicroservice.Domain.Entity.Enums
 {
     [Flags]
-    public enum WeekDay
+    public enum CoinsOptions
     {
         None = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 4,
-        Thursday = 8,
-        Friday = 16,
-        Saturday = 32,
-        Sunday = 64        
+        FallingLevel = 1,
+        AutoPayment = 2,
+        CheckingLimit = 4,
+        CheckingReport = 8
     }
 }
