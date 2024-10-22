@@ -1,10 +1,10 @@
 ﻿namespace SantasBag.Core.Domain.Contracts
 {
-    public class RewardedDto
+    public class RewardedDto //: BaseEntity
     {
-        public required string Name;
-        public string? Description;
-        public int Cost;
-        public Guid RoomId;
+        public required string Name { get; set; }
+        public string? Description { get; set; }
+        public int Cost { get; set; }
+        public Guid RoomId { get; set; }
     }
 }

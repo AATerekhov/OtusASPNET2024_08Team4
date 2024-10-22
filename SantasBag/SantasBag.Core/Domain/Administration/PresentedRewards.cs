@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SantasBag.Core.Domain.Administration
 {
-    public class PresentedRewards
+    public class PresentedRewards: BaseEntity
     {
-        public required RewardedDto reward;
-        public required Guid buyer;
+        public required RewardedDto reward { get; set; }
+        public required Guid buyer { get; set; }
     }
 }
