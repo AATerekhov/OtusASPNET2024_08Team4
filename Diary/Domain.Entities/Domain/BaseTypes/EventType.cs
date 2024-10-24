@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities.BaseTypes
+namespace Diary.Core.Domain.BaseTypes
 {
-    public enum EventTypes
+    public enum EventType
     {
         PerformingAHabit,
         ReceivingTheReward,
