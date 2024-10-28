@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  santasbag.webhost:
+    image: ${DOCKER_REGISTRY-}santasbagwebhost
+    build:
+      context: .
+      dockerfile: SantasBag/Dockerfile
