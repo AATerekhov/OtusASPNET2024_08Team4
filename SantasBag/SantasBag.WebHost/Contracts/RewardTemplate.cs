@@ -2,7 +2,7 @@
 
 namespace SantasBag.WebHost.Contracts;
 
-public class RewardTemplate: BaseEntity 
+public class RewardTemplate
 {
     public required string Name { get; set; }
     public string? Description { get; set; }
