@@ -14,7 +14,7 @@ public class RewardsRepository : IRewardsRepository
         _context = context;
     }
 
-    public async Task<List<Reward>> Get()
+    public async Task<List<Reward>> Get(CancellationToken cancellationToken)
     {
         var rewardEntities = await _context.Rewards
             .AsNoTracking()
@@ -25,7 +25,7 @@ public class RewardsRepository : IRewardsRepository
         return rewards;
     }
 
-    public async Task<Guid> Create(Reward reward)
+    public async Task<Guid> Create(Reward reward, CancellationToken cancellationToken)
     {
         var rewardEntity = new RewardEntity
         {
@@ -40,7 +40,7 @@ public class RewardsRepository : IRewardsRepository
         return rewardEntity.Id;
     }
 
-    public async Task<Guid> Update(Guid id, string name, string description, string image, decimal cost, Guid roomId)
+    public async Task<Guid> Update(Guid id, string name, string description, string image, decimal cost, Guid roomId, CancellationToken cancellationToken)
     {
         await _context.Rewards
             .Where(b=>b.Id==id)
@@ -53,7 +53,7 @@ public class RewardsRepository : IRewardsRepository
         return id;
     }
 
-    public async Task<Guid> Delete(Guid id)
+    public async Task<Guid> Delete(Guid id, CancellationToken cancellationToken)
     {
         await _context.Rewards
             .Where(b => b.Id == id)

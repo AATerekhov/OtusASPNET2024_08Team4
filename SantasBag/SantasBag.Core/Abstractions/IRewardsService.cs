@@ -4,8 +4,8 @@ namespace SantasBug.Core.Abstractions;
 
 public interface IRewardsService
 {
-    Task<Guid> CreateReward(Reward reward);
-    Task<Guid> DeleteReward(Guid id);
-    Task<List<Reward>> GetAllRewards();
-    Task<Guid> UpdateReward(Guid id, string name, string description, string image, decimal cost, Guid roomId);
+    Task<Guid> CreateReward(Reward reward, CancellationToken cancellationToken);
+    Task<Guid> DeleteReward(Guid id, CancellationToken cancellationToken);
+    Task<List<Reward>> GetAllRewards(CancellationToken cancellationToken);
+    Task<Guid> UpdateReward(Guid id, string name, string description, string image, decimal cost, Guid roomId, CancellationToken cancellationToken);
 }

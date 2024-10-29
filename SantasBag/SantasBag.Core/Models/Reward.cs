@@ -5,7 +5,7 @@ public class Reward : BaseEntity
     public string Name { get; set; }
     public string Description { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
-    public decimal Cost { get; set; }
+    public decimal Cost { get; set; } = 0;
     public Guid RoomId { get; set; }
 
     private Reward(string name, string description, string image, decimal cost, Guid roomId )
