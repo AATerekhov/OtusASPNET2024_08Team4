@@ -1,38 +1,35 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Base;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
+using System.Runtime.CompilerServices;
 
 namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class TimeResetInterval : Property
     {
-        public Habit Habit { get; }
-        public bool IsEveryDay { get; }
-        public TimeOnly TimeTheDay  { get; }
-        public bool IsWeekday { get; }
-        public WeekDays WeekDays { get; }
-        public bool IsOnceAMonth { get; }
-        public int NumberDayOfTheMonth { get; }
+        public Habit? Habit { get; }
+        public ResetIntervalOptions Options { get; private set; }
+        public TimeOnly TimeTheDay  { get; private set; }
+        public WeekDays WeekDays { get; private set; }
+        public int NumberDayOfTheMonth { get; private set; }
 
-        public TimeResetInterval(Guid id,Habit habit, bool isEveryDay, TimeOnly timeTheDay, bool isWeekday, WeekDays weekDays, bool isOnceAMonth, int numberDayOfTheMonth)
+        public TimeResetInterval(Guid id,Habit habit, ResetIntervalOptions options, TimeOnly timeTheDay, WeekDays weekDays, int numberDayOfTheMonth)
             :base(id, "TimeResetInterval")
         {
             Habit = habit;
-            IsEveryDay = isEveryDay;
+            Options = options;
             TimeTheDay = timeTheDay;
-            IsWeekday = isWeekday;
             WeekDays = weekDays;
-            IsOnceAMonth = isOnceAMonth;
             NumberDayOfTheMonth = numberDayOfTheMonth;
         }
-        public TimeResetInterval(Habit habit, bool isEveryDay, TimeOnly timeTheDay, bool isWeekday, WeekDays weekDays, bool isOnceAMonth, int numberDayOfTheMonth)
-            :this(Guid.NewGuid(),habit, isEveryDay, timeTheDay, isWeekday, weekDays,isOnceAMonth,numberDayOfTheMonth)
-        {                
+        public TimeResetInterval(Habit habit, ResetIntervalOptions options, TimeOnly timeTheDay, WeekDays weekDays, int numberDayOfTheMonth)
+            :this(Guid.NewGuid(),habit, options, timeTheDay, weekDays,numberDayOfTheMonth)
+        {     
+            
         }
         protected TimeResetInterval(Habit habit)
             : base(Guid.NewGuid(), "TimeResetInterval")
         {
             Habit = habit;
         }
-
     }
 }

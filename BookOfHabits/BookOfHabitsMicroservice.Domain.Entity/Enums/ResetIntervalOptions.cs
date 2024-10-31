@@ -7,16 +7,12 @@ using System.Threading.Tasks;
 namespace BookOfHabitsMicroservice.Domain.Entity.Enums
 {
     [Flags]
-    public enum TemplateOptions
+    public enum ResetIntervalOptions
     {
         None = 0,
-        Status = 1,
-        Value = 2,
-        Check = 4,
-        Report = 8,
-        Tags = 16,
-        Positive = 32,
-        Negative = 64,
-        Result = 128,
+        EveryDay = 1,
+        Weekday = 2,
+        OnceAMonth = 4,
+        All = 7
     }
 }

@@ -13,5 +13,6 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Enums
         Delayed =1,
         Reset = 2,
         Repetition = 4,
+        All = 7,
     }
 }

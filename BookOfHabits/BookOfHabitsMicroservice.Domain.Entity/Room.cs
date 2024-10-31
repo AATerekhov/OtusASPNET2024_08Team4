@@ -15,16 +15,19 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public IReadOnlyCollection<Habit> SuggestedHabits => [.. _habits];
         public IReadOnlyCollection<Coins> AssignedCoins => [.. _bags];
         public Person Manager { get; }
-        public RoomName Name { get; }
+        public RoomName Name { get; private set; }
         public DateTime CreateDate { get; }
-        public DateTime UpdateDate { get; }
+        public DateTime UpdateDate { get; private set; }
+        public bool IsActive { get; private set; }
         public Room(Guid id, Person manager, RoomName name, DateTime createDate, DateTime updateDate)
             :base(id)
         {
             Name = name;
             CreateDate = createDate;
-            UpdateDate = updateDate;
+            IsActive = true;
+            UpdateDate = updateDate; 
             Manager = manager;
+            manager.AdministerRoom(this);
         }
         public Room(Person manager, RoomName name, DateTime createDate, DateTime updateDate)
             :this(Guid.NewGuid(), manager, name, createDate, updateDate)
@@ -33,6 +36,9 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         }
         protected Room(Guid id) : base(id)
         {
+
         }
+        public void SetName(string name) => Name = new RoomName(name);      
+        public void SetActiveStatus(bool activeStatus) => IsActive = activeStatus;      
     }
 }

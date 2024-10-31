@@ -8,7 +8,9 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
     {
         public void Configure(EntityTypeBuilder<Delay> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Ignore(x => x.Habit);
         }
     }
 }

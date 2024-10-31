@@ -13,6 +13,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Enums
         FallingLevel = 1,
         AutoPayment = 2,
         CheckingLimit = 4,
-        CheckingReport = 8
+        CheckingReport = 8,
+        All = 15
     }
 }

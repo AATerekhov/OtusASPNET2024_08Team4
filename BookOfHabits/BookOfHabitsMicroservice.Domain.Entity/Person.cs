@@ -10,7 +10,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         private readonly ICollection<Room> _rooms = [];
         public IReadOnlyCollection<Habit> SuggestedHabits => [.. _habits];
         public IReadOnlyCollection<Room> RoomManager => [.. _rooms];
-        public PersonName Name { get; }
+        public PersonName Name { get; private set; }
         public Person(Guid id, PersonName name) : base(id)
         {
             Name = name;
@@ -22,7 +22,13 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         }
         protected Person(Guid id):base(id)
         {
-                
+
         }
+        internal void AdministerRoom(Room room)
+        {
+            if (!_rooms.Contains(room))
+                _rooms.Add(room);
+        }
+        public void SetName(string name) => Name = new PersonName(name);
     }
 }

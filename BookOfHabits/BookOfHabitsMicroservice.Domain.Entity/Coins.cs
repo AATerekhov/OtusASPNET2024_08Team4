@@ -11,12 +11,13 @@ namespace BookOfHabitsMicroservice.Domain.Entity
     public class Coins : Entity<Guid>
     {
         public Room Room { get; }
-        public Habit Habit { get; }
-        public CoinsOptions Options { get; }
-        public int CostOfWinning { get; }
-        public int Forfeit { get; }
-        public int Start { get; }
-        public int Falls { get; }
+        public Habit Habit { get; private set; }
+        public string Description { get; private set; }
+        public CoinsOptions Options { get; private set; }
+        public int CostOfWinning { get; private set; }
+        public int Forfeit { get; private set; }
+        public int Start { get; private set; }
+        public int Falls { get; private set; }
 
         public Coins(Guid id,Room room, Habit habit, CoinsOptions options, int costOfWinning, int forfeit, int start, int falls)
             :base(id)
@@ -34,7 +35,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         {
                 
         }
-        protected Coins(Guid id) : base(id)
+        protected Coins() : base(Guid.NewGuid())
         {
 
         }
