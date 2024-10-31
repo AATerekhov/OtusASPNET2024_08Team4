@@ -1,4 +1,8 @@
-﻿using BookOfHabitsMicroservice.Application.Services.Abstractions;
+﻿using AutoMapper;
+using BookOfHabits.Requests.Habit;
+using BookOfHabits.Responses.Habit;
+using BookOfHabitsMicroservice.Application.Models.Habit;
+using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookOfHabits.Controllers
@@ -6,8 +10,64 @@ namespace BookOfHabits.Controllers
     [ApiController]
     [Route("api/v1/[controller]")]
     public class HabitsController(IHabitsApplicationService habitsApplicationService,
-                                    IInstallCardApplicationService installCardApplicationService):ControllerBase
+                                  IInstallCardApplicationService installCardApplicationService,
+                                  IMapper mapper):ControllerBase
     {
+        [HttpGet("room/{roomId:guid}")]
+        public async Task<IEnumerable<HabitShortResponse>> GetAllRoomHabits(Guid roomId)
+        {
+            IEnumerable<HabitModel> persons = await habitsApplicationService.GetAllRoomHabitsAsync(roomId,HttpContext.RequestAborted);
+            return persons.Select(mapper.Map<HabitShortResponse>);
+        }
 
+        [HttpGet("{id:guid}")]
+        public async Task<HabitDetailedResponse> GetHabitById(Guid id)
+        {
+            var habit = await habitsApplicationService.GetHabitByIdAsync(id, HttpContext.RequestAborted);
+            return mapper.Map<HabitDetailedResponse>(habit);
+        }
+
+        [HttpPost]
+        public async Task<HabitShortResponse> CreateHAbit(CreateHabitRequest request)
+        {
+            var habit = await habitsApplicationService.AddHabitAsync(mapper.Map<CreateHabitModel>(request), HttpContext.RequestAborted);
+            return mapper.Map<HabitShortResponse>(habit);
+        }
+
+        [HttpPut]
+        public async Task UpdatehabitAsync(UpdateHabitRequest request)
+        {
+            await habitsApplicationService.UpdateHabit(mapper.Map<UpdateHabitModel>(request), HttpContext.RequestAborted);
+        }
+
+        [HttpPut("delay/{id:guid}")]
+        public async Task UpdateDelayHabitAsync(Guid id, DelayRequest request)
+        {
+            await habitsApplicationService.UpdateDelayHabit(id, mapper.Map<UpdateDelayModel>(request), HttpContext.RequestAborted);
+        }
+
+        [HttpPut("repetition/{id:guid}")]
+        public async Task UpdateRepetitionHabitAsync(Guid id, RepetitionRequest request)
+        {
+            await habitsApplicationService.UpdateRepetitionHabit(id, mapper.Map<UpdateRepetitionModel>(request), HttpContext.RequestAborted);
+        }
+
+        [HttpPut("interval/{id:guid}")]
+        public async Task UpdateIntervalHabitAsync(Guid id, TimeResetIntervalRequest request)
+        {
+            await habitsApplicationService.UpdateTimeResetIntervalHabit(id, mapper.Map<UpdateTimeResetIntervalModel>(request), HttpContext.RequestAborted);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task DeleteHabit(Guid id)
+        {
+            await habitsApplicationService.DeleteHabit(id, HttpContext.RequestAborted);
+        }
+
+        [HttpPost("install")]
+        public async Task InstallCardInHabitAsync(InstallCardRequest request) 
+        {
+           await installCardApplicationService.InstallCardAsync(mapper.Map<InstallCardModel>(request), HttpContext.RequestAborted);
+        }
     }
 }

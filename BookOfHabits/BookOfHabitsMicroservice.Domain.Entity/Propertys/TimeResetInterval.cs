@@ -1,35 +1,46 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Base;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
+using BookOfHabitsMicroservice.Domain.Entity.Exceptions;
 using System.Runtime.CompilerServices;
 
 namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class TimeResetInterval : Property
     {
+        readonly int _ticksSec = 10_000_000;
+        readonly int _day = 86_400;
+        readonly int _daysInMonth = 31;
         public Habit? Habit { get; }
         public ResetIntervalOptions Options { get; private set; }
-        public TimeOnly TimeTheDay  { get; private set; }
+        public int TimeTheDay  { get; private set; }
         public WeekDays WeekDays { get; private set; }
         public int NumberDayOfTheMonth { get; private set; }
 
-        public TimeResetInterval(Guid id,Habit habit, ResetIntervalOptions options, TimeOnly timeTheDay, WeekDays weekDays, int numberDayOfTheMonth)
+        public TimeResetInterval(Guid id, ResetIntervalOptions options, int timeTheDay, WeekDays weekDays, int numberDayOfTheMonth)
             :base(id, "TimeResetInterval")
         {
-            Habit = habit;
-            Options = options;
-            TimeTheDay = timeTheDay;
-            WeekDays = weekDays;
-            NumberDayOfTheMonth = numberDayOfTheMonth;
+            SetProperty(options, timeTheDay, weekDays, numberDayOfTheMonth);
         }
-        public TimeResetInterval(Habit habit, ResetIntervalOptions options, TimeOnly timeTheDay, WeekDays weekDays, int numberDayOfTheMonth)
-            :this(Guid.NewGuid(),habit, options, timeTheDay, weekDays,numberDayOfTheMonth)
+        public TimeResetInterval(ResetIntervalOptions options, int timeTheDay, WeekDays weekDays, int numberDayOfTheMonth)
+            :this(Guid.NewGuid(), options, timeTheDay, weekDays,numberDayOfTheMonth)
         {     
             
         }
-        protected TimeResetInterval(Habit habit)
+        protected TimeResetInterval()
             : base(Guid.NewGuid(), "TimeResetInterval")
         {
-            Habit = habit;
+
+        }
+        public void SetProperty(ResetIntervalOptions options, int timeTheDay, WeekDays weekDays, int numberDayOfTheMonth)
+        {
+            Options = options;
+            if (timeTheDay > _day)
+                throw new InvalidTimeResetIntervalException(timeTheDay);
+            TimeTheDay = timeTheDay;
+            WeekDays = weekDays;
+            if (numberDayOfTheMonth > _daysInMonth)
+                throw new InvalidDayResetIntervalException(numberDayOfTheMonth);
+            NumberDayOfTheMonth = numberDayOfTheMonth;
         }
     }
 }

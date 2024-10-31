@@ -1,4 +1,5 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Base;
+using BookOfHabitsMicroservice.Domain.Entity.Exceptions;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,12 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         protected Room(Guid id) : base(id)
         {
 
+        }
+        internal void GetHabit(Habit habit)
+        {
+            if (_habits.Contains(habit))
+                throw new DoubleHabitRoomException(this, habit);
+            _habits.Add(habit);
         }
         public void SetName(string name) => Name = new RoomName(name);      
         public void SetActiveStatus(bool activeStatus) => IsActive = activeStatus;      

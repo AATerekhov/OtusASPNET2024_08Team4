@@ -9,6 +9,6 @@ namespace BookOfHabitsMicroservice.Application.Services.Abstractions
 {
     public interface IInstallCardApplicationService
     {
-        Task<bool> InstallCardAsync(InstallCardModel installCardModel);
+        Task InstallCardAsync(InstallCardModel installCardModel, CancellationToken token = default);
     }
 }

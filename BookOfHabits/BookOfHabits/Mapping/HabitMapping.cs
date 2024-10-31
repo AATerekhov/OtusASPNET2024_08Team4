@@ -10,9 +10,18 @@ namespace BookOfHabits.Mapping
         public HabitMapping()
         {
             CreateMap<CreateHabitRequest, CreateHabitModel>();
-            CreateMap<UpdateHabitRequest, HabitModel>();
+            CreateMap<UpdateHabitRequest, UpdateHabitModel>();
             CreateMap<HabitModel, HabitShortResponse>();
-            CreateMap<HabitModel, HabitDetailedResponse>();
+            CreateMap<HabitModel, HabitDetailedResponse>();            
+
+            CreateMap<DelayRequest, UpdateDelayModel>();
+            CreateMap<RepetitionRequest, UpdateRepetitionModel>();
+            CreateMap<TimeResetIntervalRequest, UpdateTimeResetIntervalModel>();
+            CreateMap<DelayModel, DelayRequest>();
+            CreateMap<RepetitionModel, RepetitionRequest>();
+            CreateMap<TimeResetIntervalModel, TimeResetIntervalRequest>();
+
+            CreateMap<InstallCardRequest, InstallCardModel>();
         }
     }
 }

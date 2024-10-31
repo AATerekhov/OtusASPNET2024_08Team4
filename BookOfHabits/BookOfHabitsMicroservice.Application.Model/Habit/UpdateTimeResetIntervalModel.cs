@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace BookOfHabitsMicroservice.Application.Models.Habit
 {
-    public class UpdateHabitModel : ICreateModel
+    public class UpdateTimeResetIntervalModel:ICreateModel
     {
-        public Guid Id { get; init; }
-        public Guid PersonId { get; set; }
-        public required string Name { get; init; }
-        public required string Description { get; init; }
-        public HabitOptions Options { get; init; }
+        public ResetIntervalOptions Options { get; init; }
+        public int TimeTheDay { get; init; }
+        public WeekDays WeekDays { get; init; }
+        public int NumberDayOfTheMonth { get; init; }
     }
 }

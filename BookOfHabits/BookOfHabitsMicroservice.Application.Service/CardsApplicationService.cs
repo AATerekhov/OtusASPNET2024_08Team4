@@ -78,10 +78,10 @@ namespace BookOfHabitsMicroservice.Application.Services
             await cardRepository.UpdateAsync(entity: card, token);
         }
 
-        public async Task UpdateTemplateValues(Guid id, UpdateTemplateValuesModel tempateValuesInfo, CancellationToken token = default)
+        public async Task UpdateTemplateValues(Guid cardId, UpdateTemplateValuesModel tempateValuesInfo, CancellationToken token = default)
         {
-            var card = await cardRepository.GetByIdAsync(x => x.Id.Equals(id), includes: nameof(Card.Titles), cancellationToken: token)
-                ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Card)));
+            var card = await cardRepository.GetByIdAsync(x => x.Id.Equals(cardId), includes: nameof(Card.Titles), cancellationToken: token)
+                ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(cardId, nameof(Card)));
             var template = await templateValuesRepository.GetByIdAsync(x => x.Id.Equals(card.Titles.Id), cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(card.Titles.Id, nameof(TemplateValues)));
             if (tempateValuesInfo.Status is not null)

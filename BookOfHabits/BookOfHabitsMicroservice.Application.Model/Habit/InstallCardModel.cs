@@ -10,6 +10,6 @@ namespace BookOfHabitsMicroservice.Application.Models.Habit
     {
         public Guid PersonId { get; init; }
         public Guid HabitId { get; init; }
-        public Guid TemplateCardId { get; init; }
+        public Guid CardId { get; init; }
     }
 }
