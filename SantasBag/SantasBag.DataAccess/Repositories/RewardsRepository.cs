@@ -20,7 +20,7 @@ public class RewardsRepository : IRewardsRepository
             .AsNoTracking()
             .ToListAsync();
         var rewards = rewardEntities
-            .Select(b=>Reward.Create(b.Name, b.Description, b.Image, b.Cost, b.RoomId).Reward)
+            .Select(b=>Reward.Map(b.Id, b.Name, b.Description, b.Image, b.Cost, b.RoomId))
             .ToList();
         return rewards;
     }
@@ -59,5 +59,16 @@ public class RewardsRepository : IRewardsRepository
             .Where(b => b.Id == id)
             .ExecuteDeleteAsync();
         return id;
+    }
+
+    public async Task<Reward> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var rewardEntities = await _context.Rewards
+            .AsNoTracking()
+            .ToListAsync();
+        var reward = rewardEntities
+            .Select(b => Reward.Map(b.Id, b.Name, b.Description, b.Image, b.Cost, b.RoomId))
+            .First(r=>r.Id==id); //добавить проверку на null
+        return reward;
     }
 }

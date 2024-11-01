@@ -29,4 +29,9 @@ public class RewardsService : IRewardsService
     {
         return await _rewardsRepository.Delete(id, cancellationToken);
     }
+
+    public async Task<Reward> GetRewardById(Guid id, CancellationToken cancellationToken)
+    {
+        return await _rewardsRepository.GetById(id, cancellationToken);
+    }
 }
