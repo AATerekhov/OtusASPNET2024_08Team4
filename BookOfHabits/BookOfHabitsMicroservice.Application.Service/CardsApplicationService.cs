@@ -2,13 +2,13 @@
 using BookOfHabitsMicroservice.Application.Models.Card;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
-using BookOfHabitsMicroservice.Application.Services.Base;
+using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
 
-namespace BookOfHabitsMicroservice.Application.Services
+namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
     public class CardsApplicationService(IRepository<Card, Guid> cardRepository,
                                          IRepository<TemplateValues, Guid> templateValuesRepository,
@@ -55,7 +55,7 @@ namespace BookOfHabitsMicroservice.Application.Services
         public async Task<CardModel?> GetCardByIdAsync(Guid id, CancellationToken token = default)
         {
             Card card = await cardRepository.GetByIdAsync(x => x.Id.Equals(id),
-                                                                includes: $"{nameof(Card.Titles)}",
+                                                                includes: $"{nameof(Card.TemplateValues)}",
                                                                 asNoTracking: true,
                                                                 cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Card)));
@@ -80,10 +80,10 @@ namespace BookOfHabitsMicroservice.Application.Services
 
         public async Task UpdateTemplateValues(Guid cardId, UpdateTemplateValuesModel tempateValuesInfo, CancellationToken token = default)
         {
-            var card = await cardRepository.GetByIdAsync(x => x.Id.Equals(cardId), includes: nameof(Card.Titles), cancellationToken: token)
+            var card = await cardRepository.GetByIdAsync(x => x.Id.Equals(cardId), includes: nameof(Card.TemplateValues), cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(cardId, nameof(Card)));
-            var template = await templateValuesRepository.GetByIdAsync(x => x.Id.Equals(card.Titles.Id), cancellationToken: token)
-                ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(card.Titles.Id, nameof(TemplateValues)));
+            var template = await templateValuesRepository.GetByIdAsync(x => x.Id.Equals(card.TemplateValues.Id), cancellationToken: token)
+                ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(card.TemplateValues.Id, nameof(TemplateValues)));
             if (tempateValuesInfo.Status is not null)
                 template.SetStatus(tempateValuesInfo.Status);
             if (tempateValuesInfo.TitleValue is not null)

@@ -2,14 +2,14 @@
 using BookOfHabitsMicroservice.Application.Models.Habit;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
-using BookOfHabitsMicroservice.Application.Services.Base;
+using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
 
-namespace BookOfHabitsMicroservice.Application.Services
+namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
     public class HabitsApplicationService(IRepository<Habit, Guid> habitRepository,
                                           IRepository<Person, Guid> personRepository,

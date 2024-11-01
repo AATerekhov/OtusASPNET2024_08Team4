@@ -3,7 +3,7 @@ using BookOfHabitsMicroservice.Application.Models.Habit;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 
-namespace BookOfHabitsMicroservice.Application.Services.Mapping
+namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
 {
     public class HabitMapping : Profile 
     {

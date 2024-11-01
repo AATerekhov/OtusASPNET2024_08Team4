@@ -10,9 +10,9 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public HabitName Name { get; private set; }
         public string Description { get; private set; }
         public Person Owner { get; }
-        public Card? Card { get; private set; }
+        public Card Card { get; private set; }
         public Room Room { get; }
-        public Coins? Coins { get; private set; }
+        //public Coins? Coins { get; private set; }
         public bool IsUsed { get; private set; }
         public HabitOptions Options { get; private set; }
         public Delay Delay { get; }
@@ -44,9 +44,9 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         {
 
         }
-        internal void UseInTheCoins(Coins coins) 
+        internal void UseInTheCoins() 
         {        
-            Coins = coins;
+            //Coins = coins;
             IsUsed = true;
         }
         public void GetCard(Card card) 

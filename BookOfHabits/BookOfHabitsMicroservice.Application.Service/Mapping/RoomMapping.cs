@@ -2,7 +2,7 @@
 using BookOfHabitsMicroservice.Application.Models.Room;
 using BookOfHabitsMicroservice.Domain.Entity;
 
-namespace BookOfHabitsMicroservice.Application.Services.Mapping
+namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
 {
     public class RoomMapping: Profile
     {

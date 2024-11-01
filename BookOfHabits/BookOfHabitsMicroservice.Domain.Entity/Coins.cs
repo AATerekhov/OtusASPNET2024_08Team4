@@ -21,7 +21,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             Habit = habit;
             SetDescription(description);
             SetProperty(options, costOfWinning, forfeit, start, falls);
-            Habit.UseInTheCoins(this);
+            Habit.UseInTheCoins();
             Room.GetCoins(this);
         }
         public Coins(Room room, Habit habit, string description, CoinsOptions options, int costOfWinning, int forfeit, int start, int falls)

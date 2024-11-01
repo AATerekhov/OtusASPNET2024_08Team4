@@ -10,7 +10,7 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Ignore(x => x.Habit);
+            builder.Property(x => x.NameType).HasMaxLength(50);
         }
     }
 }

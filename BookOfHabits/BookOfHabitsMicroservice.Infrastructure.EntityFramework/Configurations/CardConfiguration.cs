@@ -14,19 +14,17 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
             builder.Property(x => x.Name)
                          .IsRequired()
                          .HasMaxLength(50)
-                         .HasConversion(name => name.Name, name => new  CardName(name));
-            builder.Property(x => x.Options).IsRequired();
-            builder.HasOne(x => x.Titles)
-                    .WithOne(x => x.Template)
+                         .HasConversion(name => name.Name, name => new CardName(name));
+            builder.HasOne(x => x.TemplateValues)
+                    .WithMany()
                     .OnDelete(DeleteBehavior.Cascade);
-            builder.Property(x => x.Titles).IsRequired();
+            builder.Property(x => x.Options).IsRequired();
             builder.Property(x => x.Description)
                     .HasMaxLength(250);
             builder.Property(x => x.TitlesCheck)
                     .HasMaxLength(1500);
             builder.Property(x => x.Image)
                     .HasMaxLength(25000);
-            builder.Ignore(x => x.Habit);
             builder.Ignore(x => x.TitleCheckElements);
         }
     }

@@ -23,13 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.Domain.Repository.Abstractions", "BookOfHabitsMicroservice.Domain.Repository.Abstractions\BookOfHabitsMicroservice.Domain.Repository.Abstractions.csproj", "{D9AB5981-C4A0-444A-819E-B3E51B9868E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations", "BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations\BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations.csproj", "{EA577F94-5FB2-4C0F-BC61-CF63A2647B3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations", "BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations\BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations.csproj", "{EA577F94-5FB2-4C0F-BC61-CF63A2647B3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOfHabitsMicroservice.Application.Models", "BookOfHabitsMicroservice.Application.Model\BookOfHabitsMicroservice.Application.Models.csproj", "{CBC55176-1E6C-46EE-BB36-EC243EBFBEF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.Application.Models", "BookOfHabitsMicroservice.Application.Model\BookOfHabitsMicroservice.Application.Models.csproj", "{CBC55176-1E6C-46EE-BB36-EC243EBFBEF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOfHabitsMicroservice.Application.Services", "BookOfHabitsMicroservice.Application.Service\BookOfHabitsMicroservice.Application.Services.csproj", "{2D488056-D835-4E82-BCF6-90602E86FB8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.Application.Services.Implementations", "BookOfHabitsMicroservice.Application.Service\BookOfHabitsMicroservice.Application.Services.Implementations.csproj", "{2D488056-D835-4E82-BCF6-90602E86FB8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOfHabitsMicroservice.Application.Services.Abstractions", "BookOfHabitsMicroservice.Application.Services.Abstractions\BookOfHabitsMicroservice.Application.Services.Abstractions.csproj", "{70A8FE6A-BED4-44A9-966B-81AA772DA09B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.Application.Services.Abstractions", "BookOfHabitsMicroservice.Application.Services.Abstractions\BookOfHabitsMicroservice.Application.Services.Abstractions.csproj", "{70A8FE6A-BED4-44A9-966B-81AA772DA09B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

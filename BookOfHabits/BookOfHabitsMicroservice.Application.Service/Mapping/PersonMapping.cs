@@ -2,7 +2,7 @@
 using BookOfHabitsMicroservice.Application.Models.Person;
 using BookOfHabitsMicroservice.Domain.Entity;
 
-namespace BookOfHabitsMicroservice.Application.Services.Mapping
+namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
 {
     public class PersonMapping : Profile
     {

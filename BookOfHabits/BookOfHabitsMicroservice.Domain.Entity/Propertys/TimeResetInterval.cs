@@ -10,7 +10,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
         readonly int _ticksSec = 10_000_000;
         readonly int _day = 86_400;
         readonly int _daysInMonth = 31;
-        public Habit? Habit { get; }
+        //public Habit Habit { get; }
         public ResetIntervalOptions Options { get; private set; }
         public int TimeTheDay  { get; private set; }
         public WeekDays WeekDays { get; private set; }

@@ -19,7 +19,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         {
                 
         }
-        protected Person(Guid id):base(id)
+        protected Person():base(Guid.NewGuid())
         {
 
         }

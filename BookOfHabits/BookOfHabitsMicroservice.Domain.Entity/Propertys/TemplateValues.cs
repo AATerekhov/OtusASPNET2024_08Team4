@@ -4,7 +4,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class TemplateValues : Property
     {
-        public Card? Template { get; }
+        //public Card Card { get; }
         public string StatusString { get; private set; } //List
         public string[] Status => StatusString.Split(';', StringSplitOptions.RemoveEmptyEntries);
         public string TitleValue { get; private set; }
@@ -32,8 +32,8 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
                 
         }
 
-        protected TemplateValues(Guid id)
-            : base(id, "TemplateValues")
+        protected TemplateValues()
+            : base(Guid.NewGuid(), "TemplateValues")
         {
 
         }

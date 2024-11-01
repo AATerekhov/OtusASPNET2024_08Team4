@@ -7,10 +7,10 @@ namespace BookOfHabitsMicroservice.Domain.Entity
 {
     public class Card : Entity<Guid>
     {
-        public Habit? Habit { get; }
+        public Habit Habit { get; }
         public CardOptions Options { get; private set; }
         public CardName Name { get; private set; }
-        public TemplateValues Titles { get; }
+        public TemplateValues TemplateValues { get; }
         public string Description { get; private set; }
         public byte[]? Image { get; private set; }
         public string TitlesCheck { get; private set; }  //List
@@ -21,7 +21,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         {
             Name = name;
             Options = options;
-            Titles = titles;
+            TemplateValues = titles;
             Description = description;
             TitlesCheck = string.Empty;
             IsPublic = true;
@@ -45,7 +45,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         {
             var result = new Card(name: new CardName(this.Name.Name),
                                   options: this.Options,
-                                  titles: Titles.DeepCopy(),
+                                  titles: TemplateValues.DeepCopy(),
                                   description: this.Description);
             result.Close();
             result.SetTitlesCheck(this.TitleCheckElements);

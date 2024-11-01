@@ -30,7 +30,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         {
                 
         }
-        protected Room(Guid id) : base(id)
+        protected Room() : base(Guid.NewGuid())
         {
 
         }

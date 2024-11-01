@@ -15,7 +15,6 @@
     <ProjectReference Include="..\BookOfHabitsMicroservice.Application.Services.Abstractions\BookOfHabitsMicroservice.Application.Services.Abstractions.csproj" />
     <ProjectReference Include="..\BookOfHabitsMicroservice.Domain.Entity\BookOfHabitsMicroservice.Domain.Entity.csproj" />
     <ProjectReference Include="..\BookOfHabitsMicroservice.Domain.Repository.Abstractions\BookOfHabitsMicroservice.Domain.Repository.Abstractions.csproj" />
-    <ProjectReference Include="..\BookOfHabits\BookOfHabits.csproj" />
   </ItemGroup>
 
 </Project>

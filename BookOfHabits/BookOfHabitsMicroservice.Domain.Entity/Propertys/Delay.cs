@@ -6,7 +6,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
     {
         readonly int _ticksSec = 10_000_000;
         readonly int _day = 86_400;
-        public Habit? Habit { get; }
+        //public Habit Habit { get; }
         public bool IsAfterATime { get; private set; }
         public int AfterTime { get; private set; }
         public bool IsEndless { get; private set; }

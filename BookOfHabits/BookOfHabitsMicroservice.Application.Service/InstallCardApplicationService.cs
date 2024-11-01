@@ -1,12 +1,11 @@
 ﻿using BookOfHabitsMicroservice.Application.Models.Habit;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
-using BookOfHabitsMicroservice.Application.Services.Base;
+using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
-using Newtonsoft.Json.Linq;
 
-namespace BookOfHabitsMicroservice.Application.Services
+namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
     public class InstallCardApplicationService(IRepository<Person, Guid> personRepository,
                                                 IRepository<Habit, Guid> habitRepository,

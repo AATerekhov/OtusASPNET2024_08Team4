@@ -2,12 +2,12 @@
 using BookOfHabitsMicroservice.Application.Models.Person;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
-using BookOfHabitsMicroservice.Application.Services.Base;
+using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
 
-namespace BookOfHabitsMicroservice.Application.Services
+namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
     public class PersonsApplicationService(IRepository<Person, Guid> personRepository,
                                             IMapper mapper) : BaseService, IPersonsApplicationService

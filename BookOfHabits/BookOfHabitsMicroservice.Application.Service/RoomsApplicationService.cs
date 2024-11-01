@@ -2,12 +2,12 @@
 using BookOfHabitsMicroservice.Application.Models.Room;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
-using BookOfHabitsMicroservice.Application.Services.Base;
+using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
 
-namespace BookOfHabitsMicroservice.Application.Services
+namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
     public class RoomsApplicationService(IRepository<Room, Guid> roomRepository,
                                             IRepository<Person, Guid> personRepository,

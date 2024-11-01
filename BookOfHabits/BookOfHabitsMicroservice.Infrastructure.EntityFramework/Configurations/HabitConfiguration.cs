@@ -16,8 +16,6 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Owner).IsRequired();
-            builder.Property(x => x.Room).IsRequired();
             builder.Property(x => x.Name)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -25,21 +23,19 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
             builder.Property(x => x.Description)
                     .HasMaxLength(250);
             builder.Property(x => x.Options).IsRequired();
-            builder.HasOne(x => x.Card)
-                    .WithOne(x => x.Habit)
-                    .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.Room).WithMany("_habits");
-            builder.HasOne(x => x.Owner).WithMany("_habits");
+            builder.HasOne(x => x.Room)
+                    .WithMany("_habits");
+            builder.HasOne(x => x.Owner)
+                    .WithMany("_habits");
             builder.HasOne(x => x.Delay)
-                    .WithOne(x => x.Habit)
+                    .WithMany()
                     .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(x => x.TimeResetInterval)
-                    .WithOne(x => x.Habit)
+                    .WithMany()
                     .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(x => x.Repetition)
-                    .WithOne(x => x.Habit)
+                    .WithMany()
                     .OnDelete(DeleteBehavior.Cascade);
-            builder.Ignore(x => x.Coins);
         }
     }
 }

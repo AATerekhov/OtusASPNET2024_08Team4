@@ -4,7 +4,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class Repetition: Property
     {
-        public Habit? Habit { get; }
+        //public Habit Habit { get; }
         public int MaxCountPositive { get; private set; }
         public int MaxCountNegative { get; private set; }
         public bool IsLimit { get; private set; }

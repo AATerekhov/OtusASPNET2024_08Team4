@@ -16,6 +16,7 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
                     .HasConversion(name => name.Name, name => new RoomName(name));
             builder.HasOne(x => x.Manager).WithMany("_rooms");
             builder.Property(x => x.CreateDate).IsRequired();
+            builder.HasMany("_habits").WithOne(nameof(Habit.Room));
             builder.Ignore(x => x.AssignedCoins);
             builder.Ignore(x => x.SuggestedHabits);
         }
