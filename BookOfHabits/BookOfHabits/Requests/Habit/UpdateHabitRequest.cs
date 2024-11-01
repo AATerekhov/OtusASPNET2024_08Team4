@@ -6,8 +6,8 @@ namespace BookOfHabits.Requests.Habit
     {
         public Guid Id { get; init; }
         public Guid PersonId { get; set; }
-        public required string Name { get; init; }
-        public required string Description { get; init; }
+        public string? Name { get; init; }
+        public string? Description { get; init; }
         public HabitOptions Options { get; init; }
     }
 }

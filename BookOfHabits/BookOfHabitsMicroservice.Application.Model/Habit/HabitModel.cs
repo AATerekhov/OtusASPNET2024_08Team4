@@ -1,15 +1,7 @@
 ﻿using BookOfHabitsMicroservice.Application.Models.Base;
 using BookOfHabitsMicroservice.Application.Models.Card;
 using BookOfHabitsMicroservice.Application.Models.Person;
-using BookOfHabitsMicroservice.Application.Models.Room;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
-using BookOfHabitsMicroservice.Domain.Entity.Propertys;
-using BookOfHabitsMicroservice.Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookOfHabitsMicroservice.Application.Models.Habit
 {

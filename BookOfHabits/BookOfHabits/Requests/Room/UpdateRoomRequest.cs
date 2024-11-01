@@ -3,7 +3,7 @@
     public class UpdateRoomRequest
     {
         public Guid Id { get; init; }
-        public required string Name { get; init; }
+        public string? Name { get; init; }
         public bool IsActive { get; init; }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using BookOfHabitsMicroservice.Application.Models.Base;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookOfHabitsMicroservice.Application.Models.Habit
 {
@@ -12,8 +7,8 @@ namespace BookOfHabitsMicroservice.Application.Models.Habit
     {
         public Guid Id { get; init; }
         public Guid PersonId { get; set; }
-        public required string Name { get; init; }
-        public required string Description { get; init; }
+        public string? Name { get; init; }
+        public string? Description { get; init; }
         public HabitOptions Options { get; init; }
     }
 }

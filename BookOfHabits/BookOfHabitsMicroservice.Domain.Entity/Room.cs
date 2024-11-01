@@ -1,11 +1,6 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Base;
 using BookOfHabitsMicroservice.Domain.Entity.Exceptions;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookOfHabitsMicroservice.Domain.Entity
 {
@@ -13,7 +8,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
     {
         private readonly ICollection<Habit> _habits = [];
         private readonly ICollection<Coins> _bags = [];
-        public IReadOnlyCollection<Habit> SuggestedHabits => [.. _habits];
+        public IReadOnlyCollection<Habit> SuggestedHabits => _habits.Where(habit => !habit.IsUsed).ToList().AsReadOnly();
         public IReadOnlyCollection<Coins> AssignedCoins => [.. _bags];
         public Person Manager { get; }
         public RoomName Name { get; private set; }
@@ -44,6 +39,15 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             if (_habits.Contains(habit))
                 throw new DoubleHabitRoomException(this, habit);
             _habits.Add(habit);
+            UpdateDate = DateTime.Now.ToUniversalTime();
+        }
+        internal void GetCoins(Coins coins)
+        {
+            if (_habits.Contains(coins.Habit) is false)
+                throw new InvalidOperationException($"The habit {coins.Habit.Name} is not in the room {Name}");
+            if (_bags.FirstOrDefault(c => c.Habit.Equals(coins.Habit)) is not null)
+                throw new DoubleCoinsRoomException(this, coins);
+            _bags.Add(coins);
         }
         public void SetName(string name) => Name = new RoomName(name);      
         public void SetActiveStatus(bool activeStatus) => IsActive = activeStatus;      

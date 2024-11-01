@@ -16,8 +16,8 @@ namespace BookOfHabits.Controllers
         [HttpGet("room/{roomId:guid}")]
         public async Task<IEnumerable<HabitShortResponse>> GetAllRoomHabits(Guid roomId)
         {
-            IEnumerable<HabitModel> persons = await habitsApplicationService.GetAllRoomHabitsAsync(roomId,HttpContext.RequestAborted);
-            return persons.Select(mapper.Map<HabitShortResponse>);
+            IEnumerable<HabitModel> habits = await habitsApplicationService.GetAllRoomHabitsAsync(roomId,HttpContext.RequestAborted);
+            return habits.Select(mapper.Map<HabitShortResponse>);
         }
 
         [HttpGet("{id:guid}")]
@@ -28,14 +28,14 @@ namespace BookOfHabits.Controllers
         }
 
         [HttpPost]
-        public async Task<HabitShortResponse> CreateHAbit(CreateHabitRequest request)
+        public async Task<HabitShortResponse> CreateHabit(CreateHabitRequest request)
         {
             var habit = await habitsApplicationService.AddHabitAsync(mapper.Map<CreateHabitModel>(request), HttpContext.RequestAborted);
             return mapper.Map<HabitShortResponse>(habit);
         }
 
         [HttpPut]
-        public async Task UpdatehabitAsync(UpdateHabitRequest request)
+        public async Task UpdateHabitAsync(UpdateHabitRequest request)
         {
             await habitsApplicationService.UpdateHabit(mapper.Map<UpdateHabitModel>(request), HttpContext.RequestAborted);
         }

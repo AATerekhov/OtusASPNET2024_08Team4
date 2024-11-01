@@ -73,8 +73,7 @@ namespace BookOfHabitsMicroservice.Application.Services
                                                           cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(roomId, nameof(Room)));
 
-            var habits = room.SuggestedHabits.Where(x => !x.IsUsed);
-            return habits.Select(mapper.Map<HabitModel>);
+            return room.SuggestedHabits.Select(mapper.Map<HabitModel>);
         }
 
         public async Task<HabitModel?> GetHabitByIdAsync(Guid id, CancellationToken token = default)

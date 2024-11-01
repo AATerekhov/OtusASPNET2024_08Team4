@@ -1,18 +1,49 @@
-﻿using BookOfHabitsMicroservice.Application.Models.Coins;
+﻿using AutoMapper;
+using BookOfHabitsMicroservice.Application.Models.Coins;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
+using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
+using BookOfHabitsMicroservice.Application.Services.Base;
 using BookOfHabitsMicroservice.Domain.Entity;
+using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 
 namespace BookOfHabitsMicroservice.Application.Services
 {
-    internal class ChooseHabitApplicationService (IRepository<Person,Guid> personRepository,
+    internal class ChooseHabitApplicationService(IRepository<Person, Guid> personRepository,
                                                 IRepository<Habit, Guid> habitRepository,
                                                 IRepository<Room, Guid> roomRepository,
-                                                IRepository<Coins, Guid> coinsRepository): IChooseHabitApplicationService
+                                                ICoinsRepository coinsRepository,
+                                                IMapper mapper) : BaseService, IChooseHabitApplicationService
     {
-        public async Task<bool> ChooseHabitInTheRoomAsync(ChooseHabitModel chooseHabitModel)
+        public async Task<CoinsModel> ChooseHabitInTheRoomAsync(ChooseHabitModel chooseHabitModel, CancellationToken token = default)
         {
-            return true;
+            Person owner = await personRepository.GetByIdAsync(filter: x => x.Id.Equals(chooseHabitModel.PersonId),
+                                                               cancellationToken: token)
+                ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(chooseHabitModel.PersonId, nameof(Person)));
+
+            Room room = await roomRepository.GetByIdAsync(filter: x => x.Id.Equals(chooseHabitModel.RoomId),
+                                                          includes: $"{nameof(Room.Manager)};_habits;_bags",
+                                                          cancellationToken: token)
+                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(chooseHabitModel.RoomId, nameof(Room)));
+            if (room.Manager.Equals(owner) is false)
+                throw new BadRequestException(FormatBadRequestErrorMessage(chooseHabitModel.PersonId, nameof(Person)));
+
+            Habit habit = await habitRepository.GetByIdAsync(filter: x => x.Id.Equals(chooseHabitModel.HabitId),
+                                                             cancellationToken: token)
+                ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(chooseHabitModel.HabitId, nameof(Habit)));
+
+            var coins = new Coins(room: room,
+                                  habit: habit,
+                                  description: chooseHabitModel.Description,
+                                  options: CoinsOptions.None,
+                                  costOfWinning: 10,
+                                  forfeit: 2,
+                                  start: 100,
+                                  falls: 10);
+            coins = await coinsRepository.AddAsync(entity: coins, cancellationToken: token);
+            await habitRepository.UpdateAsync(entity: habit, cancellationToken: token);
+            await roomRepository.UpdateAsync(entity: room, cancellationToken: token);
+            return mapper.Map<CoinsModel>(coins);
         }
     }
 }

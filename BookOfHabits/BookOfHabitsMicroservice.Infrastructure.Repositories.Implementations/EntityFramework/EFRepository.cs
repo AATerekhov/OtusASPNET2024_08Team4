@@ -26,7 +26,6 @@ namespace BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations.E
 
             if (asNoTracking)
                 query = query.AsNoTracking();
-
             return await query.ToListAsync(token);
         }
         public virtual async Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> filter,

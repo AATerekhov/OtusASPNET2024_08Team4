@@ -2,7 +2,6 @@
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
-using System.Xml.Linq;
 
 namespace BookOfHabitsMicroservice.Domain.Entity
 {
@@ -53,7 +52,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public void GetCard(Card card) 
         {
             if (Card is not null)
-                throw new ArgumentException("The card has already been assigned", nameof(this.Card));
+                throw new InvalidOperationException($"The card has already been assigned habit {Name}");
             var newCard = card.DeepCopy();
             newCard.Close();
             Card = newCard;

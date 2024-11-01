@@ -1,13 +1,6 @@
 ﻿using AutoMapper;
-using BookOfHabits.Requests.Person;
-using BookOfHabits.Responses.Person;
 using BookOfHabitsMicroservice.Application.Models.Person;
 using BookOfHabitsMicroservice.Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookOfHabitsMicroservice.Application.Services.Mapping
 {

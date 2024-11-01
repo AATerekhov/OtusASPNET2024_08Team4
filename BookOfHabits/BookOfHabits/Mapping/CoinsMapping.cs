@@ -9,8 +9,8 @@ namespace BookOfHabits.Mapping
     {
         public CoinsMapping()
         {
-            CreateMap<CreateCoinsRequest, CreateCoinsModel>();
             CreateMap<UpdateCoinsRequest, CoinsModel>();
+            CreateMap<ChooseHabitRequest, ChooseHabitModel>();
             CreateMap<CoinsModel, CoinsShortResponse>();
             CreateMap<CoinsModel, CoinsDetailedResponse>();
         }

@@ -2,18 +2,25 @@
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 using BookOfHabitsMicroservice.Infrastructure.EntityFramework;
 using BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations
 {
-    public class CoinsRepository : EFRepository<Coins, Guid>, IRepository<Coins, Guid>
+    public class CoinsRepository : EFRepository<Coins, Guid>, ICoinsRepository
     {
+        readonly ApplicationDbContext _context;
         public CoinsRepository(ApplicationDbContext context) : base(context)
         {
+            _context = context;
+        }
+        public async Task<Coins?> GetDetailedCoinsByIdAsync(Guid id, CancellationToken token = default) 
+        {
+            var query = _context.Set<Coins>()
+                                .Where(x => x.Id.Equals(id))
+                                .Include(x => x.Room)
+                                .ThenInclude(x => x.Manager);
+            
+            return await query.SingleOrDefaultAsync(token);
         }
     }
 }

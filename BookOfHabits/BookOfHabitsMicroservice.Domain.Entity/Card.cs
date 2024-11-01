@@ -7,7 +7,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
 {
     public class Card : Entity<Guid>
     {
-        public Habit?  Habit { get; }
+        public Habit? Habit { get; }
         public CardOptions Options { get; private set; }
         public CardName Name { get; private set; }
         public TemplateValues Titles { get; }
@@ -16,8 +16,8 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public string TitlesCheck { get; private set; }  //List
         public string[] TitleCheckElements => TitlesCheck.Split(';', StringSplitOptions.RemoveEmptyEntries);
         public bool IsPublic { get; private set; }
-        public Card(Guid id,CardName name, CardOptions options, TemplateValues titles, string description)
-            :base(id)
+        public Card(Guid id, CardName name, CardOptions options, TemplateValues titles, string description)
+            : base(id)
         {
             Name = name;
             Options = options;
@@ -27,8 +27,8 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             IsPublic = true;
         }
         public Card(CardName name, CardOptions options, TemplateValues titles, string description)
-            : this(Guid.NewGuid(), name, options, titles, description) 
-        { 
+            : this(Guid.NewGuid(), name, options, titles, description)
+        {
 
         }
         protected Card() : base(Guid.NewGuid())
@@ -41,12 +41,12 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public void SetTitlesCheck(string[] titleCheckElements) => TitlesCheck = string.Join(";", titleCheckElements);
         public void SetOptions(CardOptions options) => Options = options;
         internal void Close() => IsPublic = false;
-        internal Card DeepCopy() 
+        internal Card DeepCopy()
         {
             var result = new Card(name: new CardName(this.Name.Name),
-                            options: this.Options,
-                            titles: Titles.DeepCopy(),
-                            description: this.Description);
+                                  options: this.Options,
+                                  titles: Titles.DeepCopy(),
+                                  description: this.Description);
             result.Close();
             result.SetTitlesCheck(this.TitleCheckElements);
             if (this.Image is not null)

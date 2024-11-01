@@ -1,6 +1,6 @@
-﻿namespace BookOfHabitsMicroservice.Application.Models.Coins
+﻿namespace BookOfHabits.Requests.Cains
 {
-    public class ChooseHabitModel
+    public class ChooseHabitRequest
     {
         public Guid PersonId { get; init; }
         public Guid RoomId { get; init; }
