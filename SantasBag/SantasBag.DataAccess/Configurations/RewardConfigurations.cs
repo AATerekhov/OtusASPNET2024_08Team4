@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SantasBug.DataAccess.Entities;
+using SantasBag.DataAccess.Entities;
 
-namespace SantasBug.DataAccess.Configurations
+namespace SantasBag.DataAccess.Configurations
 {
     internal class RewardConfigurations : IEntityTypeConfiguration<RewardEntity>
     {

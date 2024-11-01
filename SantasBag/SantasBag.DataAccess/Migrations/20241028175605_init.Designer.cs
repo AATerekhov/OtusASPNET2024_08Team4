@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SantasBug.DataAccess;
+using SantasBag.DataAccess;
 
 #nullable disable
 
@@ -25,7 +25,7 @@ namespace SantasBag.DataAccess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SantasBug.DataAccess.Entities.RewardEntity", b =>
+            modelBuilder.Entity("SantasBag.DataAccess.Entities.RewardEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

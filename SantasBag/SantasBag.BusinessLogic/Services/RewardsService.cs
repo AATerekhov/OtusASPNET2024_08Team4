@@ -1,13 +1,14 @@
 ﻿using SantasBag.Core.Models;
-using SantasBug.Core.Abstractions;
+using SantasBag.Core.Abstractions;
+using SantasBag.DataAccess.Entities;
 
 namespace SantasBag.BusinessLogic.Services;
 
 public class RewardsService : IRewardsService
 {
-    private readonly IRewardsRepository _rewardsRepository;
+    private readonly IRewardsRepository<RewardEntity> _rewardsRepository;
 
-    public RewardsService(IRewardsRepository rewardsRepository)
+    public RewardsService(IRewardsRepository<RewardEntity> rewardsRepository)
     {
         _rewardsRepository = rewardsRepository;
     }
@@ -19,7 +20,15 @@ public class RewardsService : IRewardsService
 
     public async Task<Guid> CreateReward(Reward reward, CancellationToken cancellationToken)
     {
-        return await _rewardsRepository.Create(reward, cancellationToken);
+        var rewardEntity = new RewardEntity
+        {
+            Name = reward.Name,
+            Description = reward.Description,
+            Image = reward.Image,
+            Cost = reward.Cost,
+            RoomId = reward.RoomId
+        };
+        return await _rewardsRepository.Create(rewardEntity, cancellationToken);
     }
     public async Task<Guid> UpdateReward(Guid id, string name, string description, string image, decimal cost, Guid roomId, CancellationToken cancellationToken)
     {

@@ -2,7 +2,7 @@
 using SantasBag.Contracts;
 using SantasBag.Core.Models;
 using SantasBag.WebHost.Contracts;
-using SantasBug.Core.Abstractions;
+using SantasBag.Core.Abstractions;
 
 namespace SantasBag.Controllers;
 

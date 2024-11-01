@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SantasBug.DataAccess.Entities;
+using SantasBag.DataAccess.Entities;
 
-namespace SantasBug.DataAccess;
+namespace SantasBag.DataAccess;
 
 public class SantasBagDbContext : DbContext
 {

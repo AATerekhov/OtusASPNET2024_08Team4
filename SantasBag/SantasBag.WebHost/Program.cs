@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using SantasBag.BusinessLogic.Services;
-using SantasBug.Core.Abstractions;
-using SantasBug.DataAccess;
-using SantasBug.DataAccess.Repositories;
+using SantasBag.Core.Abstractions;
+using SantasBag.DataAccess;
+using SantasBag.DataAccess.Entities;
+using SantasBag.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Services.AddDbContext<SantasBagDbContext>(
     });
 
 builder.Services.AddScoped<IRewardsService, RewardsService>();
-builder.Services.AddScoped<IRewardsRepository, RewardsRepository>();
+builder.Services.AddScoped<IRewardsRepository<RewardEntity>, RewardsRepository>();
 
 
 var app = builder.Build();

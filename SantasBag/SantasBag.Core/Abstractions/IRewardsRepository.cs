@@ -1,10 +1,10 @@
 ﻿using SantasBag.Core.Models;
 
-namespace SantasBug.Core.Abstractions;
+namespace SantasBag.Core.Abstractions;
 
-public interface IRewardsRepository
+public interface IRewardsRepository<T>
 {
-    Task<Guid> Create(Reward reward, CancellationToken cancellationToken);
+    Task<Guid> Create(T reward, CancellationToken cancellationToken);
     Task<Guid> Delete(Guid id, CancellationToken cancellationToken);
     Task<List<Reward>> Get(CancellationToken cancellationToken);
     Task<Guid> Update(Guid id, string name, string description, string image, decimal cost, Guid roomId, CancellationToken cancellationToken);

@@ -1,6 +1,6 @@
 ﻿using SantasBag.Core.Models;
 
-namespace SantasBug.Core.Abstractions;
+namespace SantasBag.Core.Abstractions;
 
 public interface IRewardsService
 {

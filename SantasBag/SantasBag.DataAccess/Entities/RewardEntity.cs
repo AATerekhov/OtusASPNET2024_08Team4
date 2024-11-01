@@ -1,6 +1,6 @@
 ﻿using SantasBag.Core.Models;
 
-namespace SantasBug.DataAccess.Entities;
+namespace SantasBag.DataAccess.Entities;
 
 public class RewardEntity :BaseEntity
 {

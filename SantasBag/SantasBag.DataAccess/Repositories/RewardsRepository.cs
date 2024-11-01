@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SantasBag.Core.Abstractions;
 using SantasBag.Core.Models;
-using SantasBug.Core.Abstractions;
-using SantasBug.DataAccess.Entities;
+using SantasBag.DataAccess.Entities;
 
-namespace SantasBug.DataAccess.Repositories;
+namespace SantasBag.DataAccess.Repositories;
 
-public class RewardsRepository : IRewardsRepository
+public class RewardsRepository : IRewardsRepository<RewardEntity>
 {
     private readonly SantasBagDbContext _context;
 
@@ -25,16 +25,16 @@ public class RewardsRepository : IRewardsRepository
         return rewards;
     }
 
-    public async Task<Guid> Create(Reward reward, CancellationToken cancellationToken)
+    public async Task<Guid> Create(RewardEntity reward, CancellationToken cancellationToken)
     {
-        var rewardEntity = new RewardEntity
+        var rewardEntity = reward; /*  new RewardEntity
         {
             Name = reward.Name,
             Description = reward.Description,
             Image = reward.Image,
             Cost = reward.Cost,
             RoomId = reward.RoomId
-        };
+        };*/
         await _context.Rewards.AddAsync(rewardEntity);
         await _context.SaveChangesAsync();
         return rewardEntity.Id;

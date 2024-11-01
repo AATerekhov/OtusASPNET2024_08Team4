@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SantasBag.Core\SantasBag.Core.csproj" />
+    <ProjectReference Include="..\SantasBag.DataAccess\SantasBag.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
