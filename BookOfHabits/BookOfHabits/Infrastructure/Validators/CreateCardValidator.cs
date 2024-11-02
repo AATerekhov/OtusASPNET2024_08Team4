@@ -1,0 +1,19 @@
+﻿using BookOfHabits.Requests.Card;
+using BookOfHabitsMicroservice.Domain.Entity.Enums;
+using FluentValidation;
+using System.Data;
+
+namespace BookOfHabits.Infrastructure.Validators
+{
+    public class CreateCardValidator : BaseCommonValidator<CreateCardRequest>
+    {
+        public CreateCardValidator()
+        {
+            RuleFor(x => x.Options)
+                .Must(ValidateOptionsField)
+                .WithMessage($"There are not so many flags for this option {nameof(CardOptions)}");
+        }
+        private bool ValidateOptionsField(CardOptions options)
+            => (int)options <= (int)CardOptions.All ? true : false;
+    }
+}

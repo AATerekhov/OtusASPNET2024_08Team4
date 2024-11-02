@@ -16,7 +16,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
             Person owner = await personRepository.GetByIdAsync(x => x.Id.Equals(installCardModel.PersonId), cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(installCardModel.PersonId, nameof(Person)));
 
-            Habit habit = await habitRepository.GetByIdAsync(x => x.Id.Equals(installCardModel.HabitId), includes: $"{nameof(Habit.Owner)};{nameof(Habit.Card)}", cancellationToken: token)
+            Habit habit = await habitRepository.GetByIdAsync(x => x.Id.Equals(installCardModel.HabitId), includes: $"{nameof(Habit.Owner)},{nameof(Habit.Card)}", cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(installCardModel.HabitId, nameof(Habit)));
 
             if (habit.Owner.Equals(owner) is false)

@@ -1,4 +1,6 @@
 ﻿using BookOfHabits.Infrastructure.Settings;
+using BookOfHabits.Infrastructure.Validators;
+using BookOfHabits.Requests;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Implementations;
 using BookOfHabitsMicroservice.Domain.Entity;
@@ -7,6 +9,7 @@ using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 using BookOfHabitsMicroservice.Infrastructure.EntityFramework;
 using BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations;
 using BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations.PropertyRepository;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookOfHabits
@@ -47,6 +50,14 @@ namespace BookOfHabits
                 optionsBuilder => optionsBuilder.MigrationsAssembly("BookOfHabitsMicroservice.Infrastructure.EntityFramework"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssemblyContaining<BaseCommonValidator<BaseCommonRequest>>();
+            services.AddValidatorsFromAssemblyContaining<CreateCardValidator>();
+            services.AddValidatorsFromAssemblyContaining<CreateHabitValidator>();
             return services;
         }
 

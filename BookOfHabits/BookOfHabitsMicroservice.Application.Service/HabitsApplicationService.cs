@@ -79,7 +79,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
         public async Task<HabitModel?> GetHabitByIdAsync(Guid id, CancellationToken token = default)
         {
             Habit habit = await habitRepository.GetByIdAsync(x => x.Id.Equals(id),
-                                                                includes: $"{nameof(Habit.Card)};{nameof(Habit.Owner)};{nameof(Habit.Delay)};{nameof(Habit.Repetition)};{nameof(Habit.TimeResetInterval)}",
+                                                                includes: $"{nameof(Habit.Card)},{nameof(Habit.Owner)},{nameof(Habit.Delay)},{nameof(Habit.Repetition)},{nameof(Habit.TimeResetInterval)}",
                                                                 asNoTracking: true,
                                                                 cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Habit)));

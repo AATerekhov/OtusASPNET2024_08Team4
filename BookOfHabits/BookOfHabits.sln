@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.Application.Services.Abstractions", "BookOfHabitsMicroservice.Application.Services.Abstractions\BookOfHabitsMicroservice.Application.Services.Abstractions.csproj", "{70A8FE6A-BED4-44A9-966B-81AA772DA09B}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F15342BC-832A-4430-98D9-85B121AC7326}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{70A8FE6A-BED4-44A9-966B-81AA772DA09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70A8FE6A-BED4-44A9-966B-81AA772DA09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70A8FE6A-BED4-44A9-966B-81AA772DA09B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F15342BC-832A-4430-98D9-85B121AC7326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F15342BC-832A-4430-98D9-85B121AC7326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F15342BC-832A-4430-98D9-85B121AC7326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F15342BC-832A-4430-98D9-85B121AC7326}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

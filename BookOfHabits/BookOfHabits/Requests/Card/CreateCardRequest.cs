@@ -2,10 +2,8 @@
 
 namespace BookOfHabits.Requests.Card
 {
-    public class CreateCardRequest
+    public class CreateCardRequest: BaseCommonRequest
     {
-        public required string Name { get; init; }
-        public required string Description { get; init; }
         public CardOptions Options { get; init; }
         public byte[]? Image { get; init; }
         public string[]? TitleCheckElements { get; init; }

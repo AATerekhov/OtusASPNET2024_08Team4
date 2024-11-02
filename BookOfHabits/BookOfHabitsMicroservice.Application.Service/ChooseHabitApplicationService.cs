@@ -22,7 +22,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(chooseHabitModel.PersonId, nameof(Person)));
 
             Room room = await roomRepository.GetByIdAsync(filter: x => x.Id.Equals(chooseHabitModel.RoomId),
-                                                          includes: $"{nameof(Room.Manager)};_habits;_bags",
+                                                          includes: $"{nameof(Room.Manager)},_habits,_bags",
                                                           cancellationToken: token)
                  ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(chooseHabitModel.RoomId, nameof(Room)));
             if (room.Manager.Equals(owner) is false)

@@ -5,10 +5,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,10 +31,6 @@
     <ProjectReference Include="..\BookOfHabitsMicroservice.Application.Service\BookOfHabitsMicroservice.Application.Services.Implementations.csproj" />
     <ProjectReference Include="..\BookOfHabitsMicroservice.Domain.Repository.Abstractions\BookOfHabitsMicroservice.Domain.Repository.Abstractions.csproj" />
     <ProjectReference Include="..\BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations\BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\Validators\" />
   </ItemGroup>
 
 </Project>

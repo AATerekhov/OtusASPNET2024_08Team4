@@ -4,6 +4,7 @@ using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
 using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
 using BookOfHabitsMicroservice.Domain.Entity;
+using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
@@ -24,9 +25,10 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                                                     titlePositive: "Healthy",
                                                     titleNegative: "Damage");
             var card = new Card(name: new CardName(cardInfo.Name),
-                                options: Domain.Entity.Enums.CardOptions.Status | Domain.Entity.Enums.CardOptions.Value,
+                                options: CardOptions.Status | CardOptions.Value,
                                 titles: tempalteValues,
                                 description: cardInfo.Description);
+
             if (cardInfo.Image is not null)
                 card.SetImage(cardInfo.Image);
             if (cardInfo.TitleCheckElements is not null)

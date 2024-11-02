@@ -3,6 +3,7 @@ using BookOfHabits.Infrastructure.ExceptionHandling;
 using BookOfHabits.Infrastructure.MigrationsManager;
 using BookOfHabitsMicroservice.Application.Services.Implementations.Mapping;
 using BookOfHabitsMicroservice.Infrastructure.EntityFramework;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,17 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(Program), typeof(CardMapping));
 
+builder.Services.AddFluentValidationAutoValidation()
+                .AddValidators();
+
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseRouting();
 app.UseCors();
