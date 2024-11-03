@@ -17,24 +17,24 @@ public class RewardsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<RewardResponse>>> GetRewardsAsync(CancellationToken cancellationToken)
+    public async Task<ActionResult<List<RewardResponse>>> GetRewardsAsync()
     {
-        var rewards = await _rewardsService.GetAllRewards(cancellationToken);
+        var rewards = await _rewardsService.GetAllRewards(HttpContext.RequestAborted);
         var response = rewards.Select(r => new RewardResponse(r.Id, r.Name, r.Description, r.Image, r.Cost, r.RoomId));
         return Ok(response);
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<RewardResponse>> GetRewardByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<RewardResponse>> GetRewardByIdAsync(Guid id)
     {
-        var reward = await _rewardsService.GetRewardById(id, cancellationToken );
+        var reward = await _rewardsService.GetRewardById(id, HttpContext.RequestAborted);
         if (reward == null)
             return NotFound(id);
         return Ok(reward);
     }
 
     [HttpPost]
-    public async Task<ActionResult<List<RewardResponse>>> CreateRewardASync([FromBody] RewardTemplate request, CancellationToken cancellationToken)
+    public async Task<ActionResult<List<RewardResponse>>> CreateRewardASync([FromBody] RewardTemplate request)
     {
         var newReward= Reward.Create(
             request.Name,
@@ -43,21 +43,21 @@ public class RewardsController : ControllerBase
             request.Cost,
             request.RoomId);
 
-        var rewardId = await _rewardsService.CreateReward(newReward, cancellationToken);
+        var rewardId = await _rewardsService.CreateReward(newReward, HttpContext.RequestAborted);
         return Ok(rewardId);
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<Guid>> UpdatRewardAsync(Guid id, [FromBody] RewardTemplate request, CancellationToken cancellationToken)
+    public async Task<ActionResult<Guid>> UpdatRewardAsync(Guid id, [FromBody] RewardTemplate request)
     {
-        var rewardId = await _rewardsService.UpdateReward(id, request.Name, request.Description, request.Image, request.Cost, request.RoomId, cancellationToken);
+        var rewardId = await _rewardsService.UpdateReward(id, request.Name, request.Description, request.Image, request.Cost, request.RoomId, HttpContext.RequestAborted);
         return Ok(rewardId);
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<ActionResult<Guid>> DeleteRewardAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<Guid>> DeleteRewardAsync(Guid id)
     {
-        return Ok(await _rewardsService.DeleteReward(id, cancellationToken));
+        return Ok(await _rewardsService.DeleteReward(id, HttpContext.RequestAborted));
     }
 
 }

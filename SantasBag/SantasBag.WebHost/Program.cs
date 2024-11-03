@@ -14,10 +14,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var connectionString = Environment.GetEnvironmentVariable("SANTASBAG_DBCONTEXT_CONNECTION_STRING");
 builder.Services.AddDbContext<SantasBagDbContext>(
     options =>
     {
-        options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(SantasBagDbContext)));
+        options.UseNpgsql(connectionString);
     });
 
 builder.Services.AddScoped<IRewardsService, RewardsService>();
@@ -27,7 +28,7 @@ builder.Services.AddScoped<IRewardsRepository<RewardEntity>, RewardsRepository>(
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())   //временно для контейнера
 {
     app.UseSwagger();
     app.UseSwaggerUI();

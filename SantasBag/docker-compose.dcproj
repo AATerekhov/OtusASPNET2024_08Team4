@@ -4,7 +4,7 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>aeaf57e4-7b75-485f-87af-aa1db16cc014</ProjectGuid>
+    <ProjectGuid>a1d413f8-cf7d-4a56-9315-2d7e347549e4</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>santasbag.webhost</DockerServiceName>
