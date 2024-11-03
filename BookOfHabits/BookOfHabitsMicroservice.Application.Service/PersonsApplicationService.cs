@@ -14,7 +14,11 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
     {
         public async Task<PersonModel?> AddPersonAsync(CreatePersonModel personInfo, CancellationToken token)
         {
-            var person = new Person(personInfo.Id, new PersonName(personInfo.Name));
+            Person? person = await personRepository.GetByIdAsync(filter: x => x.Id.Equals(personInfo.Id), cancellationToken: token);
+            if (person is not null)
+                throw new BadRequestException(BadRequestEntityExistsMessage(personInfo.Id, nameof(Person)));
+
+            person = new Person(personInfo.Id, new PersonName(personInfo.Name));
             person = await personRepository.AddAsync(person, token)
                 ?? throw new BadRequestException(FormatBadRequestErrorMessage(personInfo.Id, nameof(Person)));
             return mapper.Map<PersonModel>(person);

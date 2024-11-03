@@ -5,6 +5,10 @@ namespace BookOfHabitsMicroservice.Domain.Entity
 {
     public class Coins : Entity<Guid>
     {
+        const int _defaultCost = 10;
+        const int _defaultForfeit = 2;
+        const int _defaultStart = 100;
+        const int _defaultFalls = 10;
         public Room Room { get; }
         public Habit Habit { get; private set; }
         public string? Description { get; private set; }
@@ -24,7 +28,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             Habit.UseInTheCoins();
             Room.GetCoins(this);
         }
-        public Coins(Room room, Habit habit, string description, CoinsOptions options, int costOfWinning, int forfeit, int start, int falls)
+        public Coins(Room room, Habit habit, string description, CoinsOptions options, int costOfWinning = _defaultCost, int forfeit = _defaultForfeit, int start = _defaultStart, int falls = _defaultFalls)
             :this(Guid.NewGuid(), room, habit, description, options, costOfWinning, forfeit, start, falls)
         {
                 

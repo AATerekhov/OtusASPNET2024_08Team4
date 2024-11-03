@@ -31,10 +31,10 @@ namespace BookOfHabits.Controllers
         }
 
         [HttpPost]
-        public async Task<PersonShortResponse> CreateRoom(CreateRoomRequest request)
+        public async Task<RoomShortResponse> CreateRoom(CreateRoomRequest request)
         {
             var student = await roomsApplicationService.AddRoomAsync(mapper.Map<CreateRoomModel>(request), HttpContext.RequestAborted);
-            return mapper.Map<PersonShortResponse>(student);
+            return mapper.Map<RoomShortResponse>(student);
         }
 
         [HttpPut]

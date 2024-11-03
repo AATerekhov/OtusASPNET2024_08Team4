@@ -3,8 +3,8 @@ using BookOfHabitsMicroservice.Application.Models.Card;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
 using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
+using BookOfHabitsMicroservice.Application.Services.Implementations.Default_values;
 using BookOfHabitsMicroservice.Domain.Entity;
-using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
@@ -17,18 +17,11 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
     {
         public async Task<CardModel?> AddCardAsync(CreateCardModel cardInfo, CancellationToken token = default)
         {
-            var tempalteValues = new TemplateValues(status: "ToDo;Doing;Done",
-                                                    titleValue: "Result",
-                                                    titleCheck: "Tasks",
-                                                    titleReportField: "Report",
-                                                    tags: "Achievement;Important;Regular;Ordinary",
-                                                    titlePositive: "Healthy",
-                                                    titleNegative: "Damage");
+            var tempalteValues = DefaultValues.GetDefaultTemplateValues();
             var card = new Card(name: new CardName(cardInfo.Name),
-                                options: CardOptions.Status | CardOptions.Value,
+                                options: cardInfo.Options,
                                 titles: tempalteValues,
                                 description: cardInfo.Description);
-
             if (cardInfo.Image is not null)
                 card.SetImage(cardInfo.Image);
             if (cardInfo.TitleCheckElements is not null)
@@ -40,10 +33,12 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
 
         public async Task DeleteCard(Guid id, CancellationToken token = default)
         {
-            var card = await cardRepository.GetByIdAsync(x => x.Id.Equals(id))
+            var card = await cardRepository.GetByIdAsync(x => x.Id.Equals(id), includes:$"{nameof(Card.TemplateValues)}",cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Card)));
-            if (await cardRepository.DeleteAsync(card) is false)
+            var templateValues = card.TemplateValues;
+            if (await cardRepository.DeleteAsync(entity: card, cancellationToken: token) is false)
                 throw new BadRequestException(FormatBadRequestErrorMessage(id, nameof(Card)));
+            await templateValuesRepository.DeleteAsync(entity: templateValues, cancellationToken: token) ;
         }
 
         public async Task<IEnumerable<CardModel>> GetAllCardsAsync(CancellationToken token = default)

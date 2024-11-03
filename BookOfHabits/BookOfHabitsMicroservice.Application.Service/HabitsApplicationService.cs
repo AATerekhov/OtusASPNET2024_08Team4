@@ -3,6 +3,7 @@ using BookOfHabitsMicroservice.Application.Models.Habit;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
 using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
+using BookOfHabitsMicroservice.Application.Services.Implementations.Default_values;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
@@ -27,29 +28,14 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
             Room room = await roomRepository.GetByIdAsync(x => x.Id.Equals(cardInfo.RoomId), includes: $"_habits", cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(cardInfo.RoomId, nameof(Room)));
 
-            var delay = new Delay(isAfterATime: false,
-                                  afterTime: 0,
-                                  isEndless: true,
-                                  durationTime: 3600);
-
-            var repetition = new Repetition(maxCountPositive: 5,
-                                            maxCountNegative: 5,
-                                            isLimit: false,
-                                            countLimit: 10);
-
-            var timeResetInterval = new TimeResetInterval(options: ResetIntervalOptions.EveryDay,
-                                                          timeTheDay: 43_200,
-                                                          weekDays: WeekDays.None,
-                                                          numberDayOfTheMonth: 10);
-
             var habit = new Habit(name: new HabitName(cardInfo.Name),
                                   description: cardInfo.Description,
                                   owner: owner,
                                   room: room,
                                   options: HabitOptions.None,
-                                  delay: delay,
-                                  repetition: repetition,
-                                  timeResetInterval: timeResetInterval);
+                                  delay: DefaultValues.GetDefaultDelay(),
+                                  repetition: DefaultValues.GetDefaultRepetition(),
+                                  timeResetInterval: DefaultValues.GetDefaultTimeResetInterval());
 
             habit = await habitRepository.AddAsync(habit, token)
                 ?? throw new BadRequestException(FormatBadRequestErrorMessage(habit.Id, nameof(Habit)));

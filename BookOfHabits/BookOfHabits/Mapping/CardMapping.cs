@@ -10,7 +10,7 @@ namespace BookOfHabits.Mapping
         public CardMapping()
         {
             CreateMap<CreateCardRequest, CreateCardModel>();
-            CreateMap<UpdateCardRequest, CardModel>();
+            CreateMap<UpdateCardRequest, UpdateCardModel>();
             CreateMap<CardModel, CardShortResponse>();
             CreateMap<CardModel, CardDetailedResponse>();
             CreateMap<UpdateTemplateValuesRequest, UpdateTemplateValuesModel>();

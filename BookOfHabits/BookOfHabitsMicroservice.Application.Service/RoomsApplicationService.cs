@@ -18,10 +18,14 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
             var manager = await personRepository.GetByIdAsync(x => x.Id.Equals(roomInfo.ManagerId), includes: "_rooms", cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(roomInfo.ManagerId, nameof(Person)));
 
+            Room? person = await roomRepository.GetByIdAsync(filter: x => x.Id.Equals(roomInfo.Id), cancellationToken: token);
+            if (person is not null)
+                throw new BadRequestException(BadRequestEntityExistsMessage(roomInfo.Id, nameof(Room)));
+
             var room = new Room(roomInfo.Id, manager, new RoomName(roomInfo.Name), roomInfo.CreateDate, roomInfo.CreateDate);
+            await personRepository.UpdateAsync(entity: manager, cancellationToken: token);
             room = await roomRepository.AddAsync(entity: room, cancellationToken: token)
                 ?? throw new BadRequestException(FormatBadRequestErrorMessage(roomInfo.Id, nameof(Room)));
-            await personRepository.UpdateAsync(entity: manager, cancellationToken: token);
             return mapper.Map<RoomModel>(room);
         }
 
