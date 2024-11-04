@@ -7,7 +7,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
 {
     public class Card : Entity<Guid>
     {
-        public Habit Habit { get; }
+        //public Habit Habit { get; }
         public CardOptions Options { get; private set; }
         public CardName Name { get; private set; }
         public TemplateValues TemplateValues { get; }

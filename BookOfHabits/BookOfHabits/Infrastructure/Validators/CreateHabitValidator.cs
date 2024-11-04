@@ -7,9 +7,5 @@ namespace BookOfHabits.Infrastructure.Validators
 {
     public class CreateHabitValidator: BaseCommonValidator<CreateHabitRequest>
     {
-        public CreateHabitValidator()
-        {
-
-        }
     }
 }

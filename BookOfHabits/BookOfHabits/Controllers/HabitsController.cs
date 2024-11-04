@@ -2,6 +2,7 @@
 using BookOfHabits.Requests.Habit;
 using BookOfHabits.Responses.Habit;
 using BookOfHabitsMicroservice.Application.Models.Habit;
+using BookOfHabitsMicroservice.Application.Models.Card;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +12,13 @@ namespace BookOfHabits.Controllers
     [Route("api/v1/[controller]")]
     public class HabitsController(IHabitsApplicationService habitsApplicationService,
                                   IInstallCardApplicationService installCardApplicationService,
-                                  IMapper mapper):ControllerBase
+                                  ICardsApplicationService cardsApplicationService,
+                                  IMapper mapper) : ControllerBase
     {
         [HttpGet("room/{roomId:guid}")]
         public async Task<IEnumerable<HabitShortResponse>> GetAllRoomHabits(Guid roomId)
         {
-            IEnumerable<HabitModel> habits = await habitsApplicationService.GetAllRoomHabitsAsync(roomId,HttpContext.RequestAborted);
+            IEnumerable<HabitModel> habits = await habitsApplicationService.GetAllRoomHabitsAsync(roomId, HttpContext.RequestAborted);
             return habits.Select(mapper.Map<HabitShortResponse>);
         }
 
@@ -61,13 +63,17 @@ namespace BookOfHabits.Controllers
         [HttpDelete("{id:guid}")]
         public async Task DeleteHabit(Guid id)
         {
+            var habit = await habitsApplicationService.GetHabitByIdAsync(id, HttpContext.RequestAborted);
+
             await habitsApplicationService.DeleteHabit(id, HttpContext.RequestAborted);
+            if (habit?.Card is not null)
+                await cardsApplicationService.DeleteCard(habit.Card.Id, HttpContext.RequestAborted);
         }
 
         [HttpPost("install")]
-        public async Task InstallCardInHabitAsync(InstallCardRequest request) 
+        public async Task InstallCardInHabitAsync(InstallCardRequest request)
         {
-           await installCardApplicationService.InstallCardAsync(mapper.Map<InstallCardModel>(request), HttpContext.RequestAborted);
+            await installCardApplicationService.InstallCardAsync(mapper.Map<InstallCardModel>(request), HttpContext.RequestAborted);
         }
     }
 }

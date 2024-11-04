@@ -9,27 +9,33 @@ using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
 namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
     public class CoinsApplicationService(ICoinsRepository coinsRepository,
-                                         IRepository<Room, Guid> roomRepository,
+                                         IRoomRepository roomRepository,
                                          IRepository<Person, Guid> personRepository,
+                                         IRepository<Habit, Guid> habitRepository,
                                          IMapper mapper) : BaseService, ICoinsApplicationService
     {
         public async Task DeleteCoins(Guid id, CancellationToken token = default)
         {
-            var coins = await coinsRepository.GetByIdAsync(x => x.Id.Equals(id))
+            var coins = await coinsRepository.GetByIdAsync(filter: x => x.Id.Equals(id), includes:$"{nameof(Coins.Habit)}")
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Coins)));
+            if (coins.Habit is not null)
+            {
+                Habit habit = coins.Habit;
+                habit.UseInTheCoins(false);
+                await habitRepository.UpdateAsync(entity: habit, cancellationToken: token);
+            }               
             if (await coinsRepository.DeleteAsync(coins) is false)
                 throw new BadRequestException(FormatBadRequestErrorMessage(id, nameof(Coins)));
         }
 
         public async Task<IEnumerable<CoinsModel>> GetAllRoomCoinsAsync(Guid roomId, CancellationToken token = default)
         {
-            Room room = await roomRepository.GetByIdAsync(filter: x => x.Id.Equals(roomId),
-                                                          includes: "_bags",
-                                                          asNoTracking: true,
-                                                          cancellationToken: token)
+            var bags = await coinsRepository.GetAllAsync(filter: x => x.Room.Id.Equals(roomId),
+                                                         includes: $"{nameof(Coins.Room)},{nameof(Coins.Habit)}",
+                                                         cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(roomId, nameof(Room)));
 
-            return room.AssignedCoins.Select(mapper.Map<CoinsModel>);
+            return bags.Select(mapper.Map<CoinsModel>);
         }
 
         public async Task<CoinsModel> GetCoinsByIdAsync(Guid id, CancellationToken token = default)

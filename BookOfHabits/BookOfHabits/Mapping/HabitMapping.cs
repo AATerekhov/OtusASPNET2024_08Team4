@@ -17,9 +17,9 @@ namespace BookOfHabits.Mapping
             CreateMap<DelayRequest, UpdateDelayModel>();
             CreateMap<RepetitionRequest, UpdateRepetitionModel>();
             CreateMap<TimeResetIntervalRequest, UpdateTimeResetIntervalModel>();
-            CreateMap<DelayModel, DelayRequest>();
-            CreateMap<RepetitionModel, RepetitionRequest>();
-            CreateMap<TimeResetIntervalModel, TimeResetIntervalRequest>();
+            CreateMap<DelayModel, DelayResponse>();
+            CreateMap<RepetitionModel, RepetitionResponse>();
+            CreateMap<TimeResetIntervalModel, TimeResetIntervalResponse>();
 
             CreateMap<InstallCardRequest, InstallCardModel>();
         }

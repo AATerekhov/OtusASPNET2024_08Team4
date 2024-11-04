@@ -7,8 +7,13 @@ namespace BookOfHabits.Infrastructure.Validators
     {
         public BaseCommonValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().MaximumLength(50);
-            RuleFor(x => x.Description).NotEmpty().MaximumLength(250);
+            RuleFor(x => x.Name)
+                .NotNull()
+                .NotEmpty()
+                .MaximumLength(50);
+            RuleFor(x => x.Description)
+                .NotNull()
+                .MaximumLength(250);
         }
     }
 }

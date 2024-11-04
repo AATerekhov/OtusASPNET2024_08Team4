@@ -42,7 +42,7 @@ namespace BookOfHabits.Controllers
         [HttpPut("{id:guid}")]
         public async Task UpdateTemplateValueAsync(Guid id, UpdateTemplateValuesRequest request)
         {
-            await cardsApplicationService.UpdateTemplateValues(id,mapper.Map<UpdateTemplateValuesModel>(request), HttpContext.RequestAborted);
+            await cardsApplicationService.UpdateTemplateValues(id, mapper.Map<UpdateTemplateValuesModel>(request), HttpContext.RequestAborted);
         }
 
 

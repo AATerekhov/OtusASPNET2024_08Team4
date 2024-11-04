@@ -19,7 +19,7 @@ namespace BookOfHabits
         public static IServiceCollection AddRepository(this IServiceCollection services)
         {
             services.AddScoped<IRepository<Person, Guid>, PersonRepository>();
-            services.AddScoped<IRepository<Room, Guid>, RoomRepository>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IRepository<TemplateValues, Guid>, TemplateValuesRepository>();
             services.AddScoped<IRepository<Card, Guid>, CardRepository>();
             services.AddScoped<IRepository<Delay, Guid>, DelayRepository>();
@@ -57,6 +57,8 @@ namespace BookOfHabits
         {
             services.AddValidatorsFromAssemblyContaining<BaseCommonValidator<BaseCommonRequest>>();
             services.AddValidatorsFromAssemblyContaining<CreateCardValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateCardValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateTemplateValuesValidator>();
             services.AddValidatorsFromAssemblyContaining<CreateHabitValidator>();
             return services;
         }

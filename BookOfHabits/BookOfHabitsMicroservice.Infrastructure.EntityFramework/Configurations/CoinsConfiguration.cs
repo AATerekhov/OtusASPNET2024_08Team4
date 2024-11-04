@@ -15,7 +15,8 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
             builder.HasOne(x => x.Room)
                     .WithMany("_bags");
             builder.HasOne(x => x.Habit)
-                    .WithMany();
+                    .WithMany()
+                    .IsRequired();
             builder.Property(x => x.Options).IsRequired();
             builder.Property(x => x.CostOfWinning).IsRequired();
             builder.Property(x => x.Forfeit).IsRequired();

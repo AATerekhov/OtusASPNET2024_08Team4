@@ -11,7 +11,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
     public class ChooseHabitApplicationService(IRepository<Person, Guid> personRepository,
                                                 IRepository<Habit, Guid> habitRepository,
-                                                IRepository<Room, Guid> roomRepository,
+                                                IRoomRepository roomRepository,
                                                 ICoinsRepository coinsRepository,
                                                 IMapper mapper) : BaseService, IChooseHabitApplicationService
     {
@@ -36,9 +36,9 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                                   habit: habit,
                                   description: chooseHabitModel.Description,
                                   options: CoinsOptions.None);
-            coins = await coinsRepository.AddAsync(entity: coins, cancellationToken: token);
             await habitRepository.UpdateAsync(entity: habit, cancellationToken: token);
             await roomRepository.UpdateAsync(entity: room, cancellationToken: token);
+            coins = await coinsRepository.AddAsync(entity: coins, cancellationToken: token);
             return mapper.Map<CoinsModel>(coins);
         }
     }

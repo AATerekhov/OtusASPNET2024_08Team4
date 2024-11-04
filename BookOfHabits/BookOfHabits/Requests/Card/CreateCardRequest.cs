@@ -6,6 +6,6 @@ namespace BookOfHabits.Requests.Card
     {
         public CardOptions Options { get; init; }
         public byte[]? Image { get; init; }
-        public string[]? TitleCheckElements { get; init; }
+        public required string[] TitleCheckElements { get; init; }
     }
 }

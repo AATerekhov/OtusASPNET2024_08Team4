@@ -9,9 +9,9 @@ using BookOfHabitsMicroservice.Domain.ValueObjects;
 
 namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
-    public class RoomsApplicationService(IRepository<Room, Guid> roomRepository,
-                                            IRepository<Person, Guid> personRepository,
-                                            IMapper mapper) : BaseService, IRoomsApplicationService
+    public class RoomsApplicationService(IRoomRepository roomRepository,
+                                         IRepository<Person, Guid> personRepository,
+                                         IMapper mapper) : BaseService, IRoomsApplicationService
     {
         public async Task<RoomModel?> AddRoomAsync(CreateRoomModel roomInfo, CancellationToken token = default)
         {
@@ -45,10 +45,11 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
 
         public async Task<RoomModel?> GetRoomByIdAsync(Guid id, CancellationToken token = default)
         {
-            var room = await roomRepository.GetByIdAsync(x => x.Id.Equals(id),
-                                                            includes: $"{nameof(Room.Manager)},_habits,_bags",
-                                                            asNoTracking:true,
-                                                            cancellationToken: token)
+            
+            var room = await roomRepository.GetByIdAsync(filter: x => x.Id.Equals(id),
+                                                         includes: $"{nameof(Room.Manager)},_habits,_bags",
+                                                         asNoTracking: true,
+                                                         cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Room)));
 
             return mapper.Map<RoomModel>(room);
@@ -58,7 +59,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
         {
             var room = await roomRepository.GetByIdAsync(x => x.Id.Equals(roomInfo.Id), cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(roomInfo.Id, nameof(Room)));
-            
+
             if (roomInfo.Name is not null)
                 room.SetName(roomInfo.Name);
             room.SetActiveStatus(roomInfo.IsActive);

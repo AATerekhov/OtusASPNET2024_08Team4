@@ -2,13 +2,11 @@
 
 namespace BookOfHabits.Requests.Card
 {
-    public class UpdateCardRequest
+    public class UpdateCardRequest : BaseCommonRequest
     {
         public Guid Id { get; init; }
-        public string? Name { get; init; }
-        public string? Description { get; init; }
         public CardOptions Options { get; init; }
         public byte[]? Image { get; init; }
-        public string[]? TitleCheckElements { get; init; }
+        public required string[] TitleCheckElements { get; init; }
     }
 }

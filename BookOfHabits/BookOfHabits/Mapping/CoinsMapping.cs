@@ -2,6 +2,7 @@
 using BookOfHabits.Requests.Cains;
 using BookOfHabits.Responses.Coins;
 using BookOfHabitsMicroservice.Application.Models.Coins;
+using System.Xml.Linq;
 
 namespace BookOfHabits.Mapping
 {
@@ -11,7 +12,8 @@ namespace BookOfHabits.Mapping
         {
             CreateMap<UpdateCoinsRequest, CoinsModel>();
             CreateMap<ChooseHabitRequest, ChooseHabitModel>();
-            CreateMap<CoinsModel, CoinsShortResponse>();
+            CreateMap<CoinsModel, CoinsShortResponse>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Habit.Name));
             CreateMap<CoinsModel, CoinsDetailedResponse>();
         }
     }

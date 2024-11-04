@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using BookOfHabits.Requests.Person;
 using BookOfHabits.Requests.Room;
-using BookOfHabits.Responses.Person;
 using BookOfHabits.Responses.Room;
-using BookOfHabitsMicroservice.Application.Models.Person;
 using BookOfHabitsMicroservice.Application.Models.Room;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +10,8 @@ namespace BookOfHabits.Controllers
 
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class RoomsController(IRoomsApplicationService roomsApplicationService, 
-                                 IMapper mapper) :ControllerBase
+    public class RoomsController(IRoomsApplicationService roomsApplicationService,
+                                 IMapper mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IEnumerable<RoomShortResponse>> GetAllRooms()

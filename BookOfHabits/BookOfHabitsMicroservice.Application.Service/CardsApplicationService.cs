@@ -17,15 +17,13 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
     {
         public async Task<CardModel?> AddCardAsync(CreateCardModel cardInfo, CancellationToken token = default)
         {
-            var tempalteValues = DefaultValues.GetDefaultTemplateValues();
             var card = new Card(name: new CardName(cardInfo.Name),
                                 options: cardInfo.Options,
-                                titles: tempalteValues,
+                                titles: DefaultValues.GetDefaultTemplateValues(),
                                 description: cardInfo.Description);
             if (cardInfo.Image is not null)
                 card.SetImage(cardInfo.Image);
-            if (cardInfo.TitleCheckElements is not null)
-                card.SetTitlesCheck(cardInfo.TitleCheckElements);
+            card.SetTitlesCheck(cardInfo.TitleCheckElements);
             card = await cardRepository.AddAsync(card, token)
                 ?? throw new BadRequestException(FormatBadRequestErrorMessage(card.Id, nameof(Card)));
             return mapper.Map<CardModel>(card);
@@ -63,15 +61,14 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
         {
             var card = await cardRepository.GetByIdAsync(x => x.Id.Equals(cardInfo.Id), cancellationToken: token)
                  ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(cardInfo.Id, nameof(Card)));
-            if (cardInfo.Name is not null)
-                card.SetName(cardInfo.Name);
-            if (cardInfo.Description is not null)
-                card.SetDescription(cardInfo.Description);
+            
+            card.SetName(cardInfo.Name);            
+            card.SetDescription(cardInfo.Description);
+            card.SetTitlesCheck(cardInfo.TitleCheckElements);
+            card.SetOptions(cardInfo.Options);
             if (cardInfo.Image is not null)
                 card.SetImage(cardInfo.Image);
-            if (cardInfo.TitleCheckElements is not null)
-                card.SetTitlesCheck(cardInfo.TitleCheckElements);
-            card.SetOptions(cardInfo.Options);
+            
             await cardRepository.UpdateAsync(entity: card, token);
         }
 
@@ -81,20 +78,14 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(cardId, nameof(Card)));
             var template = await templateValuesRepository.GetByIdAsync(x => x.Id.Equals(card.TemplateValues.Id), cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(card.TemplateValues.Id, nameof(TemplateValues)));
-            if (tempateValuesInfo.Status is not null)
-                template.SetStatus(tempateValuesInfo.Status);
-            if (tempateValuesInfo.TitleValue is not null)
-                template.SetTitleValue(tempateValuesInfo.TitleValue);
-            if (tempateValuesInfo.TitleCheck is not null)
-                template.SetTitleCheck(tempateValuesInfo.TitleCheck);
-            if (tempateValuesInfo.TitleReportField is not null)
-                template.SetTitleReportField(tempateValuesInfo.TitleReportField);
-            if (tempateValuesInfo.Tags is not null)
-                template.SetTags(tempateValuesInfo.Tags);
-            if (tempateValuesInfo.TitlePositive is not null)
-                template.SetTitlePositive(tempateValuesInfo.TitlePositive);
-            if (tempateValuesInfo.TitleNegative is not null)
-                template.SetTitleNegative(tempateValuesInfo.TitleNegative);
+           
+            template.SetStatus(tempateValuesInfo.Status);           
+            template.SetTitleValue(tempateValuesInfo.TitleValue);            
+            template.SetTitleCheck(tempateValuesInfo.TitleCheck);            
+            template.SetTitleReportField(tempateValuesInfo.TitleReportField);           
+            template.SetTags(tempateValuesInfo.Tags);           
+            template.SetTitlePositive(tempateValuesInfo.TitlePositive);            
+            template.SetTitleNegative(tempateValuesInfo.TitleNegative);
             await templateValuesRepository.UpdateAsync(entity: template, token);
         }
     }

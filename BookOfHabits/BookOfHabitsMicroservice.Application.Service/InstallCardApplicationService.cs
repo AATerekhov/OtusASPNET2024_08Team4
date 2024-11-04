@@ -24,10 +24,13 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
             if (habit.Card is not null)
                 throw new BadRequestException(FormatBadRequestErrorMessage(installCardModel.HabitId, nameof(Habit)));
 
-            Card card = await cardRepository.GetByIdAsync(x => x.Id.Equals(installCardModel.CardId), cancellationToken: token)
+            Card card = await cardRepository.GetByIdAsync(filter: x => x.Id.Equals(installCardModel.CardId),
+                                                          includes:$"{nameof(Card.TemplateValues)}",
+                                                          cancellationToken: token)
                  ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(installCardModel.HabitId, nameof(Habit)));
             habit.GetCard(card);
-
+            if (habit.Card is not null)
+                await cardRepository.AddAsync(entity: habit.Card, cancellationToken: token);
             await habitRepository.UpdateAsync(habit, token);
         }
     }

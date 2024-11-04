@@ -2,11 +2,6 @@
 using BookOfHabitsMicroservice.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
 {
@@ -23,6 +18,9 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
             builder.Property(x => x.Description)
                     .HasMaxLength(250);
             builder.Property(x => x.Options).IsRequired();
+            builder.HasOne(x => x.Card)
+                    .WithMany()
+                    .IsRequired(false);
             builder.HasOne(x => x.Room)
                     .WithMany("_habits");
             builder.HasOne(x => x.Owner)

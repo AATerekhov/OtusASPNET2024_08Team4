@@ -14,7 +14,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
     public class HabitsApplicationService(IRepository<Habit, Guid> habitRepository,
                                           IRepository<Person, Guid> personRepository,
-                                          IRepository<Room, Guid> roomRepository,
+                                          IRoomRepository roomRepository,
                                           IRepository<Delay, Guid> delayRepository,
                                           IRepository<Repetition, Guid> repetitionRepository,
                                           IRepository<TimeResetInterval, Guid> timeResetIntervalRepository,
@@ -37,26 +37,35 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                                   repetition: DefaultValues.GetDefaultRepetition(),
                                   timeResetInterval: DefaultValues.GetDefaultTimeResetInterval());
 
-            habit = await habitRepository.AddAsync(habit, token)
+            await roomRepository.UpdateAsync(entity: room, cancellationToken: token);
+            await personRepository.UpdateAsync(entity: owner, cancellationToken: token);
+            habit = await habitRepository.AddAsync(entity: habit, cancellationToken: token)
                 ?? throw new BadRequestException(FormatBadRequestErrorMessage(habit.Id, nameof(Habit)));
-            await roomRepository.UpdateAsync(room, token);
             return mapper.Map<HabitModel>(habit);
         }
 
         public async Task DeleteHabit(Guid id, CancellationToken token = default)
         {
-            var card = await habitRepository.GetByIdAsync(x => x.Id.Equals(id))
+            var habit = await habitRepository.GetByIdAsync(filter: x => x.Id.Equals(id),
+                                                           includes: $"{nameof(Habit.Delay)},{nameof(Habit.Repetition)},{nameof(Habit.TimeResetInterval)}",
+                                                           cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Habit)));
-            if (await habitRepository.DeleteAsync(card) is false)
+            var delay = habit.Delay;
+            var repetition = habit.Repetition;
+            var timeResetInterval = habit.TimeResetInterval;
+            if (await habitRepository.DeleteAsync(habit, token) is false)
                 throw new BadRequestException(FormatBadRequestErrorMessage(id, nameof(Habit)));
+            await delayRepository.DeleteAsync(delay, token);
+            await repetitionRepository.DeleteAsync(repetition, token);
+            await timeResetIntervalRepository.DeleteAsync(timeResetInterval, token);
         }
 
         public async Task<IEnumerable<HabitModel>> GetAllRoomHabitsAsync(Guid roomId, CancellationToken token = default)
         {
             Room? room = await roomRepository.GetByIdAsync(filter: x => x.Id.Equals(roomId),
-                                                          includes: $"_habits", 
-                                                          asNoTracking: true,
-                                                          cancellationToken: token)
+                                                           includes: $"_habits",
+                                                           asNoTracking: true,
+                                                           cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(roomId, nameof(Room)));
 
             return room.SuggestedHabits.Select(mapper.Map<HabitModel>);
@@ -65,9 +74,9 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
         public async Task<HabitModel?> GetHabitByIdAsync(Guid id, CancellationToken token = default)
         {
             Habit habit = await habitRepository.GetByIdAsync(x => x.Id.Equals(id),
-                                                                includes: $"{nameof(Habit.Card)},{nameof(Habit.Owner)},{nameof(Habit.Delay)},{nameof(Habit.Repetition)},{nameof(Habit.TimeResetInterval)}",
-                                                                asNoTracking: true,
-                                                                cancellationToken: token)
+                                                             includes: $"{nameof(Habit.Card)},{nameof(Habit.Owner)},{nameof(Habit.Delay)},{nameof(Habit.Repetition)},{nameof(Habit.TimeResetInterval)}",
+                                                             asNoTracking: true,
+                                                             cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Habit)));
             return mapper.Map<HabitModel>(habit);
         }
@@ -85,7 +94,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
             if (habitInfo.Name is not null)
                 habit.SetName(habitInfo.Name);
             if (habitInfo.Description is not null)
-                habit.SetDescription(habitInfo.Description); 
+                habit.SetDescription(habitInfo.Description);
             habit.SetOptions(habitInfo.Options);
             await habitRepository.UpdateAsync(entity: habit, token);
         }
