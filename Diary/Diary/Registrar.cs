@@ -1,5 +1,10 @@
 ﻿using Diary.Settings;
 using Diary.DataAccess;
+using System.ComponentModel.Design;
+using Diary.DataAccess.Abstractions;
+using Diary.DataAccess.Repositories;
+using Diary.BusinessLogic.Services;
+using Diary.BusinessLogic.Services.Implementation;
 
 namespace Diary
 {
@@ -10,10 +15,26 @@ namespace Diary
             var applicationSettings = configuration.Get<ApplicationSettings>();
             services.AddSingleton(applicationSettings)
                     .AddSingleton((IConfigurationRoot)configuration)
-                    //.InstallServices()
-                    .ConfigureContext(applicationSettings.ConnectionString);
-                    //.InstallRepositories();
+                    .InstallServices()
+                    .InstallRepositories();
             return services;
+        }
+
+        private static IServiceCollection InstallServices(this IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                 .AddTransient<IJournalService, JournalService>()
+                 .AddTransient<IJournalOwnerService, JournalOwnerService>();
+            return serviceCollection;
+        }
+
+        private static IServiceCollection InstallRepositories(this IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddTransient<IJournalOwnerRepository, JournalOwnerRepository>()
+                .AddTransient<IJournaRepository, JournalRepository>();
+          
+            return serviceCollection;
         }
     }
 }

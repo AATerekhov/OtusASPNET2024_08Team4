@@ -8,20 +8,20 @@ using Diary.Core.Domain.BaseTypes;
 
 namespace Diary.Core.Domain.UserJournals
 {
-    public class UserJournal : BaseEntity
+    public class Journal : BaseEntity
     {
         public Guid RoomId { get; set; }
 
         public string Description { get; set; }
 
-        public Guid UserId { get; set; }
+        public Guid JournalOwnerId { get; set; }
 
-        public List<UserJournalLine> UserJournalLines { get; set; }
-        public required User User { get; set; }
+        public List<JournalLine> JournalLines { get; set; }
+        public required JournalOwner JournalOwner { get; set; }
 
-        public UserJournal()
+        public Journal()
         {
-            UserJournalLines = new List<UserJournalLine>();
+            JournalLines = new List<JournalLine>();
         }
     }
 }

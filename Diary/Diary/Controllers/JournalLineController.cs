@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Diary.Controllers
 {
     /// <summary>
-    /// Diary
+    /// UserJournalLine
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class DiaryController
+    public class JournalLineController
     {
-             
-       
+      
     }
 }

@@ -7,14 +7,14 @@ using Diary.Core.Domain.BaseTypes;
 
 namespace Diary.Core.Domain.UserJournals
 {
-    public class UserJournalLine : BaseEntity
+    public class JournalLine : BaseEntity
     {
-        public Guid UserJournalId { get; set; }
+        public Guid JournalId { get; set; }
         public Guid RelatedEntityId { get; set; }
         public required string EventDescription { get; set; }
         public DateTime CreatedDate { get; set; }
         public EventType EventType { get; set; }
         public RelatedEntityType RelatedEntityType { get; set; }
-        public required UserJournal UserJournal { get; set; }
+        public required Journal Journal { get; set; }
     }
 }

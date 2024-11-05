@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Diary.Core.Abstractions;
 using Diary.Core.Domain.BaseTypes;
+using System.Linq.Expressions;
 
 namespace Diary.DataAccess.Abstractions
 {
@@ -14,6 +15,7 @@ namespace Diary.DataAccess.Abstractions
         protected readonly DbContext Context;
         private readonly DbSet<T>    _entitySet;
 
+        private static readonly char[] IncludeSeparator = [','];
         protected BaseRepository(DbContext context)
         {
             Context    = context;
@@ -25,6 +27,7 @@ namespace Diary.DataAccess.Abstractions
         /// </summary>
         /// <param name="id">Id сущности.</param>
         /// <param name="cancellationToken">токен отмены</param>
+        /// <param name="filter">фильтер</param>
         /// <returns> Cущность. </returns>
         public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
@@ -47,10 +50,31 @@ namespace Diary.DataAccess.Abstractions
         /// </summary>
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <param name="asNoTracking"> Вызвать с AsNoTracking. </param>
+        /// <param name="filter">фильтер</param>
         /// <returns> Список сущностей. </returns>
-        public async Task<List<T>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false)
+        public async Task<List<T>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false, Expression<Func<T, bool>> filter = null, string includes = null)
         {
-            return await GetAll().ToListAsync(cancellationToken);
+            IQueryable<T> query = _entitySet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includes != null && includes.Any())
+            {
+                foreach (var includeEntity in includes.Split(IncludeSeparator, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeEntity);
+                }
+            }
+
+            if (asNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query.ToListAsync();
         }
 
         /// <summary>
@@ -94,14 +118,14 @@ namespace Diary.DataAccess.Abstractions
         /// </summary>
         /// <param name="id"> Id удалённой сущности. </param>
         /// <returns> Была ли сущность удалена. </returns>
-        public virtual bool Delete(Guid id)
+        public virtual bool Delete(T entity)
         {
-            var obj = _entitySet.Find(id);
-            if (obj == null)
+            if (entity == null)
             {
                 return false;
             }
-            _entitySet.Entry(obj).State = EntityState.Deleted;
+
+            Context.Entry(entity).State = EntityState.Deleted;
 
             return true;
         }
