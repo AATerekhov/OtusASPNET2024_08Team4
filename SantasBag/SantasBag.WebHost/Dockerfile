@@ -8,17 +8,17 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["SantasBag/SantasBag.csproj", "SantasBag/"]
-RUN dotnet restore "./SantasBag/SantasBag.csproj"
+COPY ["SantasBag.WebHost/SantasBag.WebHost.csproj", "SantasBag.WebHost/"]
+RUN dotnet restore "./SantasBag.WebHost/SantasBag.WebHost.csproj"
 COPY . .
-WORKDIR "/src/SantasBag"
-RUN dotnet build "./SantasBag.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/SantasBag.WebHost"
+RUN dotnet build "./SantasBag.WebHost.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./SantasBag.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./SantasBag.WebHost.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SantasBag.dll"]
+ENTRYPOINT ["dotnet", "SantasBag.WebHost.dll"]
