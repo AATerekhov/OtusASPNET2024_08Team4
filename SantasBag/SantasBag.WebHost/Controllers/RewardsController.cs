@@ -16,6 +16,10 @@ public class RewardsController : ControllerBase
         _rewardsService = rewardsService;
     }
 
+    /// <summary>
+    /// Поучение списка всех наград
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<List<RewardResponse>>> GetRewardsAsync()
     {
@@ -24,6 +28,11 @@ public class RewardsController : ControllerBase
         return Ok(response);
     }
 
+    /// <summary>
+    /// Получение конкретной награды, по Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<RewardResponse>> GetRewardByIdAsync(Guid id)
     {
@@ -33,8 +42,13 @@ public class RewardsController : ControllerBase
         return Ok(reward);
     }
 
+    /// <summary>
+    /// Создание новой награды
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<List<RewardResponse>>> CreateRewardASync([FromBody] RewardTemplate request)
+    public async Task<ActionResult<List<RewardResponse>>> CreateRewardAsync([FromBody] RewardTemplate request)
     {
         var newReward= Reward.Create(
             request.Name,
@@ -47,6 +61,12 @@ public class RewardsController : ControllerBase
         return Ok(rewardId);
     }
 
+    /// <summary>
+    /// Обновление конкретной награды
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<Guid>> UpdatRewardAsync(Guid id, [FromBody] RewardTemplate request)
     {
@@ -54,6 +74,12 @@ public class RewardsController : ControllerBase
         return Ok(rewardId);
     }
 
+
+    /// <summary>
+    /// Удаление конкретной награды
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult<Guid>> DeleteRewardAsync(Guid id)
     {
