@@ -1,9 +1,12 @@
-﻿namespace RoomsDesigner.Core.Domain.Entities.Administration
+﻿using System.Collections.Generic;
+
+namespace RoomsDesigner.Core.Domain.Entities.Administration
 {
-	public class Role : IEntity<Guid>
+	public class Role : IEntity<int>
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
+		public ICollection<User> Users { get; set; }
 	}
 }
