@@ -51,8 +51,9 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                                                          asNoTracking: true,
                                                          cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Room)));
-
-            return mapper.Map<RoomModel>(room);
+            
+            var result = mapper.Map<RoomModel>(room);
+            return result;
         }
 
         public async Task UpdateRoom(UpdateRoomModel roomInfo, CancellationToken token = default)

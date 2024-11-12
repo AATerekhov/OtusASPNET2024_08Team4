@@ -10,7 +10,7 @@ namespace BookOfHabits.Responses.Habit
         public required string Name { get; init; }
         public required string Description { get; init; }
         public CardShortResponse? Card { get; init; }
-        public required PersonShortResponse Owner { get; init; }
+        public Guid OwnerId { get; init; }
         public bool IsUsed { get; init; }
         public HabitOptions Options { get; init; }
         public required DelayResponse Delay { get; init; }

@@ -7,6 +7,7 @@ namespace BookOfHabits.Responses.Coins
         public Guid Id { get; init; }
         public required string Name { get; init; }
         public required string Description { get; init; }
+        public Guid RoomId { get; init; }
         public CoinsOptions Options { get; init; }
         public int CostOfWinning { get; init; }
         public int Forfeit { get; init; }

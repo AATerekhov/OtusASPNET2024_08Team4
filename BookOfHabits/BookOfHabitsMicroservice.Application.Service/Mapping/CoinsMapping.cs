@@ -8,7 +8,8 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
     {
         public CoinsMapping()
         {
-            CreateMap<Coins, CoinsModel>();                
+            CreateMap<Coins, CoinsModel>()
+                .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.Room.Id));                
         }
     }
 }

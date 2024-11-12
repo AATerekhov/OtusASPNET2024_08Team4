@@ -7,7 +7,7 @@ namespace BookOfHabits.Responses.Coins
     public class CoinsDetailedResponse
     {
         public Guid Id { get; init; }
-        public required RoomShortResponse Room { get; init; }
+        public Guid RoomId { get; init; }
         public required HabitShortResponse Habit { get; init; }
         public required string Description { get; init; }
         public CoinsOptions Options { get; init; }

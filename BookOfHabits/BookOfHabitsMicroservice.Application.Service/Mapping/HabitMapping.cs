@@ -10,7 +10,8 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
         public HabitMapping()
         {
             CreateMap<Habit, HabitModel>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name.Name));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name.Name))
+                .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.Owner.Id));
 
             CreateMap<Repetition, RepetitionModel>();
             CreateMap<Delay, DelayModel>();
