@@ -26,7 +26,8 @@ namespace RoomsDesigner.DataAccess.Abstrations
 		public virtual async Task<List<T>> GetAllAsync(
 			Expression<Func<T, bool>> filter = null,
 			string includes = null,
-			bool asNoTracking = false)
+			bool asNoTracking = false,
+			CancellationToken cancellationToken = default)
 		{
 			IQueryable<T> query = _entitySet;
 
@@ -48,13 +49,14 @@ namespace RoomsDesigner.DataAccess.Abstrations
 				query = query.AsNoTracking();
 			}
 
-			return await query.ToListAsync();
+			return await query.ToListAsync(cancellationToken);
 		}
 
 		public virtual async Task<T> GetByIdAsync(
 			Expression<Func<T, bool>> filter,
 			string includes = null,
-			bool asNoTracking = false)
+			bool asNoTracking = false,
+			CancellationToken cancellationToken = default)
 		{
 			IQueryable<T> query = _entitySet;
 
@@ -76,11 +78,11 @@ namespace RoomsDesigner.DataAccess.Abstrations
 				query = query.AsNoTracking();
 			}
 
-			return await query.SingleOrDefaultAsync();
+			return await query.SingleOrDefaultAsync(cancellationToken);
 		}
 
-		public virtual async Task<T> AddAsync(T entity)
-			=> (await _entitySet.AddAsync(entity)).Entity;
+		public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
+			=> (await _entitySet.AddAsync(entity, cancellationToken)).Entity;
 
 		public virtual void Update(T entity)
 			=> Context.Entry(entity).State = EntityState.Modified;
