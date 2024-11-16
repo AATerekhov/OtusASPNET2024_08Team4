@@ -1,6 +1,6 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Base;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
-using System.Diagnostics;
+using System.Linq;
 
 namespace BookOfHabitsMicroservice.Domain.Entity
 {
@@ -10,7 +10,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         private readonly ICollection<Room> _rooms = [];
         public IReadOnlyCollection<Habit> SuggestedHabits => [.. _habits];
         public IReadOnlyCollection<Room> RoomManager => [.. _rooms];
-        public PersonName Name { get; }
+        public PersonName Name { get; private set; }
         public Person(Guid id, PersonName name) : base(id)
         {
             Name = name;
@@ -20,9 +20,20 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         {
                 
         }
-        protected Person(Guid id):base(id)
+        protected Person():base(Guid.NewGuid())
         {
-                
+
         }
+        internal void AdministerRoom(Room room)
+        {
+            if (!_rooms.Contains(room))
+                _rooms.Add(room);
+        }
+        internal void GetHabit(Habit habit)
+        {
+            if (!_habits.Contains(habit))
+                _habits.Add(habit);
+        }
+        public void SetName(string name) => Name = new PersonName(name);
     }
 }

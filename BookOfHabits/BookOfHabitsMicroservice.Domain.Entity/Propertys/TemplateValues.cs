@@ -4,38 +4,55 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class TemplateValues : Property
     {
-        public Template Template { get; protected set; }
-        public string Status { get; } //List
-        public string TitleValue { get; }
-        public string TitleCheck { get; }
-        public string TitleReportField { get; }
-        public string Tags { get; } //List
-        public string TitlePositive { get; }
-        public string TitleNegative { get; }
+        //public Card Card { get; }
+        public string StatusString { get; private set; } //List
+        public string[] Status => StatusString.Split(';', StringSplitOptions.RemoveEmptyEntries);
+        public string TitleValue { get; private set; }
+        public string TitleCheck { get; private set; }
+        public string TitleReportField { get; private set; }
+        public string TagsString { get; private set; } //List
+        public string[] Tags => TagsString.Split(';', StringSplitOptions.RemoveEmptyEntries);
+        public string TitlePositive { get; private set; }
+        public string TitleNegative { get; private set; }
 
-        public TemplateValues(Guid id,Template template, string status, string titleValue, string titleCheck, string titleReportField, string tags, string titlePositive, string titleNegative)
+        public TemplateValues(Guid id , string status, string titleValue, string titleCheck, string titleReportField, string tags, string titlePositive, string titleNegative)
             :base(id, "TemplateValues")
         {
-            Template = template;
-            Status = status;
+            StatusString = status;
             TitleValue = titleValue;
             TitleCheck = titleCheck;
             TitleReportField = titleReportField;
-            Tags = tags;
+            TagsString = tags;
             TitlePositive = titlePositive;
             TitleNegative = titleNegative;
         }
-        public TemplateValues(Template template, string status, string titleValue, string titleCheck, string titleReportField, string tags, string titlePositive, string titleNegative)
-            :this(Guid.NewGuid(), template, status, titleValue,titleCheck,titleReportField,tags,titlePositive, titleNegative)
+        public TemplateValues(string status, string titleValue, string titleCheck, string titleReportField, string tags, string titlePositive, string titleNegative)
+            :this(Guid.NewGuid(), status, titleValue,titleCheck,titleReportField,tags,titlePositive, titleNegative)
         {
                 
         }
 
-        protected TemplateValues(Template template)
+        protected TemplateValues()
             : base(Guid.NewGuid(), "TemplateValues")
         {
-            Template = template;
+
         }
-        public void UseInTheTemplate(Template template) => Template = template;
+        public void SetStatus(string[] status) => StatusString = string.Join(";", status);
+        public void SetTags(string[] tags) => TagsString = string.Join(";", tags);
+        public void SetTitleValue(string titleValue) => TitleValue = titleValue;
+        public void SetTitleCheck(string titleCheck) => TitleCheck = titleCheck;
+        public void SetTitleReportField(string titleReportField) => TitleReportField = titleReportField;
+        public void SetTitlePositive(string titlePositive) => TitlePositive = titlePositive;
+        public void SetTitleNegative(string titleNegative) => TitleNegative = titleNegative;
+        internal TemplateValues DeepCopy() 
+        {
+            return new TemplateValues(status: this.StatusString,
+                                      titleValue: this.TitleValue,
+                                      titleCheck: this.TitleCheck,
+                                      titleReportField: this.TitleReportField,
+                                      tags: this.TagsString,
+                                      titlePositive: this.TitlePositive,
+                                      titleNegative: this.TitleNegative);
+        }
     }
 }

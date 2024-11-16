@@ -4,29 +4,33 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class Delay: Property
     {
-        public Habit Habit { get; }
-        public bool IsAfterATime { get; }
-        public long AfterTime { get; }
-        public DateTime Start { get; }
-        public DateTime Finish { get; }
-        public bool IsEndless { get; }
-        public Delay(Guid id, Habit habit, bool isAfterATime, long afterTime, DateTime start, DateTime finish, bool isEndless) 
+        readonly int _ticksSec = 10_000_000;
+        readonly int _day = 86_400;
+        //public Habit Habit { get; }
+        public bool IsAfterATime { get; private set; }
+        public int AfterTime { get; private set; }
+        public bool IsEndless { get; private set; }
+        public int DurationTime { get; private set; }
+        public Delay(Guid id, bool isAfterATime, int afterTime, bool isEndless, int durationTime) 
             : base(id, "Delay")
         {
-            Habit = habit;
             IsAfterATime = isAfterATime;
             AfterTime = afterTime;
-            Start = start;
-            Finish = finish;
             IsEndless = isEndless;
+            DurationTime = durationTime;
         }
-        public Delay(Habit habit, bool isAfterATime, long afterTime, DateTime start, DateTime finish, bool isEndless)
-            :this(Guid.NewGuid(), habit, isAfterATime, afterTime, start, finish, isEndless)
-        {                
+        public Delay( bool isAfterATime, int afterTime, bool isEndless, int durationTime)
+            :this(Guid.NewGuid(), isAfterATime, afterTime, isEndless, durationTime)
+        {   
+            
         }
-        protected Delay(Habit habit) : base(Guid.NewGuid(), "Delay")
+        protected Delay() : base(Guid.NewGuid(), "Delay")
         {
-            Habit = habit;
+
         }
+        public void SetIsAfterATime(bool isAfterATime) =>IsAfterATime = isAfterATime;
+        public void SetAfterTime(int afterTime) => AfterTime = afterTime;
+        public void SetIsEndless(bool isEndless) => IsEndless = isEndless;
+        public void SetDurationTime(int durationTime) => DurationTime = durationTime;
     }
 }

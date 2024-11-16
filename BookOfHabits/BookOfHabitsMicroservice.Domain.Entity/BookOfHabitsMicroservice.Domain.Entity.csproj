@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BookOfHabitsMicroservice.Domain.ValueObjects\BookOfHabitsMicroservice.Domain.ValueObjects.csproj" />
   </ItemGroup>
 

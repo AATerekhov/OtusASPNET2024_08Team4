@@ -4,29 +4,32 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class Repetition: Property
     {
-        public Habit Habit { get; }
-        public int MaxCountPositive { get; }
-        public int MaxCountNegative { get; }
-        public bool IsLimit { get; }
-        public int CountLimit { get; }
+        //public Habit Habit { get; }
+        public int MaxCountPositive { get; private set; }
+        public int MaxCountNegative { get; private set; }
+        public bool IsLimit { get; private set; }
+        public int CountLimit { get; private set; }
 
-        public Repetition(Guid id,Habit habit, int maxCountPositive, int maxCountNegative, bool isLimit, int countLimit)
+        public Repetition(Guid id, int maxCountPositive, int maxCountNegative, bool isLimit, int countLimit)
             :base(id, "Repetition")
         {
-            Habit = habit;
+            SetProperty(maxCountPositive, maxCountNegative, isLimit, countLimit);
+        }
+
+        public Repetition(int maxCountPositive, int maxCountNegative, bool isLimit, int countLimit)
+            :this(Guid.NewGuid(), maxCountPositive, maxCountNegative, isLimit, countLimit)
+        {                
+        }
+        protected Repetition() : base(Guid.NewGuid(), "Repetition")
+        {
+            
+        }
+        public void SetProperty(int maxCountPositive, int maxCountNegative, bool isLimit, int countLimit) 
+        {
             MaxCountPositive = maxCountPositive;
             MaxCountNegative = maxCountNegative;
             IsLimit = isLimit;
             CountLimit = countLimit;
-        }
-
-        public Repetition(Habit habit, int maxCountPositive, int maxCountNegative, bool isLimit, int countLimit)
-            :this(Guid.NewGuid(), habit, maxCountPositive, maxCountNegative, isLimit, countLimit)
-        {                
-        }
-        protected Repetition(Habit habit) : base(Guid.NewGuid(), "Repetition")
-        {
-            Habit = habit;   
         }
     }
 }
