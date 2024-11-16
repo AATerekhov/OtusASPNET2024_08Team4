@@ -16,6 +16,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Enums
         Thursday = 8,
         Friday = 16,
         Saturday = 32,
-        Sunday = 64        
+        Sunday = 64,
+        All = 127
     }
 }

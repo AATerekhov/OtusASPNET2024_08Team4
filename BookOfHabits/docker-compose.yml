@@ -1,0 +1,29 @@
+services:
+  bookofhabits:
+    image: ${DOCKER_REGISTRY-}bookofhabits
+    build:
+      context: .
+      dockerfile: BookOfHabits/Dockerfile
+    environment:
+      "ASPNETCORE_URLS": "http://+:5100"
+      "ConnectionString": "Host=habit_db;Port=5432;Database=Habit;UserId=postgres;Password=admin24"
+    container_name: habitsbook-service
+    depends_on:
+      - habit_db
+    ports:
+      - "5101:5100"
+
+  habit_db:
+    image: postgres
+    container_name: habit_db
+    restart: always
+    environment:    
+      POSTGRES_DB: Habit
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin24
+    volumes:
+      - 'habitsbook_data:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+volumes:
+  habitsbook_data:

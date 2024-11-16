@@ -10,8 +10,7 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework
         public DbSet<Person> Persons { get; set; }
         public DbSet<Coins> Вags { get; set; }
         public DbSet<Habit> Habits { get; set; }
-        public DbSet<HabitCard> HabitCards { get; set; }
-        public DbSet<Template> Templates { get; set; }
+        public DbSet<Card> Cards { get; set; }
         public DbSet<Delay> DelayProperties { get; set; }
         public DbSet<Repetition> RepetitionProperties { get; set; }
         public DbSet<TimeResetInterval> TimeResetIntervalProperties { get; set; }
