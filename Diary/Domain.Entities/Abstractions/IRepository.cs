@@ -12,7 +12,7 @@ namespace Diary.Core.Abstractions
 
     {
         Task<List<T>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking, Expression<Func<T, bool>> filter = null, string includes = null);
-        Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken, string includes = null);
         Task<T> AddAsync(T entity, CancellationToken cancellationToken);
 
         bool Delete(T entity);

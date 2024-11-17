@@ -23,17 +23,19 @@ namespace Diary
         private static IServiceCollection InstallServices(this IServiceCollection serviceCollection)
         {
             serviceCollection
-                 .AddTransient<IJournalService, JournalService>()
-                 .AddTransient<IJournalOwnerService, JournalOwnerService>();
+                 .AddScoped<IHabitDiaryService, HabitDiaryService>()
+                 .AddScoped<IHabitDiaryOwnerService, HabitDiaryOwnerService>()
+                 .AddScoped<IHabitDiaryLineService, HabitDiaryLineService>(); 
             return serviceCollection;
         }
 
         private static IServiceCollection InstallRepositories(this IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddTransient<IJournalOwnerRepository, JournalOwnerRepository>()
-                .AddTransient<IJournaRepository, JournalRepository>();
-          
+                .AddScoped<IHabitDiaryOwnerRepository, HabitDiaryOwnerRepository>()
+                .AddScoped<IHabitDiaryRepository, HabitDiaryRepository>()
+                .AddScoped<IHabitDiaryLineRepository, HabitDiaryLineRepository>();
+
             return serviceCollection;
         }
     }

@@ -78,8 +78,9 @@ namespace Diary
         {
             var configuration = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<JournalOwnerMappingsProfile>();
-                cfg.AddProfile<JournalMappingsProfile>();
+                cfg.AddProfile<HabitDiaryOwnerMappingsProfile>();
+                cfg.AddProfile<HabitDiaryMappingsProfile>();
+                cfg.AddProfile<HabitDiaryLineMappingsProfile>();
             });
 
             configuration.AssertConfigurationIsValid();

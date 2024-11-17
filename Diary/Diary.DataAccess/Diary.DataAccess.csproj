@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Domain.Entities\Diary.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Diary.Core.Abstractions;
 using Diary.Core.Domain.BaseTypes;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Diary.DataAccess.Abstractions
 {
@@ -29,9 +30,19 @@ namespace Diary.DataAccess.Abstractions
         /// <param name="cancellationToken">токен отмены</param>
         /// <param name="filter">фильтер</param>
         /// <returns> Cущность. </returns>
-        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken, string includes = null)
         {
-            return await _entitySet.FindAsync(id);
+            IQueryable<T> query = _entitySet;
+
+            if (includes != null && includes.Any())
+            {
+                foreach (var includeEntity in includes.Split(IncludeSeparator, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeEntity);
+                }
+            }
+
+            return await query.AsNoTracking().FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -39,9 +50,21 @@ namespace Diary.DataAccess.Abstractions
         /// </summary>
         /// <param name="asNoTracking"> Вызвать с AsNoTracking. </param>
         /// <returns> IQueryable массив сущностей. </returns>
-        public virtual IQueryable<T> GetAll(bool asNoTracking = false)
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> filter = null, bool asNoTracking = false)
         {
-            return asNoTracking ? _entitySet.AsNoTracking() : _entitySet;
+            IQueryable<T> query = _entitySet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (asNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return query;
         }
 
 
@@ -50,7 +73,7 @@ namespace Diary.DataAccess.Abstractions
         /// </summary>
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <param name="asNoTracking"> Вызвать с AsNoTracking. </param>
-        /// <param name="filter">фильтер</param>
+        /// <param name="filter">фильтр</param>
         /// <returns> Список сущностей. </returns>
         public async Task<List<T>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false, Expression<Func<T, bool>> filter = null, string includes = null)
         {

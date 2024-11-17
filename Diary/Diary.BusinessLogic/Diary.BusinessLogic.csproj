@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\UserJournalLine\" />
+    <Compile Remove="Models\UserJournalLine\**" />
+    <EmbeddedResource Remove="Models\UserJournalLine\**" />
+    <None Remove="Models\UserJournalLine\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,17 +10,7 @@ using Microsoft.Extensions.Hosting;
 namespace Diary.DataAccess
 {
     public static  class EntityFrameworkInstaller
-    {
-        public static IServiceCollection ConfigureContext(this IServiceCollection services,
-        string connectionString)
-        {
-            services.AddDbContext<EfDbContext>(optionsBuilder
-                => optionsBuilder
-                    .UseSqlite(connectionString));
-
-            return services;
-        }
-
+    {      
         public static async Task MigrationDataBaseAsync(this IHost webHost)
         {
             using var scope = webHost.Services.CreateScope();
