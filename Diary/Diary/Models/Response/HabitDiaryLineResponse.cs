@@ -15,5 +15,7 @@ namespace Diary.Models.Response
         public required string EventDescription { get; set; }
         [Required]
         public Status Status { get; set; }
+        [Required]
+        public DateTime ModifiedDate { get; set; }
     }
 }

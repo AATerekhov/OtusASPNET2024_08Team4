@@ -76,7 +76,6 @@ namespace Diary.BusinessLogic.Services.Implementation
                    ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(HabitDiaryOwner)));
 
             diaryOwner.Name = createOrEditDiaryOwnerDto.Name;
-            diaryOwner.Email = createOrEditDiaryOwnerDto.Email;
 
             _diaryOwnerRepository.Update(diaryOwner);
             await _diaryOwnerRepository.SaveChangesAsync(cancellationToken);

@@ -10,8 +10,6 @@ namespace Diary.DataAccess.Models
     public class HabitDiaryOwnerFilterModel
     {
         public required string Name { get; init; }
-        public required string Email { get; init; }
-
         public int ItemsPerPage { get; init; }
         public int Page { get; init; }
     }

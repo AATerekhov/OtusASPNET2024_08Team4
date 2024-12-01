@@ -13,5 +13,7 @@ namespace Diary.Models.Request
         public required string EventDescription { get; set; }
         [Required]
         public Status Status { get; set; }
+        [Required]
+        public required string ModifiedDate { get; set; }
     }
 }

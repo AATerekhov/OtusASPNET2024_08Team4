@@ -32,7 +32,6 @@ namespace Diary.DataAccess
 
                 entity.Property(dO => dO.Id).HasColumnName("DiaryOwnerId");
                 entity.Property(dO => dO.Name).HasMaxLength(32);
-                entity.Property(dO => dO.Email).HasMaxLength(32);
             });
        
 

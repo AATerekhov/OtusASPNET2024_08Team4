@@ -20,12 +20,7 @@ namespace Diary.DataAccess.Repositories
             { 
                 query = query.Where(dO => dO.Name == filterModel.Name);
             }
-
-            if (!string.IsNullOrWhiteSpace(filterModel.Email))
-            {
-                query = query.Where(dO => dO.Email == filterModel.Email);
-            }        
-
+        
             query = query
                 .Skip((filterModel.Page - 1) * filterModel.ItemsPerPage)
                 .Take(filterModel.ItemsPerPage);
