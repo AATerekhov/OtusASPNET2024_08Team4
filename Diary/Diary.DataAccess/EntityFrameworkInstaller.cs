@@ -5,19 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace Diary.DataAccess
 {
     public static  class EntityFrameworkInstaller
-    {
-        public static IServiceCollection ConfigureContext(this IServiceCollection services,
-        string connectionString)
+    {      
+        public static async Task MigrationDataBaseAsync(this IHost webHost)
         {
-            services.AddDbContext<EfDbContext>(optionsBuilder
-                => optionsBuilder
-                    .UseSqlite(connectionString));
+            using var scope = webHost.Services.CreateScope();
+            var services = scope.ServiceProvider;
 
-            return services;
+            await using var db = services.GetRequiredService<EfDbContext>();
+            try
+            {
+                await db.Database.MigrateAsync();
+            }
+            catch (Exception ex)
+            {
+                //TODO: Add logging
+                throw;
+            }
         }
     }
 }

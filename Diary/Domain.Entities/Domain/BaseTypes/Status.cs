@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Diary.Core.Domain.BaseTypes
 {
-    public enum RelatedEntityType
+    public enum Status
     {
-        Habit,
-        Reward,
-        Fine
+        Closed,
+        Active,
     }
 }

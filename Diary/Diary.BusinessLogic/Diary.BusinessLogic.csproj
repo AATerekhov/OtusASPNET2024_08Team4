@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Remove="Models\UserJournalLine\**" />
+    <EmbeddedResource Remove="Models\UserJournalLine\**" />
+    <None Remove="Models\UserJournalLine\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Diary.DataAccess\Diary.DataAccess.csproj" />
+    <ProjectReference Include="..\Domain.Entities\Diary.Core.csproj" />
   </ItemGroup>
 
 </Project>
