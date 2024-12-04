@@ -1,8 +1,9 @@
 ﻿using BroadcasterMicroservice.Domain.Entity;
+using BroadcasterMicroservice.Domain.Entity.MongoModel;
 
 namespace BroadcasterMicroservice.Domain.Repository.Abstractions
 {
-    public interface IHabitNotificationRepository : IRepository<HabitNotification, Guid>
+    public interface IHabitNotificationRepository : IMongoRepository<HabitNotifucationMongo, HabitNotification, Guid>
     {
     }
 }

@@ -1,5 +1,6 @@
-﻿using Broadcaster.Infrastructure.Settings;
+﻿
 using BroadcasterMicroservice.Infrastructure.MongoDbContext.Abstraction;
+using BroadcasterMicroservice.Infrastructure.MongoDbContext.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 

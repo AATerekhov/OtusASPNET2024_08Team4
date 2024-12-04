@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BroadcasterService.Domain.Entity\BroadcasterMicroservice.Domain.Entity.csproj" />
-    <ProjectReference Include="..\Broadcaster\Broadcaster.csproj" />
   </ItemGroup>
 
 </Project>

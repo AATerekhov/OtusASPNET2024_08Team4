@@ -6,7 +6,7 @@ using BroadcasterMicroservice.Infrastructure.MongoDbContext.Abstraction;
 
 namespace BroadcasterMicroservice.Infrastructure.Implementations
 {
-    public class AddressGroupRepository(IMongoDBContext context) : BaseRepository<AddressGroupMongo, AddressGroup, Guid>(context), IAddressGroupeRepository
+    public class HabitNotificationRepository (IMongoDBContext context): BaseRepository<HabitNotifucationMongo, HabitNotification, Guid>(context), IHabitNotificationRepository
     {
     }
 }

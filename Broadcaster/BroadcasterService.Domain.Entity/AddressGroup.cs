@@ -13,6 +13,10 @@ namespace BroadcasterMicroservice.Domain.Entity
         {
             GroupName = name;
         }
+        protected AddressGroup() : base(Guid.NewGuid()) 
+        {
+        
+        }
         public void Сlose()=> IsActive = false;
         public void AddNotification(DiaryAddressee addressee)
         {

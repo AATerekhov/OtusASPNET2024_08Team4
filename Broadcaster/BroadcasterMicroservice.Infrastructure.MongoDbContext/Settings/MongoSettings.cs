@@ -1,4 +1,5 @@
-﻿namespace Broadcaster.Infrastructure.Settings
+﻿
+namespace BroadcasterMicroservice.Infrastructure.MongoDbContext.Settings
 {
     public class MongoSettings
     {
