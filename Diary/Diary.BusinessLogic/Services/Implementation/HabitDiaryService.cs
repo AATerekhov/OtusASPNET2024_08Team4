@@ -53,7 +53,7 @@ namespace Diary.BusinessLogic.Services.Implementation
         {
             return await _diaryRepository.GetAllAsync(cancellationToken, true);
         }
-
+     
         public async Task<HabitDiary> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _diaryRepository.GetByIdAsync(id, cancellationToken, nameof(HabitDiary.Lines))
@@ -81,6 +81,11 @@ namespace Diary.BusinessLogic.Services.Implementation
             await _diaryRepository.SaveChangesAsync(cancellationToken);
 
             return habitDiary;
+        }
+
+        async Task<ICollection<HabitDiary>> IHabitDiaryService.GetAllByDiaryOwnerIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return await _diaryRepository.GetAllByDiaryOwnerIdAsync(id, cancellationToken);
         }
     }
 }

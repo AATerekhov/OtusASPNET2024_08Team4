@@ -2,9 +2,12 @@
 using Diary.BusinessLogic.Models.HabitDiaryLine;
 using Diary.BusinessLogic.Models.UserJournal;
 using Diary.BusinessLogic.Services;
+using Diary.Cache;
 using Diary.Models.Request;
 using Diary.Models.Response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Diary.Controllers
 {
@@ -13,17 +16,11 @@ namespace Diary.Controllers
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class HabitDiaryLineController : ControllerBase
+    public class HabitDiaryLineController(IHabitDiaryLineService _service,
+                                          IMapper                _mapper,
+                                          IDistributedCache      _distributedCache) : ControllerBase
     {
-        private readonly IHabitDiaryLineService _service;
-        private readonly IMapper _mapper;
-
-        public HabitDiaryLineController(IHabitDiaryLineService service, IMapper mapper)
-        {
-            _service = service;
-            _mapper = mapper;
-        }
-
+        
         /// <summary>
         /// Получение списка строк дневников
         /// </summary>
@@ -56,8 +53,30 @@ namespace Diary.Controllers
         [HttpGet("GetDiaryLinesByDiaryId/{id}")]
         public async Task<ActionResult<HabitDiaryLineResponse>> GetDiaryLinesByDiaryIdAsync(Guid id)
         {
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.HabitDiaryLineKey("GetDiaryLinesByDiaryIdAsync"), HttpContext.RequestAborted);
+
+            if (serialized is not null)
+            {
+                var cachResult = JsonSerializer.Deserialize<IEnumerable<HabitDiaryLineResponse>>(serialized);
+
+                if (cachResult is not null)
+                {
+                    return Ok(cachResult);
+                }
+
+            }
             var lines = await _service.GetAllByDiaryIdAsync(id, HttpContext.RequestAborted);
             var response = _mapper.Map<List<HabitDiaryLineResponse>>(lines);
+
+            await _distributedCache.SetStringAsync(
+                key: KeyForCache.HabitDiaryKey("GetDiaryLinesByDiaryIdAsync"),
+                value: JsonSerializer.Serialize(response),
+                options: new DistributedCacheEntryOptions
+                {
+                    SlidingExpiration = TimeSpan.FromHours(1)
+                });
+
+         
             return Ok(response);
         }
 
@@ -74,12 +93,12 @@ namespace Diary.Controllers
         }
 
         /// <summary>
-        /// Создание дневника
+        /// Создание строки дневника
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="request">CreateOrEditHabitDiaryLineRequest</param>
         /// <returns></returns>
         [HttpPost("CreateDiaryLine")]
-        public async Task<ActionResult<HabitDiaryLineResponse>> CreateDiaryAsync(CreateOrEditHabitDiaryLineRequest request)
+        public async Task<ActionResult<HabitDiaryLineResponse>> CreateDiaryLineAsync(CreateOrEditHabitDiaryLineRequest request)
         {
             var diaryLine = await _service.CreateAsync(_mapper.Map<CreateOrEditHabitDiaryLineDto>(request), HttpContext.RequestAborted);
 
@@ -87,14 +106,14 @@ namespace Diary.Controllers
         }
 
         /// <summary>
-        /// Изменение дневника по гуиду
+        /// Изменение строки дневника по гуиду
         /// </summary>
         /// <param name="id">Guid</param>
-        /// <param name="request">CreateOrEditDiaryRequest</param>
+        /// <param name="request">CreateOrEditHabitDiaryLineRequest</param>
         /// <returns></returns>
 
         [HttpPut("UpdateDiaryLine/{id}")]
-        public async Task<ActionResult<HabitDiaryLineResponse>> EditJournalAsync(Guid id, CreateOrEditHabitDiaryLineRequest request)
+        public async Task<ActionResult<HabitDiaryLineResponse>> EditDiaryLineAsync(Guid id, CreateOrEditHabitDiaryLineRequest request)
         {
             var diaryLine = await _service.UpdateAsync(id, _mapper.Map<CreateOrEditHabitDiaryLineRequest, CreateOrEditHabitDiaryLineDto>(request), HttpContext.RequestAborted);
 
@@ -106,11 +125,11 @@ namespace Diary.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("DeleteDiary/{id}")]
-        public async Task<IActionResult> DeleteDiary(Guid id)
+        [HttpDelete("DeleteDiaryLine/{id}")]
+        public async Task<IActionResult> DeleteDiaryLine(Guid id)
         {
             await _service.DeleteAsync(id, HttpContext.RequestAborted);
-            return Ok($"Сотрудник с id {id} удален");
+            return Ok($"Строка дневника с id {id} удален");
         }
     }
 }

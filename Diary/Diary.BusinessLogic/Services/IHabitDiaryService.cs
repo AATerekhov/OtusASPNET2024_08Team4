@@ -56,5 +56,14 @@ namespace Diary.BusinessLogic.Services
         /// <param name="cancellationToken"> cancellationToken </param>
         /// <returns> Список дневников</returns>
         Task<ICollection<HabitDiary>> GetPagedAsync(HabitDiaryFilterDto filterDto, CancellationToken cancellationToken);
+
+
+        /// <summary>
+        /// Получить дневники по гуиду владельца
+        /// </summary>
+        /// <param name="id"> Гуид владельца</param>
+        /// <param name="cancellationToken"> cancellationToken </param>
+        /// <returns>список дневников</returns>
+        Task<ICollection<HabitDiary>> GetAllByDiaryOwnerIdAsync(Guid id, CancellationToken cancellationToken);
     }
 }

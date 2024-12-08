@@ -4,8 +4,21 @@ services:
     build:
       context: .
       dockerfile: Diary/Dockerfile
+    depends_on:
+      - redis
+      - db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5000
+      ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
+      ConnectionStrings:Postgres: "Host=postgres;Port=5432;Database=diarydb;Username=postgres;Password=1234;Include Error Detail=true"
+    ports:
+      - 5000:5000
+    networks:
+      - caching-network
+
   db:
-    container_name: container_db_postgresql
+    container_name: diary_container_db_postgresql
     image: postgres:latest
     hostname: postgres
     ports:
@@ -18,5 +31,22 @@ services:
       test: ["CMD-SHELL", "psql -U postgres -d diarydb -c 'SELECT 1' || exit 1"]
     volumes:
       - db_data:/var/lib/postgresql/data 
+    networks:
+      - caching-network
+ 
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - caching-network
 volumes:
   db_data:
+
+networks:
+  caching-network:
+    driver: bridge

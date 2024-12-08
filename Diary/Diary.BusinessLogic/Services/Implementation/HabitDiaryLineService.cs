@@ -62,7 +62,7 @@ namespace Diary.BusinessLogic.Services.Implementation
         public async Task<HabitDiaryLine> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _diaryLineRepository.GetByIdAsync(id, cancellationToken)
-                  ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(HabitDiaryOwner)));
+                  ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(HabitDiaryLine)));
         }
 
         public async Task<ICollection<HabitDiaryLine>> GetPagedAsync(HabitDiaryLineFilterDto filterDto, CancellationToken cancellationToken)
@@ -76,12 +76,13 @@ namespace Diary.BusinessLogic.Services.Implementation
         public async Task<HabitDiaryLine> UpdateAsync(Guid id, CreateOrEditHabitDiaryLineDto createOrEditDiaryLineDto, CancellationToken cancellationToken)
         {
             var diaryLine = await _diaryLineRepository.GetByIdAsync(id, cancellationToken)
-                    ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Core.Domain.Diary.HabitDiary)));
+                    ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(HabitDiaryLine)));
 
             diaryLine.EventDescription = !string.IsNullOrWhiteSpace(createOrEditDiaryLineDto.EventDescription) ? createOrEditDiaryLineDto.EventDescription : diaryLine.EventDescription;
             diaryLine.DiaryId          = createOrEditDiaryLineDto.DiaryId != Guid.Empty ? createOrEditDiaryLineDto.DiaryId : diaryLine.DiaryId;
             diaryLine.HabitId          = createOrEditDiaryLineDto.HabitId != Guid.Empty ? createOrEditDiaryLineDto.HabitId : diaryLine.HabitId;
             diaryLine.Status           = createOrEditDiaryLineDto.Status;
+            diaryLine.Cost             += createOrEditDiaryLineDto.Cost;
 
             _diaryLineRepository.Update(diaryLine);
             await _diaryLineRepository.SaveChangesAsync(cancellationToken);

@@ -12,7 +12,12 @@ using System.Threading.Tasks;
 namespace Diary.DataAccess.Repositories
 {
     public class HabitDiaryRepository(EfDbContext context) : BaseRepository<HabitDiary>(context), IHabitDiaryRepository
-    {
+    {        
+        public Task<List<HabitDiary>> GetAllByDiaryOwnerIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+           return GetAll(x => x.DiaryOwnerId == id).ToListAsync(cancellationToken: cancellationToken);
+        }
+
         public Task<List<HabitDiary>> GetPagedAsync(HabitDiaryFilterModel filterModel, CancellationToken cancellationToken)
         {
             var query = GetAll();

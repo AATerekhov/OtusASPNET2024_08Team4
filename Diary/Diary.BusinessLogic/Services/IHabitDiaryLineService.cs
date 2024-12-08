@@ -16,7 +16,7 @@ namespace Diary.BusinessLogic.Services
         /// </summary>
         /// <param name="id"> Гуид строки </param>
         /// <param name="cancellationToken"> cancellationToken </param>
-        /// <returns>дневник</returns>
+        /// <returns>строка дневника</returns>
         Task<HabitDiaryLine> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Diary.BusinessLogic.Services
         Task<HabitDiaryLine> UpdateAsync(Guid id, CreateOrEditHabitDiaryLineDto createOrEditDiaryLineDto, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Удалить дневник
+        /// Удалить строку дневника
         /// </summary>
         /// <param name="id"> Гуид  </param>
         /// <param name="cancellationToken"> cancellationToken </param>
@@ -61,7 +61,7 @@ namespace Diary.BusinessLogic.Services
         /// </summary>
         /// <param name="filterDto"> дто фильтра </param>
         /// <param name="cancellationToken"> cancellationToken </param>
-        /// <returns> Список дневников</returns>
+        /// <returns> Список строк дневников</returns>
         Task<ICollection<HabitDiaryLine>> GetPagedAsync(HabitDiaryLineFilterDto filterDto, CancellationToken cancellationToken);
     }
 }
