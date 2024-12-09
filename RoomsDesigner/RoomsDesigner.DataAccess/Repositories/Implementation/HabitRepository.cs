@@ -3,7 +3,7 @@ using RoomsDesigner.Core.Domain.Entities;
 using RoomsDesigner.DataAccess.Abstrations;
 using System;
 
-namespace RoomsDesigner.DataAccess.Repositories
+namespace RoomsDesigner.DataAccess.Repositories.Implementation
 {
 	public class HabitRepository : BaseRepostory<Habit, Guid>, IRepository<Habit, Guid>
 	{

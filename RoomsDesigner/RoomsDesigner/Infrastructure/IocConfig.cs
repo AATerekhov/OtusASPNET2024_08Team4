@@ -3,6 +3,7 @@ using RoomsDesigner.Core.Abstractions.Repositories;
 using RoomsDesigner.Core.Domain.Entities;
 using RoomsDesigner.Core.Domain.Entities.Administration;
 using RoomsDesigner.DataAccess.Repositories;
+using RoomsDesigner.DataAccess.Repositories.Implementation;
 using System;
 
 namespace RoomsDesigner.Api.Infrastructure
@@ -16,7 +17,7 @@ namespace RoomsDesigner.Api.Infrastructure
 
 		private static void AddDataAccessLayerRepositories(this IServiceCollection services)
 		{
-			services.AddScoped<IRepository<Role, int>, RoleRepository>();
+			services.AddScoped<IRoleRepository, RoleRepository>();
 			services.AddScoped<IRepository<HabitCategory, int>, HabitCategoryRepository>();
 			services.AddScoped<IRepository<Diary, Guid>, DiaryRepository>();
 			services.AddScoped<IRepository<Habit, Guid>, HabitRepository>();
