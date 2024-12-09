@@ -15,5 +15,7 @@ namespace Diary.Models.Request
         public Status Status { get; set; }
         [Required]
         public required string ModifiedDate { get; set; }
+
+        public decimal Cost { get; set; }
     }
 }

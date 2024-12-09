@@ -17,5 +17,7 @@ namespace Diary.Models.Response
         public Status Status { get; set; }
         [Required]
         public DateTime ModifiedDate { get; set; }
+
+        public decimal Cost { get; set; }
     }
 }

@@ -26,6 +26,11 @@ namespace Diary
                => optionsBuilder
                    .UseNpgsql(Configuration.Get<ApplicationSettings>().ConnectionString));
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("Redis"); 
+            });
+
             InstallAutomapper(services);
             services.AddServices(Configuration);
             services.AddControllers();

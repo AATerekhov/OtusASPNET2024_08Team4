@@ -15,6 +15,8 @@ namespace Diary.Core.Domain.Diary
         public DateTime CreatedDate { get; init; } = DateTime.UtcNow;
         public DateTime ModifiedDate { get; set; } 
         public Status Status { get; set; }
+
+        public decimal Cost { get; set; }
         public required HabitDiary Diary { get; set; }
     }
 }

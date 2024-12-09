@@ -18,5 +18,14 @@ namespace Diary.DataAccess.Abstractions
         /// <param name="filterDto"> модель фильтра. </param>
         /// <returns> Список журналов </returns>
         Task<List<HabitDiary>> GetPagedAsync(HabitDiaryFilterModel filterModel, CancellationToken cancellationToken);
+
+
+        /// <summary>
+        /// Получить дневники по гуиду владельца
+        /// </summary>
+        /// <param name="id"> Гуид владельца</param>
+        /// <param name="cancellationToken"> cancellationToken </param>
+        /// <returns>список дневников</returns>
+        Task<List<HabitDiary>> GetAllByDiaryOwnerIdAsync(Guid id, CancellationToken cancellationToken);
     }
 }

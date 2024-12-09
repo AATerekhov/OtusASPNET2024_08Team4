@@ -15,5 +15,6 @@ namespace Diary.BusinessLogic.Models.HabitDiaryLine
         public required string EventDescription { get; set; }
         public Status Status { get; set; }
         public required string ModifiedDate { get; set; }
+        public decimal Cost { get; set; }
     }
 }
