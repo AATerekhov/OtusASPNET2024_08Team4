@@ -30,9 +30,9 @@ public class RewardsService : IRewardsService
         };
         return await _rewardsRepository.Create(rewardEntity, cancellationToken);
     }
-    public async Task<Guid> UpdateReward(Guid id, string name, string description, string image, decimal cost, Guid roomId, CancellationToken cancellationToken)
+    public async Task<Guid> UpdateReward(Guid id, string name, string description, string image, decimal cost, bool instantBuy, Guid roomId, CancellationToken cancellationToken)
     {
-        return await _rewardsRepository.Update(id, name, description, image, cost, roomId, cancellationToken);
+        return await _rewardsRepository.Update(id, name, description, image, cost, instantBuy, roomId, cancellationToken);
     }
     public async Task<Guid> DeleteReward(Guid id, CancellationToken cancellationToken)
     {
@@ -42,5 +42,12 @@ public class RewardsService : IRewardsService
     public async Task<Reward> GetRewardById(Guid id, CancellationToken cancellationToken)
     {
         return await _rewardsRepository.GetById(id, cancellationToken);
+    }
+
+    public async Task<List<Reward>> GetRewardByRoomId(Guid roomId, CancellationToken cancellationToken)
+    {
+        var rewardsByRoom = (await _rewardsRepository.Get(cancellationToken))
+            .Where(r => r.RoomId == roomId).ToList();
+        return rewardsByRoom;
     }
 }

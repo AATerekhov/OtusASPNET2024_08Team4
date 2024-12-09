@@ -6,5 +6,6 @@
         string Description,
         string Image,
         decimal Cost,
+        bool InstantBuy,
         Guid RoomId);
 }

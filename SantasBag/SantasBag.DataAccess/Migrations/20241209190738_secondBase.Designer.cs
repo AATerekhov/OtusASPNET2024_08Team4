@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SantasBag.DataAccess;
@@ -11,9 +12,11 @@ using SantasBag.DataAccess;
 namespace SantasBag.DataAccess.Migrations
 {
     [DbContext(typeof(SantasBagDbContext))]
-    partial class SantasBagDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241209190738_secondBase")]
+    partial class secondBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
