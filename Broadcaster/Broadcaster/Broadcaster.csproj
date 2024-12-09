@@ -14,9 +14,14 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Settings\" />
+    <Folder Include="Mapping\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Broadcaster.Application.Service.Abstractions\Broadcaster.Application.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\Broadcaster.Application.Services.Implementations\Broadcaster.Application.Services.Implementations.csproj" />
+    <ProjectReference Include="..\BroadcasterMicroservice.Domain.Repository.Abstractions\BroadcasterMicroservice.Domain.Repository.Abstractions.csproj" />
+    <ProjectReference Include="..\BroadcasterMicroservice.Infrastructure.Implementations\BroadcasterMicroservice.Infrastructure.Implementations.csproj" />
     <ProjectReference Include="..\BroadcasterMicroservice.Infrastructure.MongoDbContext\BroadcasterMicroservice.Infrastructure.MongoDbContext.csproj" />
   </ItemGroup>
 

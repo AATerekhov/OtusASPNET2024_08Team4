@@ -1,6 +1,12 @@
 ﻿namespace BroadcasterMicroservice.Domain.Entity.MongoModel
 {
-    public class DiaryAddresseeMongo(DiaryAddressee entity): MongoEntity<DiaryAddressee, Guid>(entity)
+    public class DiaryAddresseeMongo: MongoEntity<DiaryAddressee, Guid>
     {
+        public DiaryAddresseeMongo(DiaryAddressee entity) : base(entity)
+        {
+        }
+        protected DiaryAddresseeMongo() : base(null)
+        {
+        }
     }
 }

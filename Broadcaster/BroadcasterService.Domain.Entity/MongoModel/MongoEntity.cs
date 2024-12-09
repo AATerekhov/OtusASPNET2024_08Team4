@@ -12,5 +12,6 @@ namespace BroadcasterMicroservice.Domain.Entity.MongoModel
         [BsonRepresentation(BsonType.ObjectId)]
         public string? ObjectId { get; }
         public TEntity? Object { get; protected set; } = entity;
+
     }
 }

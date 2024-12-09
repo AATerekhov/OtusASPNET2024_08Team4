@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace BroadcasterMicroservice.Domain.ValueObject
+﻿namespace BroadcasterMicroservice.Domain.ValueObject
 {
     public class NotificationMessage
     {
