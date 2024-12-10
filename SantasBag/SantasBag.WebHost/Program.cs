@@ -34,11 +34,11 @@ builder.Services.AddScoped<IRewardsRepository<RewardEntity>, RewardsRepository>(
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<SantasBagDbContext>();
     db.Database.Migrate();
-}
+}*/
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())   //временно для контейнера
