@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +15,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Settings\" />
-    <Folder Include="Mapping\" />
   </ItemGroup>
 
   <ItemGroup>

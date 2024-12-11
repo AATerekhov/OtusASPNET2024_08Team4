@@ -1,0 +1,6 @@
+services:
+  broadcaster:
+    image: ${DOCKER_REGISTRY-}broadcaster
+    build:
+      context: .
+      dockerfile: Broadcaster/Dockerfile
