@@ -41,21 +41,11 @@ namespace MagazineHost.Controllers
         [HttpGet("GetMagazine/{id}")]
         public async Task<ActionResult<RewardMagazineResponse>> GetMagazineAsync(Guid id)
         {
-            return Ok(_mapper.Map<RewardMagazineResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted)));
-        }
-
-        /// <summary>
-        /// Получение всех журналов наград
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("AllMagazines")]
-        public async Task<ActionResult<RewardMagazineShortResponse>> GetAllAsync()
-        {          
-            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.RewardMagazineKey("GetAllAsync"), HttpContext.RequestAborted);
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.MagazineKey(id), HttpContext.RequestAborted);
 
             if (serialized is not null)
             {
-                var cachResult = JsonSerializer.Deserialize<IEnumerable<RewardMagazineShortResponse>>(serialized);
+                var cachResult = JsonSerializer.Deserialize<IEnumerable<RewardMagazineResponse>>(serialized);
 
                 if (cachResult is not null)
                 {
@@ -64,17 +54,29 @@ namespace MagazineHost.Controllers
 
             }
 
-            var journals = await _service.GetAllAsync(HttpContext.RequestAborted);
-            var response = _mapper.Map<List<RewardMagazineShortResponse>>(journals);
+            var response = _mapper.Map<RewardMagazineResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted));
 
             await _distributedCache.SetStringAsync(
-                key: KeyForCache.RewardMagazineKey("GetAllAsync"),
+                key: KeyForCache.MagazineKey(id),
                 value: JsonSerializer.Serialize(response),
                 options: new DistributedCacheEntryOptions
                 {
                     SlidingExpiration = TimeSpan.FromHours(1)
                 });
 
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Получение всех журналов наград
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("AllMagazines")]
+        public async Task<ActionResult<RewardMagazineShortResponse>> GetAllAsync()
+        {                      
+            var journals = await _service.GetAllAsync(HttpContext.RequestAborted);
+            var response = _mapper.Map<List<RewardMagazineShortResponse>>(journals);
 
             return Ok(response);
         }
@@ -124,9 +126,9 @@ namespace MagazineHost.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetAllByMagazineOwnerId/{id}")]
-        public async Task<ActionResult<RewardMagazineShortResponse>> GetDiariesByDiaryOwnerIdAsync(Guid id)
+        public async Task<ActionResult<RewardMagazineShortResponse>> GetMaggazinesByMagazineOwnerIdAsync(Guid id)
         {
-            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.RewardMagazineKey("GetDiariesByDiaryOwnerIdAsync"), HttpContext.RequestAborted);
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.MagazinesByMagazineOwnerIdKey(id), HttpContext.RequestAborted);
 
             if (serialized is not null)
             {
@@ -142,7 +144,7 @@ namespace MagazineHost.Controllers
             var response = _mapper.Map<List<RewardMagazineShortResponse>>(lines);
 
             await _distributedCache.SetStringAsync(
-                key: KeyForCache.RewardMagazineKey("GetDiariesByDiaryOwnerIdAsync"),
+                key: KeyForCache.MagazinesByMagazineOwnerIdKey(id),
                 value: JsonSerializer.Serialize(response),
                 options: new DistributedCacheEntryOptions
                 {
