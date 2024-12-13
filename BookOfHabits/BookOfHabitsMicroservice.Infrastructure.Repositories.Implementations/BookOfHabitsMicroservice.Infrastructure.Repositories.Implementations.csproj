@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookOfHabitsMicroservice.Domain.Entity\BookOfHabitsMicroservice.Domain.Entity.csproj" />
+    <ProjectReference Include="..\BookOfHabitsMicroservice.Domain.Repository.Abstractions\BookOfHabitsMicroservice.Domain.Repository.Abstractions.csproj" />
+    <ProjectReference Include="..\BookOfHabitsMicroservice.Infrastructure.EntityFramework\BookOfHabitsMicroservice.Infrastructure.EntityFramework.csproj" />
+  </ItemGroup>
+
+</Project>
