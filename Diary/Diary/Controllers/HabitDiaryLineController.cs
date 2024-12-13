@@ -42,7 +42,32 @@ namespace Diary.Controllers
         [HttpGet("GetDiaryLine/{id}")]
         public async Task<ActionResult<HabitDiaryLineResponse>> GetDiaryLineAsync(Guid id)
         {
-            return Ok(_mapper.Map<HabitDiaryLineResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted)));
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.DiaryLineKey(id), HttpContext.RequestAborted);
+
+            if (serialized is not null)
+            {
+                var cachResult = JsonSerializer.Deserialize<IEnumerable<HabitDiaryLineResponse>>(serialized);
+
+                if (cachResult is not null)
+                {
+                    return Ok(cachResult);
+                }
+            }
+
+            var response = _mapper.Map<HabitDiaryLineResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted));
+
+            await _distributedCache.SetStringAsync(
+                key: KeyForCache.DiaryLineKey(id),
+                value: JsonSerializer.Serialize(response),
+                options: new DistributedCacheEntryOptions
+                {
+                    SlidingExpiration = TimeSpan.FromHours(1)
+                });
+
+
+            return Ok(response);
+
+
         }
 
         /// <summary>
@@ -53,7 +78,7 @@ namespace Diary.Controllers
         [HttpGet("GetDiaryLinesByDiaryId/{id}")]
         public async Task<ActionResult<HabitDiaryLineResponse>> GetDiaryLinesByDiaryIdAsync(Guid id)
         {
-            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.HabitDiaryLineKey("GetDiaryLinesByDiaryIdAsync"), HttpContext.RequestAborted);
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.DiaryLinesByDiaryIdKey(id), HttpContext.RequestAborted);
 
             if (serialized is not null)
             {
@@ -69,7 +94,7 @@ namespace Diary.Controllers
             var response = _mapper.Map<List<HabitDiaryLineResponse>>(lines);
 
             await _distributedCache.SetStringAsync(
-                key: KeyForCache.HabitDiaryKey("GetDiaryLinesByDiaryIdAsync"),
+                key: KeyForCache.DiaryLinesByDiaryIdKey(id),
                 value: JsonSerializer.Serialize(response),
                 options: new DistributedCacheEntryOptions
                 {

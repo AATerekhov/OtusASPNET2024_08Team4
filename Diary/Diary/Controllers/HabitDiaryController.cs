@@ -42,7 +42,29 @@ namespace Diary.Controllers
         [HttpGet("GetDiary/{id}")]
         public async Task<ActionResult<HabitDiaryResponse>> GetDiaryAsync(Guid id)
         {
-            return Ok(_mapper.Map<HabitDiaryResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted)));
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.DiaryKey(id), HttpContext.RequestAborted);
+
+            if (serialized is not null)
+            {
+                var cachResult = JsonSerializer.Deserialize<IEnumerable<HabitDiaryResponse>>(serialized);
+
+                if (cachResult is not null)
+                {
+                    return Ok(cachResult);
+                }
+            }
+
+            var response = _mapper.Map<HabitDiaryResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted)));
+
+            await _distributedCache.SetStringAsync(
+                key: KeyForCache.DiaryKey(id),
+                value: JsonSerializer.Serialize(response),
+                options: new DistributedCacheEntryOptions
+                {
+                    SlidingExpiration = TimeSpan.FromHours(1)
+                });
+
+            return Ok(response);
         }
 
         /// <summary>
@@ -52,30 +74,8 @@ namespace Diary.Controllers
         [HttpGet("AllDiaries")]
         public async Task<ActionResult<HabitDiaryShortResponse>> GetAllAsync()
         {
-            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.HabitDiaryKey("GetAllAsync"), HttpContext.RequestAborted);
-
-            if (serialized is not null)
-            {
-                var cachResult = JsonSerializer.Deserialize<IEnumerable<HabitDiaryShortResponse>>(serialized);
-
-                if (cachResult is not null)
-                {
-                    return Ok(cachResult);
-                }
-
-            }
-
             var journals = await _service.GetAllAsync(HttpContext.RequestAborted);
             var response = _mapper.Map<List<HabitDiaryShortResponse>>(journals);
-
-            await _distributedCache.SetStringAsync(
-                key: KeyForCache.HabitDiaryKey("GetAllAsync"),
-                value: JsonSerializer.Serialize(response),
-                options: new DistributedCacheEntryOptions
-                {
-                    SlidingExpiration = TimeSpan.FromHours(1)
-                });
-
 
             return Ok(response);
         }
@@ -90,7 +90,7 @@ namespace Diary.Controllers
         [HttpGet("GetDiariesByDiaryOwnerId/{id}")]
         public async Task<ActionResult<HabitDiaryShortResponse>> GetDiariesByDiaryOwnerIdAsync(Guid id)
         {
-            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.HabitDiaryLineKey("GetDiariesByDiaryOwnerIdAsync"), HttpContext.RequestAborted);
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.DiariesByDiaryOwnerIdKey(id), HttpContext.RequestAborted);
 
             if (serialized is not null)
             {
@@ -106,7 +106,7 @@ namespace Diary.Controllers
             var response = _mapper.Map<List<HabitDiaryShortResponse>>(lines);
 
             await _distributedCache.SetStringAsync(
-                key: KeyForCache.HabitDiaryKey("GetDiariesByDiaryOwnerIdAsync"),
+                key: KeyForCache.DiariesByDiaryOwnerIdKey(id),
                 value: JsonSerializer.Serialize(response),
                 options: new DistributedCacheEntryOptions
                 {
