@@ -41,7 +41,30 @@ namespace MagazineHost.Controllers
         [HttpGet("GetMagazineLine/{id}")]
         public async Task<ActionResult<RewardMagazineLine>> GetRewardMagazineLineAsync(Guid id)
         {
-            return Ok(_mapper.Map<RewardMagazineLine>(await _service.GetByIdAsync(id, HttpContext.RequestAborted)));
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.MagazineLineKey(id), HttpContext.RequestAborted);
+
+            if (serialized is not null)
+            {
+                var cachResult = JsonSerializer.Deserialize<IEnumerable<RewardMagazineLine>>(serialized);
+
+                if (cachResult is not null)
+                {
+                    return Ok(cachResult);
+                }
+            }
+
+            var response = _mapper.Map<RewardMagazineLine>(await _service.GetByIdAsync(id, HttpContext.RequestAborted));
+
+            await _distributedCache.SetStringAsync(
+                key: KeyForCache.MagazineLineKey(id),
+                value: JsonSerializer.Serialize(response),
+                options: new DistributedCacheEntryOptions
+                {
+                    SlidingExpiration = TimeSpan.FromHours(1)
+                });
+
+
+            return Ok(response);
         }
 
         /// <summary>
@@ -52,7 +75,7 @@ namespace MagazineHost.Controllers
         [HttpGet("GetMagazineLinesByMagazineId/{id}")]
         public async Task<ActionResult<RewardMagazineLineResponse>> GetLinesByMagazineIdAsync(Guid id)
         {         
-            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.RewardMagazineLineKey("GetLinesByMagazineIdAsync"), HttpContext.RequestAborted);
+            string? serialized = await _distributedCache.GetStringAsync(KeyForCache.MagazineLinesByMagazineIdKey(id), HttpContext.RequestAborted);
 
             if (serialized is not null)
             {
@@ -69,7 +92,7 @@ namespace MagazineHost.Controllers
             var response = _mapper.Map<List<RewardMagazineLineResponse>>(lines);
 
             await _distributedCache.SetStringAsync(
-                key: KeyForCache.RewardMagazineLineKey("GetLinesByMagazineIdAsync"),
+                key: KeyForCache.MagazineLinesByMagazineIdKey(id),
                 value: JsonSerializer.Serialize(response),
                 options: new DistributedCacheEntryOptions
                 {

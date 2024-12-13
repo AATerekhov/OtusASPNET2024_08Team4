@@ -33,4 +33,8 @@
     <ProjectReference Include="..\Magazine.DataAccess\Magazine.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cache\" />
+  </ItemGroup>
+
 </Project>
