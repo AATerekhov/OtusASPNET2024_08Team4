@@ -1,4 +1,5 @@
 ﻿using RoomsDesigner.BusinessLogic.Models.Administration;
+using RoomsDesigner.BusinessLogic.Models.Administration.User;
 using System;
 
 namespace RoomsDesigner.BusinessLogic.Models.Intermediate

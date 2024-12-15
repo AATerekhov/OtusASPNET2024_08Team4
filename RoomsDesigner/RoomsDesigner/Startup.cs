@@ -5,13 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RoomsDesigner.Api.Infrastructure;
 using RoomsDesigner.Api.Infrastructure.ExceptionHandling;
-using RoomsDesigner.Api.Infrastructure.Settings;
 using RoomsDesigner.DataAccess;
 using System.Text.Json.Serialization;
 
 namespace RoomsDesigner.Api
 {
-	public class Startup
+    public class Startup
 	{
 		private IConfiguration Configuration { get; }
 
@@ -27,7 +26,7 @@ namespace RoomsDesigner.Api
 				options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 			});
 
-			services.ConfigureDbContext(Configuration.Get<ApplicationSettings>().ConnectionString);
+			services.AddApplicationDataContext(Configuration);
 			services.AddRoomDesignerServices();
 			services.AddSwaggerServices();
 		}

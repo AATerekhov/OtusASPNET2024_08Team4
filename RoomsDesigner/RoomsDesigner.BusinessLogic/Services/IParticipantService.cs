@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RoomsDesigner.BusinessLogic.Services
 {
-	public interface IUserService
+	public interface IParticipantService
 	{
 		Task<List<UserDto>> GetAllAsync();
 

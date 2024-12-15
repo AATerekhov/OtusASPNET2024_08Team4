@@ -3,9 +3,18 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10" />
@@ -14,12 +23,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RoomsDesigner.Application.Models\RoomsDesigner.Application.Models.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Application.Models\RoomsDesigner.Application.Models.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Application.Service.Abstractions\RoomsDesigner.Application.Service.Abstractions.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Application.Services.Implementations\RoomsDesigner.Application.Services.Implementations.csproj" />
     <ProjectReference Include="..\RoomsDesigner.BusinessLogic\RoomsDesigner.BusinessLogic.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Domain.Repository.Abstractions\RoomsDesigner.Domain.Repository.Abstractions.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Infrastructure.Repository.Implementations\RoomsDesigner.Infrastructure.Repository.Implementations.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Infrastructure\Validators\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
