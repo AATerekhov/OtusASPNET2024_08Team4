@@ -1,6 +1,40 @@
+networks:
+  caching-network:
+    driver: bridge
+
 services:
-  broadcaster:
+  habits-broadcaster-api:
     image: ${DOCKER_REGISTRY-}broadcaster
     build:
       context: .
       dockerfile: Broadcaster/Dockerfile
+    container_name: 'habits-broadcaster-api'
+    restart: always 
+    ports:
+      - "5010:5010"
+    depends_on:
+      - broadcaster-mongodb
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5010
+      MongoSettings:Connection: "mongodb://root:example@broadcaster-mongodb:27017/broadcasterDb?authSource=admin"
+      MongoSettings:DatabaseName: "broadcasterDb"
+    networks:
+      - caching-network
+
+  broadcaster-mongodb:
+    image: "mongo:latest"
+    container_name: 'broadcaster-mongodb'
+    restart: always 
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - caching-network
+
+volumes:
+  mongo_data:

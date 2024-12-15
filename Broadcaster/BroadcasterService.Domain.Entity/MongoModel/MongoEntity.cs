@@ -10,7 +10,7 @@ namespace BroadcasterMicroservice.Domain.Entity.MongoModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? ObjectId { get; }
+        public string? ObjectId { get; set; }
         public TEntity? Object { get; protected set; } = entity;
 
     }

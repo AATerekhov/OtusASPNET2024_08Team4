@@ -18,12 +18,12 @@ namespace BroadcasterMicroservice.Infrastructure.Implementations.Base
         protected BaseRepository(IMongoDBContext context)
         {
             _mongoContext = context;
-            _dbCollection = _mongoContext.GetCollection<TMongo>(nameof(TMongo));
+            _dbCollection = _mongoContext.GetCollection<TMongo>(typeof(TMongo).Name);
         }
         public virtual async Task AddAsync(TMongo entity, CancellationToken token = default)
         {
             if (entity is null)
-                throw new ArgumentNullException(nameof(TMongo) + " object is null");
+                throw new ArgumentNullException(typeof(TMongo).Name + " object is null");
             await _dbCollection.InsertOneAsync(entity, cancellationToken: token);
         }
 
