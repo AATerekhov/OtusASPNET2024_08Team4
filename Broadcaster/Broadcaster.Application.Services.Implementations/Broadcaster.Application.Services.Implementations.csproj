@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Broadcaster.Application.Service.Abstractions\Broadcaster.Application.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\BroadcasterMicroservice.Domain.Repository.Abstractions\BroadcasterMicroservice.Domain.Repository.Abstractions.csproj" />
+    <ProjectReference Include="..\BroadcasterMicroservice.Domain.ValueObject\BroadcasterMicroservice.Domain.ValueObject.csproj" />
+    <ProjectReference Include="..\BroadcasterService.Domain.Entity\BroadcasterMicroservice.Domain.Entity.csproj" />
+  </ItemGroup>
+
+</Project>
