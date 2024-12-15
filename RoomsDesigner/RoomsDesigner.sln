@@ -3,15 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomsDesigner.Api", "RoomsDesigner\RoomsDesigner.Api.csproj", "{C3C8701A-8368-43D9-8523-4DB5324712A5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.DataAccess", "RoomsDesigner.DataAccess\RoomsDesigner.DataAccess.csproj", "{0E13451B-D327-41D7-8ADB-9B032FC55288}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.BusinessLogic", "RoomsDesigner.BusinessLogic\RoomsDesigner.BusinessLogic.csproj", "{BDB0688A-94E8-4F9D-BF6C-339171B7260A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Core", "RoomsDesigner.Core\RoomsDesigner.Core.csproj", "{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.UnitTests", "RoomsDesigner.UnitTests\RoomsDesigner.UnitTests.csproj", "{AE006C0E-8256-4F80-9008-6AF6D9C5775E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner", "RoomsDesigner\RoomsDesigner.csproj", "{C3C8701A-8368-43D9-8523-4DB5324712A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,22 +15,6 @@ Global
 		{C3C8701A-8368-43D9-8523-4DB5324712A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3C8701A-8368-43D9-8523-4DB5324712A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3C8701A-8368-43D9-8523-4DB5324712A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E13451B-D327-41D7-8ADB-9B032FC55288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E13451B-D327-41D7-8ADB-9B032FC55288}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E13451B-D327-41D7-8ADB-9B032FC55288}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E13451B-D327-41D7-8ADB-9B032FC55288}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDB0688A-94E8-4F9D-BF6C-339171B7260A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDB0688A-94E8-4F9D-BF6C-339171B7260A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDB0688A-94E8-4F9D-BF6C-339171B7260A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDB0688A-94E8-4F9D-BF6C-339171B7260A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
