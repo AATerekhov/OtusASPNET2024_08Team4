@@ -19,6 +19,8 @@ namespace Diary.Core.Domain.Diary
         public List<HabitDiaryLine> Lines { get; set; }
         public required HabitDiaryOwner DiaryOwner { get; set; }
 
+        public decimal TotalCost { get; set; }
+
         public HabitDiary()
         {
             Lines = new List<HabitDiaryLine>();

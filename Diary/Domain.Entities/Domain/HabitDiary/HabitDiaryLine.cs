@@ -10,7 +10,8 @@ namespace Diary.Core.Domain.Diary
     public class HabitDiaryLine : BaseEntity
     {
         public Guid DiaryId { get; set; }
-        public Guid HabitId { get; set; }
+        public Guid EntityId { get; set; }
+        public EntityType entityType { get; set; }
         public required string EventDescription { get; set; }
         public DateTime CreatedDate { get; init; } = DateTime.UtcNow;
         public DateTime ModifiedDate { get; set; } 

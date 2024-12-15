@@ -18,6 +18,8 @@ namespace Diary.Models.Response
         [Required]
         public Guid DiaryOwnerId { get; set; }
 
+        public decimal TotalCost { get; set; }
+
         public List<HabitDiaryLineResponse> Lines { get; set; }   
     }
 }

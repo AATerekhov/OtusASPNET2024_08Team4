@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Diary.BusinessLogic.Models.DiaryOwner;
+using Diary.BusinessLogic.Models.HabitDiary;
 using Diary.BusinessLogic.Models.UserJournal;
 using Diary.BusinessLogic.Services;
 using Diary.Cache;
@@ -54,7 +55,7 @@ namespace Diary.Controllers
                 }
             }
 
-            var response = _mapper.Map<HabitDiaryResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted)));
+            var response = _mapper.Map<HabitDiaryResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted));
 
             await _distributedCache.SetStringAsync(
                 key: KeyForCache.DiaryKey(id),
@@ -123,9 +124,9 @@ namespace Diary.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("CreateDiary")]
-        public async Task<ActionResult<HabitDiaryResponse>> CreateDiaryAsync(CreateOrEditHabitDiaryRequest request)
+        public async Task<ActionResult<HabitDiaryResponse>> CreateDiaryAsync(CreateHabitDiaryRequest request)
         {
-            var diary = await _service.CreateAsync(_mapper.Map<CreateOrEditHabitDiaryDto>(request), HttpContext.RequestAborted);
+            var diary = await _service.CreateAsync(_mapper.Map<CreateHabitDiaryDto>(request), HttpContext.RequestAborted);
             return Ok(_mapper.Map<HabitDiaryResponse>(diary));
         }
 
@@ -133,13 +134,13 @@ namespace Diary.Controllers
         /// Изменение дневника по гуиду
         /// </summary>
         /// <param name="id">Guid</param>
-        /// <param name="request">CreateOrEditDiaryRequest</param>
+        /// <param name="request">EditHabitDiaryRequest</param>
         /// <returns></returns>
 
         [HttpPut("UpdateDiary/{id}")]
-        public async Task<ActionResult<HabitDiaryResponse>> EditDiaryAsync(Guid id, CreateOrEditHabitDiaryRequest request)
+        public async Task<ActionResult<HabitDiaryResponse>> EditDiaryAsync(Guid id, EditHabitDiaryRequest request)
         {
-            var diary = await _service.UpdateAsync(id, _mapper.Map<CreateOrEditHabitDiaryRequest, CreateOrEditHabitDiaryDto>(request), HttpContext.RequestAborted);
+            var diary = await _service.UpdateAsync(id, _mapper.Map<EditHabitDiaryRequest, EditHabitDiaryDto>(request), HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<HabitDiaryResponse>(diary));
         }

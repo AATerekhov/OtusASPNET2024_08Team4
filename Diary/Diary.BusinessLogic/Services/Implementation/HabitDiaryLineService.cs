@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Diary.BusinessLogic.Helpers;
 using Diary.BusinessLogic.Models.DiaryOwner;
 using Diary.BusinessLogic.Models.HabitDiaryLine;
 using Diary.BusinessLogic.Models.UserJournal;
 using Diary.Core.Domain.Administration;
+using Diary.Core.Domain.BaseTypes;
 using Diary.Core.Domain.Diary;
 using Diary.Core.Exceptions;
 using Diary.DataAccess.Abstractions;
@@ -15,25 +17,24 @@ using System.Threading.Tasks;
 
 namespace Diary.BusinessLogic.Services.Implementation
 {
-    public class HabitDiaryLineService : BaseService, IHabitDiaryLineService
-    {
-        private readonly IMapper _mapper;
-        private readonly IHabitDiaryLineRepository _diaryLineRepository;
-
-        public HabitDiaryLineService(
-         IMapper mapper,
-         IHabitDiaryLineRepository diaryLineRepository)
+    public class HabitDiaryLineService(IMapper _mapper, IHabitDiaryLineRepository _diaryLineRepository,
+                                      IHabitDiaryRepository _diaryRepository) : BaseService, IHabitDiaryLineService
+    {    
+        public async Task<HabitDiaryLine> CreateAsync(CreateHabitDiaryLineDto createOrEditDiaryLineDto, CancellationToken cancellationToken)
         {
-            _mapper              = mapper;
-            _diaryLineRepository = diaryLineRepository;
-        }
-
-        public async Task<HabitDiaryLine> CreateAsync(CreateOrEditHabitDiaryLineDto createOrEditDiaryLineDto, CancellationToken cancellationToken)
-        {
-            var diaryLine = _mapper.Map<CreateOrEditHabitDiaryLineDto, HabitDiaryLine>(createOrEditDiaryLineDto);
+            var diaryLine = _mapper.Map<CreateHabitDiaryLineDto, HabitDiaryLine>(createOrEditDiaryLineDto);
             var createdDiaryLine = await _diaryLineRepository.AddAsync(diaryLine, cancellationToken);
 
+            var diary = await _diaryRepository.GetByIdAsync(createdDiaryLine.DiaryId, cancellationToken)
+                        ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(createdDiaryLine.DiaryId, nameof(HabitDiary)));
+
+            diary.TotalCost += createdDiaryLine.Cost;
+
             await _diaryLineRepository.SaveChangesAsync(cancellationToken);
+
+            _diaryRepository.Update(diary);
+
+            await _diaryRepository.SaveChangesAsync(cancellationToken);
 
             return createdDiaryLine;
         }
@@ -73,17 +74,15 @@ namespace Diary.BusinessLogic.Services.Implementation
                      );
         }
 
-        public async Task<HabitDiaryLine> UpdateAsync(Guid id, CreateOrEditHabitDiaryLineDto createOrEditDiaryLineDto, CancellationToken cancellationToken)
+        public async Task<HabitDiaryLine> UpdateAsync(Guid id, EditHabitDiaryLineDto editDiaryLineDto, CancellationToken cancellationToken)
         {
             var diaryLine = await _diaryLineRepository.GetByIdAsync(id, cancellationToken)
                     ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(HabitDiaryLine)));
 
-            diaryLine.EventDescription = !string.IsNullOrWhiteSpace(createOrEditDiaryLineDto.EventDescription) ? createOrEditDiaryLineDto.EventDescription : diaryLine.EventDescription;
-            diaryLine.DiaryId          = createOrEditDiaryLineDto.DiaryId != Guid.Empty ? createOrEditDiaryLineDto.DiaryId : diaryLine.DiaryId;
-            diaryLine.HabitId          = createOrEditDiaryLineDto.HabitId != Guid.Empty ? createOrEditDiaryLineDto.HabitId : diaryLine.HabitId;
-            diaryLine.Status           = createOrEditDiaryLineDto.Status;
-            diaryLine.Cost             += createOrEditDiaryLineDto.Cost;
-
+            diaryLine.EventDescription = !string.IsNullOrWhiteSpace(editDiaryLineDto.EventDescription) ? editDiaryLineDto.EventDescription : diaryLine.EventDescription;    
+            diaryLine.Status           = editDiaryLineDto.Status;
+            diaryLine.ModifiedDate     = DateTimeHelper.ToDateTime(editDiaryLineDto.ModifiedDate, DateTimeHelper.DateFormat).ToUniversalTime();
+        
             _diaryLineRepository.Update(diaryLine);
             await _diaryLineRepository.SaveChangesAsync(cancellationToken);
 

@@ -32,15 +32,15 @@ namespace Diary.BusinessLogic.Services
         /// </summary>
         /// <param name="createOrEditDiaryLineDto"> дто редактируемой строки дневника. </param>
         /// <param name="cancellationToken"> cancellationToken </param>
-        Task<HabitDiaryLine> CreateAsync(CreateOrEditHabitDiaryLineDto createOrEditDiaryLineDto, CancellationToken cancellationToken);
+        Task<HabitDiaryLine> CreateAsync(CreateHabitDiaryLineDto createOrEditDiaryLineDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Изменить строку дневника
         /// </summary>
         /// <param name="id"> Гуид строки </param>
-        /// <param name="createOrEditDiaryLineDto"> дто редактируемой строки дневника </param>
+        /// <param name="editDiaryLineDto"> дто редактируемой строки дневника </param>
         /// <param name="cancellationToken"> cancellationToken </param>
-        Task<HabitDiaryLine> UpdateAsync(Guid id, CreateOrEditHabitDiaryLineDto createOrEditDiaryLineDto, CancellationToken cancellationToken);
+        Task<HabitDiaryLine> UpdateAsync(Guid id, EditHabitDiaryLineDto editDiaryLineDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удалить строку дневника

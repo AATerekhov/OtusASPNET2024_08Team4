@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Diary.BusinessLogic.Models.DiaryOwner;
+using Diary.BusinessLogic.Models.HabitDiary;
 using Diary.BusinessLogic.Models.JournalOwner;
 using Diary.BusinessLogic.Models.UserJournal;
 using Diary.Core.Domain.Administration;
@@ -18,8 +19,9 @@ namespace Diary.Mapping
             CreateMap<HabitDiary, HabitDiaryShortResponse>();
             CreateMap<HabitDiaryFilterRequest, HabitDiaryFilterDto>();
             CreateMap<HabitDiaryFilterDto, HabitDiaryFilterModel>();
-            CreateMap<CreateOrEditHabitDiaryRequest, CreateOrEditHabitDiaryDto>();
-            CreateMap<CreateOrEditHabitDiaryDto, HabitDiary>()
+            CreateMap<CreateHabitDiaryRequest, CreateHabitDiaryDto>();
+            CreateMap<EditHabitDiaryRequest, EditHabitDiaryDto>();
+            CreateMap<CreateHabitDiaryDto, HabitDiary>()
               .ForMember(j => j.Lines, opt => opt.Ignore())
               .ForMember(j => j.DiaryOwner, opt => opt.Ignore())
               .ForMember(j => j.Id, opt => opt.Ignore());

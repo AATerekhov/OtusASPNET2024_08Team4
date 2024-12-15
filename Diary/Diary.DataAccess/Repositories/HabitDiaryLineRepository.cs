@@ -33,9 +33,9 @@ namespace Diary.DataAccess.Repositories
                query = query.Where(dL => dL.DiaryId == filterModel.DiaryId);
             }
 
-            if (filterModel.HabitId != Guid.Empty)
+            if (filterModel.EntityId != Guid.Empty)
             {
-                query = query.Where(dL => dL.HabitId == filterModel.HabitId);
+                query = query.Where(dL => dL.EntityId == filterModel.EntityId);
             }
           
             query = query

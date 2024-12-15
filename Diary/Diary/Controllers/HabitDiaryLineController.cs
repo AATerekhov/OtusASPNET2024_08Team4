@@ -123,9 +123,9 @@ namespace Diary.Controllers
         /// <param name="request">CreateOrEditHabitDiaryLineRequest</param>
         /// <returns></returns>
         [HttpPost("CreateDiaryLine")]
-        public async Task<ActionResult<HabitDiaryLineResponse>> CreateDiaryLineAsync(CreateOrEditHabitDiaryLineRequest request)
+        public async Task<ActionResult<HabitDiaryLineResponse>> CreateDiaryLineAsync(CreateHabitDiaryLineRequest request)
         {
-            var diaryLine = await _service.CreateAsync(_mapper.Map<CreateOrEditHabitDiaryLineDto>(request), HttpContext.RequestAborted);
+            var diaryLine = await _service.CreateAsync(_mapper.Map<CreateHabitDiaryLineDto>(request), HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<HabitDiaryLineResponse>(diaryLine));
         }
@@ -134,13 +134,13 @@ namespace Diary.Controllers
         /// Изменение строки дневника по гуиду
         /// </summary>
         /// <param name="id">Guid</param>
-        /// <param name="request">CreateOrEditHabitDiaryLineRequest</param>
+        /// <param name="request">EditHabitDiaryLineRequest</param>
         /// <returns></returns>
 
         [HttpPut("UpdateDiaryLine/{id}")]
-        public async Task<ActionResult<HabitDiaryLineResponse>> EditDiaryLineAsync(Guid id, CreateOrEditHabitDiaryLineRequest request)
+        public async Task<ActionResult<HabitDiaryLineResponse>> EditDiaryLineAsync(Guid id, EditHabitDiaryLineRequest request)
         {
-            var diaryLine = await _service.UpdateAsync(id, _mapper.Map<CreateOrEditHabitDiaryLineRequest, CreateOrEditHabitDiaryLineDto>(request), HttpContext.RequestAborted);
+            var diaryLine = await _service.UpdateAsync(id, _mapper.Map<EditHabitDiaryLineRequest, EditHabitDiaryLineDto>(request), HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<HabitDiaryLineResponse>(diaryLine));
         }
