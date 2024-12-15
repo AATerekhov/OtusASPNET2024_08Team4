@@ -17,6 +17,8 @@ namespace SantasBag.DataAccess.Configurations
                 .IsRequired();
             builder.Property(b => b.Cost)
                 .IsRequired();
+            builder.Property(b => b.InstantBuy)
+                .IsRequired();
             builder.Property(b => b.RoomId)
                 .IsRequired();
         }

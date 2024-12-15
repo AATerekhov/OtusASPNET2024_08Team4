@@ -20,7 +20,7 @@ public class RewardsRepository : IRewardsRepository<RewardEntity>
             .AsNoTracking()
             .ToListAsync();
         var rewards = rewardEntities
-            .Select(b=>Reward.Map(b.Id, b.Name, b.Description, b.Image, b.Cost, b.RoomId))
+            .Select(b=>Reward.Map(b.Id, b.Name, b.Description, b.Image, b.Cost, b.InstantBuy, b.RoomId))
             .ToList();
         return rewards;
     }
@@ -40,7 +40,7 @@ public class RewardsRepository : IRewardsRepository<RewardEntity>
         return rewardEntity.Id;
     }
 
-    public async Task<Guid> Update(Guid id, string name, string description, string image, decimal cost, Guid roomId, CancellationToken cancellationToken)
+    public async Task<Guid> Update(Guid id, string name, string description, string image, decimal cost, bool instantBuy, Guid roomId, CancellationToken cancellationToken)
     {
         await _context.Rewards
             .Where(b=>b.Id==id)
@@ -49,6 +49,7 @@ public class RewardsRepository : IRewardsRepository<RewardEntity>
                 .SetProperty(b => b.Description, b => description)
                 .SetProperty(b => b.Image, b => image)
                 .SetProperty(b => b.Cost, b => cost)
+                .SetProperty(b => b.InstantBuy, b => instantBuy)
                 .SetProperty(b => b.RoomId, b => roomId));
         return id;
     }
@@ -67,7 +68,7 @@ public class RewardsRepository : IRewardsRepository<RewardEntity>
             .AsNoTracking()
             .ToListAsync();
         var reward = rewardEntities
-            .Select(b => Reward.Map(b.Id, b.Name, b.Description, b.Image, b.Cost, b.RoomId))
+            .Select(b => Reward.Map(b.Id, b.Name, b.Description, b.Image, b.Cost, b.InstantBuy, b.RoomId))
             .First(r=>r.Id==id); //добавить проверку на null
         return reward;
     }
