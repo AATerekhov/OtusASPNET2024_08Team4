@@ -3,12 +3,12 @@
 namespace RoomsDesigner.Api.Controllers
 {
 	/// <summary>
-	/// Habit
+	/// User
 	/// </summary>
 	[ApiController]
 	[Route("api/v1/[controller]")]
-	public class HabitController
+	public class ParticipantController()
 	{
-		public HabitController() { }
+
 	}
 }
