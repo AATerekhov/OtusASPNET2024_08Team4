@@ -2,7 +2,6 @@
 using RoomsDesigner.Api.Requests.Participant;
 using RoomsDesigner.Api.Responses.Participant;
 using RoomsDesigner.Application.Models.Participant;
-using RoomsDesigner.Domain.Entity;
 
 namespace RoomsDesigner.Api.Mapping
 {

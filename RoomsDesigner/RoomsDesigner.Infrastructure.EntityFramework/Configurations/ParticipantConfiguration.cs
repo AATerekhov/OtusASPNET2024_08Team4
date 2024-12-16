@@ -14,6 +14,7 @@ namespace RoomsDesigner.Infrastructure.EntityFramework.Configurations
                     .HasMaxLength(50);
             builder.Property(x => x.Name)
                     .HasMaxLength(50);
+            builder.HasOne(x => x.Room).WithMany("_players");
         }
     }
 }

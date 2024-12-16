@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using RoomsDesigner.Api.Infrastructure.ExceptionHandling.Model;
-using RoomsDesigner.Core.Exceptions;
+using RoomsDesigner.Application.Service.Abstractions.Exceptions;
 using System;
 using System.Net;
 using System.Threading.Tasks;

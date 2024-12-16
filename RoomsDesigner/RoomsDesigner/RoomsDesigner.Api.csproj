@@ -27,7 +27,6 @@
     <ProjectReference Include="..\RoomsDesigner.Application.Models\RoomsDesigner.Application.Models.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Application.Service.Abstractions\RoomsDesigner.Application.Service.Abstractions.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Application.Services.Implementations\RoomsDesigner.Application.Services.Implementations.csproj" />
-    <ProjectReference Include="..\RoomsDesigner.BusinessLogic\RoomsDesigner.BusinessLogic.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Domain.Repository.Abstractions\RoomsDesigner.Domain.Repository.Abstractions.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Infrastructure.Repository.Implementations\RoomsDesigner.Infrastructure.Repository.Implementations.csproj" />
   </ItemGroup>

@@ -11,6 +11,7 @@ namespace RoomsDesigner.Domain.Entity
         public Participant(Guid id, string userMail, Case room) : base(id)
         {
             Room = room;
+            room.Add(this);
             UserMail = userMail;
         }
 
@@ -22,6 +23,12 @@ namespace RoomsDesigner.Domain.Entity
         protected Participant() : base(Guid.NewGuid())
         {
 
+        }
+        public void Update(Guid userId, string name, string userMail) 
+        {
+            UserId = userId;
+            Name = name;
+            UserMail = userMail;
         }
     }
 }

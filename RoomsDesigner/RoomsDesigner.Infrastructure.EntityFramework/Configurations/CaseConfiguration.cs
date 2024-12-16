@@ -12,7 +12,7 @@ namespace RoomsDesigner.Infrastructure.EntityFramework.Configurations
             builder.Property(x => x.Name)
                     .IsRequired()
                     .HasMaxLength(100);
-            builder.HasMany("_players").WithOne(nameof(Participant.Room));
+            builder.Ignore(x => x.Players);
         }
     }
 }

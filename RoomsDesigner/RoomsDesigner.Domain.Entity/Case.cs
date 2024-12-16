@@ -6,7 +6,7 @@ namespace RoomsDesigner.Domain.Entity
     {
         private readonly ICollection<Participant> _players = [];
         public IReadOnlyCollection<Participant> Players => [.. _players];
-        public Guid OwnerId { get; }
+        public Guid OwnerId { get; private set; }
         public string? Name { get; private set; }
         public Case(Guid id, string name, Guid ownerId) : base(id)
         {
@@ -21,6 +21,16 @@ namespace RoomsDesigner.Domain.Entity
         protected Case() : base(Guid.NewGuid())
         {
 
+        }
+        public void Update(string name, Guid ownerId) 
+        {
+            Name = name;
+            OwnerId = ownerId;
+        }
+        internal void Add(Participant participant) 
+        {
+            if (!_players.Contains(participant))
+                _players.Add(participant);
         }
     }
 }
