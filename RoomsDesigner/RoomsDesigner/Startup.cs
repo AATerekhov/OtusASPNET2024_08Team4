@@ -5,13 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RoomsDesigner.Api.Infrastructure;
 using RoomsDesigner.Api.Infrastructure.ExceptionHandling;
-using RoomsDesigner.Api.Infrastructure.Settings;
-using RoomsDesigner.DataAccess;
+using RoomsDesigner.Application.Services.Implementations.Mapping;
+using RoomsDesigner.Infrastructure.EntityFramework;
 using System.Text.Json.Serialization;
 
 namespace RoomsDesigner.Api
 {
-	public class Startup
+    public class Startup
 	{
 		private IConfiguration Configuration { get; }
 
@@ -27,7 +27,8 @@ namespace RoomsDesigner.Api
 				options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 			});
 
-			services.ConfigureDbContext(Configuration.Get<ApplicationSettings>().ConnectionString);
+            services.AddAutoMapper(typeof(Program), typeof(CaseMapping));
+            services.AddApplicationDataContext(Configuration);
 			services.AddRoomDesignerServices();
 			services.AddSwaggerServices();
 		}
@@ -54,7 +55,7 @@ namespace RoomsDesigner.Api
 				endpoints.MapControllers();
 			});
 
-			app.MigrateDatabase<DatabaseContext>();
+			app.MigrateDatabase<ApplicationDbContext>();
 		}
 	}
 }

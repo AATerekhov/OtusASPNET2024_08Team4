@@ -13,6 +13,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Core", "Rooms
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.UnitTests", "RoomsDesigner.UnitTests\RoomsDesigner.UnitTests.csproj", "{AE006C0E-8256-4F80-9008-6AF6D9C5775E}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{693EF7F6-3C61-47BB-AA11-37B365499D11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Application.Service.Abstractions", "RoomsDesigner.Application.Service.Abstractions\RoomsDesigner.Application.Service.Abstractions.csproj", "{9E44A42A-61AE-400C-A701-05E2CC0AD7B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Application.Services.Implementations", "RoomsDesigner.Application.Services.Implementations\RoomsDesigner.Application.Services.Implementations.csproj", "{DCDD72FF-6DD1-4260-ADFE-32E4291729A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Application.Models", "RoomsDesigner.Application.Models\RoomsDesigner.Application.Models.csproj", "{E535535B-BE55-49D8-AEF2-C5ACC3511B69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{A307E5E1-9408-40EC-9297-16CEDA2BB37E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Domain.Entity", "RoomsDesigner.Domain.Entity\RoomsDesigner.Domain.Entity.csproj", "{6A684093-0F94-4026-A5BE-164914D9123C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Domain.Repository.Abstractions", "RoomsDesigner.Domain.Repository.Abstractions\RoomsDesigner.Domain.Repository.Abstractions.csproj", "{DE5E0B6F-FD20-4689-9A46-E13E0A0B5309}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8AEE1BD3-F8F1-4D47-BF2F-9BADB5EF8900}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Infrastructure.EntityFramework", "RoomsDesigner.Infrastructure.EntityFramework\RoomsDesigner.Infrastructure.EntityFramework.csproj", "{5A99CBD5-E55E-4324-A47A-54AB109FE7A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Infrastructure.Repository.Implementations", "RoomsDesigner.Infrastructure.Repository.Implementations\RoomsDesigner.Infrastructure.Repository.Implementations.csproj", "{52D6441B-A114-4C10-AF80-74C398497CDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +61,50 @@ Global
 		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E44A42A-61AE-400C-A701-05E2CC0AD7B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E44A42A-61AE-400C-A701-05E2CC0AD7B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E44A42A-61AE-400C-A701-05E2CC0AD7B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E44A42A-61AE-400C-A701-05E2CC0AD7B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCDD72FF-6DD1-4260-ADFE-32E4291729A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCDD72FF-6DD1-4260-ADFE-32E4291729A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCDD72FF-6DD1-4260-ADFE-32E4291729A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCDD72FF-6DD1-4260-ADFE-32E4291729A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E535535B-BE55-49D8-AEF2-C5ACC3511B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E535535B-BE55-49D8-AEF2-C5ACC3511B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E535535B-BE55-49D8-AEF2-C5ACC3511B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E535535B-BE55-49D8-AEF2-C5ACC3511B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A684093-0F94-4026-A5BE-164914D9123C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A684093-0F94-4026-A5BE-164914D9123C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A684093-0F94-4026-A5BE-164914D9123C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A684093-0F94-4026-A5BE-164914D9123C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE5E0B6F-FD20-4689-9A46-E13E0A0B5309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE5E0B6F-FD20-4689-9A46-E13E0A0B5309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE5E0B6F-FD20-4689-9A46-E13E0A0B5309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE5E0B6F-FD20-4689-9A46-E13E0A0B5309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A99CBD5-E55E-4324-A47A-54AB109FE7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A99CBD5-E55E-4324-A47A-54AB109FE7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A99CBD5-E55E-4324-A47A-54AB109FE7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A99CBD5-E55E-4324-A47A-54AB109FE7A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52D6441B-A114-4C10-AF80-74C398497CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D6441B-A114-4C10-AF80-74C398497CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D6441B-A114-4C10-AF80-74C398497CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D6441B-A114-4C10-AF80-74C398497CDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E44A42A-61AE-400C-A701-05E2CC0AD7B8} = {693EF7F6-3C61-47BB-AA11-37B365499D11}
+		{DCDD72FF-6DD1-4260-ADFE-32E4291729A8} = {693EF7F6-3C61-47BB-AA11-37B365499D11}
+		{E535535B-BE55-49D8-AEF2-C5ACC3511B69} = {693EF7F6-3C61-47BB-AA11-37B365499D11}
+		{6A684093-0F94-4026-A5BE-164914D9123C} = {A307E5E1-9408-40EC-9297-16CEDA2BB37E}
+		{DE5E0B6F-FD20-4689-9A46-E13E0A0B5309} = {A307E5E1-9408-40EC-9297-16CEDA2BB37E}
+		{5A99CBD5-E55E-4324-A47A-54AB109FE7A2} = {8AEE1BD3-F8F1-4D47-BF2F-9BADB5EF8900}
+		{52D6441B-A114-4C10-AF80-74C398497CDE} = {8AEE1BD3-F8F1-4D47-BF2F-9BADB5EF8900}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE1A57D3-C6CB-4CE8-BC3C-D61CD132469B}

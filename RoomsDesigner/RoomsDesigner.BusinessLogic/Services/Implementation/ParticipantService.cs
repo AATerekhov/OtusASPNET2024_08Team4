@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace RoomsDesigner.BusinessLogic.Services.Implementation
 {
-	public class UserService : BaseService, IUserService
+	public class ParticipantService : BaseService, IParticipantService
 	{
 		private readonly IRepository<User, Guid> _userRepository;
 		private readonly IRoleRepository _roleRepository;
 
-		public UserService(
+		public ParticipantService(
 			IRepository<User, Guid> userRepository,
 			IRoleRepository roleRepository)
 		{

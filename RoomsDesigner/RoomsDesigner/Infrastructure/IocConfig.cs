@@ -1,28 +1,42 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using RoomsDesigner.Core.Abstractions.Repositories;
-using RoomsDesigner.Core.Domain.Entities;
-using RoomsDesigner.Core.Domain.Entities.Administration;
-using RoomsDesigner.DataAccess.Repositories;
-using RoomsDesigner.DataAccess.Repositories.Implementation;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using RoomsDesigner.Api.Infrastructure.Settings;
+using RoomsDesigner.Application.Service.Abstractions;
+using RoomsDesigner.Application.Services.Implementations;
+using RoomsDesigner.Domain.Repository.Abstractions;
+using RoomsDesigner.Infrastructure.EntityFramework;
+using RoomsDesigner.Infrastructure.Repository.Implementations;
 
 namespace RoomsDesigner.Api.Infrastructure
 {
-	public static class IocConfig
+    public static class IocConfig
 	{
-		public static void AddRoomDesignerServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationDataContext(this IServiceCollection services, IConfiguration configuration)
+        {
+            var settings = configuration.Get<ApplicationSettings>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(settings.ConnectionString,
+                optionsBuilder => optionsBuilder.MigrationsAssembly("RoomsDesigner.Infrastructure.EntityFramework"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
+            return services;
+        }
+        public static void AddRoomDesignerServices(this IServiceCollection services)
 		{
 			AddDataAccessLayerRepositories(services);
-		}
-
+            AddApplicationsService(services);
+        }
+		private static void AddApplicationsService(this IServiceCollection services) 
+		{
+            services.AddScoped<ICaseService, СaseService>();
+            services.AddScoped<IParticipantService, ParticipantService>();
+        }
 		private static void AddDataAccessLayerRepositories(this IServiceCollection services)
 		{
-			services.AddScoped<IRoleRepository, RoleRepository>();
-			services.AddScoped<IRepository<HabitCategory, int>, HabitCategoryRepository>();
-			services.AddScoped<IRepository<Diary, Guid>, DiaryRepository>();
-			services.AddScoped<IRepository<Habit, Guid>, HabitRepository>();
-			services.AddScoped<IRepository<Room, Guid>, RoomRepository>();
-			services.AddScoped<IRepository<User, Guid>, UserRepository>();
+			services.AddScoped<ICaseRepository, CaseRepository>();
+			services.AddScoped<IParticipantRepository, ParticipantRepository>();
 		}
 	}
 }
