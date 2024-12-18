@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using RoomsDesigner.Application.Models.Participant;
-using RoomsDesigner.Application.Models.Room;
 using RoomsDesigner.Application.Service.Abstractions;
 using RoomsDesigner.Application.Service.Abstractions.Exceptions;
 using RoomsDesigner.Domain.Entity;
