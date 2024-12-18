@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Validators\**" />
     <Compile Remove="Models\**" />
+    <Content Remove="Infrastructure\Validators\**" />
     <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Infrastructure\Validators\**" />
     <EmbeddedResource Remove="Models\**" />
+    <None Remove="Infrastructure\Validators\**" />
     <None Remove="Models\**" />
   </ItemGroup>
 
@@ -23,16 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RoomsDesigner.Application.Models\RoomsDesigner.Application.Models.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Application.Models\RoomsDesigner.Application.Models.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Application.Models\RoomsDesigner.Application.Models.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Application.Service.Abstractions\RoomsDesigner.Application.Service.Abstractions.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Application.Services.Implementations\RoomsDesigner.Application.Services.Implementations.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Domain.Repository.Abstractions\RoomsDesigner.Domain.Repository.Abstractions.csproj" />
     <ProjectReference Include="..\RoomsDesigner.Infrastructure.Repository.Implementations\RoomsDesigner.Infrastructure.Repository.Implementations.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\Validators\" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
-﻿using RoomsDesigner.Application.Models.Participant;
-using System.Collections.Generic;
+﻿using RoomsDesigner.Api.Responses.Participant;
 using System;
-using RoomsDesigner.Api.Responses.Participant;
+using System.Collections.Generic;
 
 namespace RoomsDesigner.Api.Responses.Case
 {

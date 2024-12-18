@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RoomsDesigner.Api.Infrastructure.Settings;
 using RoomsDesigner.Application.Service.Abstractions;
 using RoomsDesigner.Application.Services.Implementations;
 using RoomsDesigner.Domain.Repository.Abstractions;
@@ -14,10 +13,10 @@ namespace RoomsDesigner.Api.Infrastructure
 	{
         public static IServiceCollection AddApplicationDataContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var settings = configuration.Get<ApplicationSettings>();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(settings.ConnectionString,
+                var connections = configuration.GetConnectionString("Postgres");
+                options.UseNpgsql(connections,
                 optionsBuilder => optionsBuilder.MigrationsAssembly("RoomsDesigner.Infrastructure.EntityFramework"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
