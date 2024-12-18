@@ -2,6 +2,7 @@
 using Magazine.DataAccess;
 using MagazineHost.Mapping;
 using MagazineHost.Settings;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,23 @@ namespace MagazineHost
 
             services.AddServices(Configuration);
             services.AddControllers();
+
+            services.AddMassTransit(configurator =>
+            {
+                configurator.SetKebabCaseEndpointNameFormatter();
+                configurator.UsingRabbitMq((context, cfg) =>
+                {
+                    var rmqSettings = Configuration.Get<ApplicationSettings>()!.RmqSettings;
+                    cfg.Host(rmqSettings.Host,
+                                rmqSettings.VHost,
+                                h =>
+                                {
+                                    h.Username(rmqSettings.Login);
+                                    h.Password(rmqSettings.Password);
+                                });
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
 
             services.AddOpenApiDocument(options =>
             {

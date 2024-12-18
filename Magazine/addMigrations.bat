@@ -4,4 +4,4 @@ IF "%MIGRATION_NAME%"=="" (
     echo "Migration name is required."
     exit /b 1
 )
-dotnet ef migrations add %MIGRATION_NAME% --project "C:\Users\ainur\source\repos\OtusASPNET2024_08Team4\Magazine\Magazine.DataAccess" --startup-project "C:\Users\ainur\source\repos\OtusASPNET2024_08Team4\Magazine\Magazine" --context "EfDbContext"
+dotnet ef migrations add %MIGRATION_NAME% --project "C:\Users\ainur\source\repos\Magazine\Magazine\Magazine.DataAccess" --startup-project "C:\Users\ainur\source\repos\Magazine\Magazine\Magazine" --context "EfDbContext"

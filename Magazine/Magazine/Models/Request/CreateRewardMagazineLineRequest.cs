@@ -2,7 +2,7 @@
 
 namespace MagazineHost.Models.Request
 {
-    public class CreateOrEditRewardMagazineLineRequest
+    public class CreateRewardMagazineLineRequest
     {
         [Required]
         public Guid MagazineId { get; set; }

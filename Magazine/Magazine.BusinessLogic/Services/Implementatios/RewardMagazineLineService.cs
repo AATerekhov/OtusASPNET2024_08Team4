@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Magazine.BusinessLogic.Helpers;
 using Magazine.BusinessLogic.Models.RewardMagazineLine;
 using Magazine.Core.Domain.Abstractions;
 using Magazine.Core.Domain.Magazines;
@@ -13,22 +14,11 @@ using System.Threading.Tasks;
 
 namespace Magazine.BusinessLogic.Services.Implementatios
 {
-    public class RewardMagazineLineService : BaseService, IRewardMagazineLineService
-    {
-        private readonly IMapper _mapper;
-        private readonly IRewardMagazineLineRepository _magazineLineRepository;
-
-        public RewardMagazineLineService(
-           IMapper mapper,
-           IRewardMagazineLineRepository magazineLineRepository)
+    public class RewardMagazineLineService(IMapper _mapper, IRewardMagazineLineRepository _magazineLineRepository) : BaseService, IRewardMagazineLineService
+    {     
+        public async Task<RewardMagazineLine> CreateAsync(CreateRewardMagazineLineDto createOrEditMagazineLineDto, CancellationToken cancellationToken)
         {
-            _mapper = mapper;
-            _magazineLineRepository = magazineLineRepository;
-        }
-
-        public async Task<RewardMagazineLine> CreateAsync(CreateOrEditRewardMagazineLineDto createOrEditMagazineLineDto, CancellationToken cancellationToken)
-        {
-            var magazineLine        = _mapper.Map<CreateOrEditRewardMagazineLineDto, RewardMagazineLine>(createOrEditMagazineLineDto);
+            var magazineLine        = _mapper.Map<CreateRewardMagazineLineDto, RewardMagazineLine>(createOrEditMagazineLineDto);
             var createdMagazineLine = await _magazineLineRepository.AddAsync(magazineLine, cancellationToken);
 
             await _magazineLineRepository.SaveChangesAsync(cancellationToken);
@@ -71,15 +61,14 @@ namespace Magazine.BusinessLogic.Services.Implementatios
                      );
         }
 
-        public async Task<RewardMagazineLine> UpdateAsync(Guid id, CreateOrEditRewardMagazineLineDto createOrEditMagazineLineDto, CancellationToken cancellationToken)
+        public async Task<RewardMagazineLine> UpdateAsync(Guid id, EditRewardMagazineLineDto editMagazineLineDto, CancellationToken cancellationToken)
         {
             var magazineLine = await _magazineLineRepository.GetByIdAsync(id, cancellationToken)
                     ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(RewardMagazineLine)));
 
-            magazineLine.EventDescription = !string.IsNullOrWhiteSpace(createOrEditMagazineLineDto.EventDescription) ? createOrEditMagazineLineDto.EventDescription : magazineLine.EventDescription;
-            magazineLine.MagazineId = createOrEditMagazineLineDto.MagazineId != Guid.Empty ? createOrEditMagazineLineDto.MagazineId : magazineLine.MagazineId;
-            magazineLine.RewardId = createOrEditMagazineLineDto.RewardId != Guid.Empty ? createOrEditMagazineLineDto.RewardId : magazineLine.RewardId;
-            magazineLine.Cost += createOrEditMagazineLineDto.Cost;
+            magazineLine.EventDescription = !string.IsNullOrWhiteSpace(editMagazineLineDto.EventDescription) ? editMagazineLineDto.EventDescription : magazineLine.EventDescription;        
+            magazineLine.Cost = editMagazineLineDto.Cost;
+            magazineLine.ModifiedDate = DateTimeHelper.ToDateTime(editMagazineLineDto.ModifiedDate, DateTimeHelper.DateFormat).ToUniversalTime();
 
             _magazineLineRepository.Update(magazineLine);
             await _magazineLineRepository.SaveChangesAsync(cancellationToken);

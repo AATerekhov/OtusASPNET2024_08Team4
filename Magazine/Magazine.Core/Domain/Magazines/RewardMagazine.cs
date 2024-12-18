@@ -18,6 +18,8 @@ namespace Magazine.Core.Domain.Magazines
 
         public Guid UserId { get; set; }
 
+        public decimal TotalCost { get; set; }
+
         public List<RewardMagazineLine> Lines { get; set; }
         public required RewardMagazineOwner MagazineOwner { get; set; }
 

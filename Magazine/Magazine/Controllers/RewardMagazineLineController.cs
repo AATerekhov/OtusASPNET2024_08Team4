@@ -8,6 +8,9 @@ using MagazineHost.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
+using MassTransit;
+using Magazine.Message;
+using MagazineHost.Mappers;
 
 namespace MagazineHost.Controllers
 {
@@ -16,8 +19,11 @@ namespace MagazineHost.Controllers
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class RewardMagazineLineController(IRewardMagazineLineService _service, IMapper _mapper,
-                                              IDistributedCache _distributedCache) : ControllerBase
+    public class RewardMagazineLineController(IRewardMagazineLineService _service,
+                                              IRewardMagazineService     _magazineService,
+                                              IMapper                    _mapper,
+                                              IDistributedCache _distributedCache,
+                                              IBusControl      _busControl) : ControllerBase
     {
        
         /// <summary>
@@ -121,26 +127,32 @@ namespace MagazineHost.Controllers
         /// <param name="request">CreateOrEditRewardMagazineLineRequest</param>
         /// <returns></returns>
         [HttpPost("CreateMagazineLine")]
-        public async Task<ActionResult<RewardMagazineLineResponse>> CreateMagazineLineAsync(CreateOrEditRewardMagazineLineRequest request)
+        public async Task<ActionResult<RewardMagazineLineResponse>> CreateMagazineLineAsync(CreateRewardMagazineLineRequest request)
         {
-            var diaryLine = await _service.CreateAsync(_mapper.Map<CreateOrEditRewardMagazineLineDto>(request), HttpContext.RequestAborted);
+            var magazineLine = await _service.CreateAsync(_mapper.Map<CreateRewardMagazineLineDto>(request), HttpContext.RequestAborted);
+            var magazine    = await _magazineService.GetByIdAsync(magazineLine.MagazineId, HttpContext.RequestAborted);
 
-            return Ok(_mapper.Map<RewardMagazineLineResponse>(diaryLine));
+            await _busControl.Publish<MagazineLineMessage>(MagazineLineMessageMapper.MapInMessage(magazine, magazineLine), HttpContext.RequestAborted);
+
+            return Ok(_mapper.Map<RewardMagazineLineResponse>(magazineLine));
         }
 
         /// <summary>
         /// Изменение строки журнала по гуиду
         /// </summary>
         /// <param name="id">Guid</param>
-        /// <param name="request">CreateOrEditRewardMagazineLineRequest</param>
+        /// <param name="request">EditRewardMagazineLineRequest</param>
         /// <returns></returns>
 
         [HttpPut("UpdateMagazineLine/{id}")]
-        public async Task<ActionResult<RewardMagazineLineResponse>> EditMagazineLineAsync(Guid id, CreateOrEditRewardMagazineLineRequest request)
+        public async Task<ActionResult<RewardMagazineLineResponse>> EditMagazineLineAsync(Guid id, EditRewardMagazineLineRequest request)
         {
-            var diaryLine = await _service.UpdateAsync(id, _mapper.Map<CreateOrEditRewardMagazineLineRequest, CreateOrEditRewardMagazineLineDto>(request), HttpContext.RequestAborted);
+            var magazineLine = await _service.UpdateAsync(id, _mapper.Map<EditRewardMagazineLineRequest, EditRewardMagazineLineDto>(request), HttpContext.RequestAborted);
+            var magazine     = await _magazineService.GetByIdAsync(magazineLine.MagazineId, HttpContext.RequestAborted);
 
-            return Ok(_mapper.Map<RewardMagazineLineResponse>(diaryLine));
+            await _busControl.Publish<MagazineLineMessage>(MagazineLineMessageMapper.MapInMessage(magazine, magazineLine), HttpContext.RequestAborted);
+
+            return Ok(_mapper.Map<RewardMagazineLineResponse>(magazineLine));
         }
 
         /// <summary>
