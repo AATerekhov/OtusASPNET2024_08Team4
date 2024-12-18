@@ -87,9 +87,9 @@ namespace MagazineHost.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("CreateMagazine")]
-        public async Task<ActionResult<RewardMagazineResponse>> CreateMagazineAsync(CreateOrEditRewardMagazineRequest request)
+        public async Task<ActionResult<RewardMagazineResponse>> CreateMagazineAsync(CreateRewardMagazineRequest request)
         {
-            var diary = await _service.CreateAsync(_mapper.Map<CreateOrEditRewardMagazineDto>(request), HttpContext.RequestAborted);
+            var diary = await _service.CreateAsync(_mapper.Map<CreateRewardMagazineDto>(request), HttpContext.RequestAborted);
             return Ok(_mapper.Map<RewardMagazineResponse>(diary));
         }
 
@@ -97,13 +97,13 @@ namespace MagazineHost.Controllers
         /// Изменение журнала наград по гуиду
         /// </summary>
         /// <param name="id">Guid</param>
-        /// <param name="request">CreateOrEditRewardMagazineRequest</param>
+        /// <param name="request">EditRewardMagazineRequest</param>
         /// <returns></returns>
 
         [HttpPut("UpdateMagazine/{id}")]
-        public async Task<ActionResult<RewardMagazineResponse>> EditMagazineAsync(Guid id, CreateOrEditRewardMagazineRequest request)
+        public async Task<ActionResult<RewardMagazineResponse>> EditMagazineAsync(Guid id, EditRewardMagazineRequest request)
         {
-            var diary = await _service.UpdateAsync(id, _mapper.Map<CreateOrEditRewardMagazineRequest, CreateOrEditRewardMagazineDto>(request), HttpContext.RequestAborted);
+            var diary = await _service.UpdateAsync(id, _mapper.Map<EditRewardMagazineRequest, EditRewardMagazineDto>(request), HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<RewardMagazineResponse>(diary));
         }
@@ -126,7 +126,7 @@ namespace MagazineHost.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetAllByMagazineOwnerId/{id}")]
-        public async Task<ActionResult<RewardMagazineShortResponse>> GetMaggazinesByMagazineOwnerIdAsync(Guid id)
+        public async Task<ActionResult<RewardMagazineShortResponse>> GetMagazinesByMagazineOwnerIdAsync(Guid id)
         {
             string? serialized = await _distributedCache.GetStringAsync(KeyForCache.MagazinesByMagazineOwnerIdKey(id), HttpContext.RequestAborted);
 

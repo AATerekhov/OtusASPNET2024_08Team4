@@ -25,9 +25,9 @@ namespace Magazine.BusinessLogic.Services.Implementatios
             _magazineRepository = magazineRepository;
         }
 
-        public async Task<RewardMagazine> CreateAsync(CreateOrEditRewardMagazineDto createOrEditMagazineDto, CancellationToken cancellationToken)
+        public async Task<RewardMagazine> CreateAsync(CreateRewardMagazineDto createOrEditMagazineDto, CancellationToken cancellationToken)
         {
-            var magazine        = _mapper.Map<CreateOrEditRewardMagazineDto, RewardMagazine>(createOrEditMagazineDto);
+            var magazine        = _mapper.Map<CreateRewardMagazineDto, RewardMagazine>(createOrEditMagazineDto);
             var createdMagazine = await _magazineRepository.AddAsync(magazine, cancellationToken);
 
             await _magazineRepository.SaveChangesAsync(cancellationToken);
@@ -70,15 +70,13 @@ namespace Magazine.BusinessLogic.Services.Implementatios
            );
         }
 
-        public async Task<RewardMagazine> UpdateAsync(Guid id, CreateOrEditRewardMagazineDto createOrEditMagazineDto, CancellationToken cancellationToken)
+        public async Task<RewardMagazine> UpdateAsync(Guid id, EditRewardMagazineDto editMagazineDto, CancellationToken cancellationToken)
         {
             var magazine = await _magazineRepository.GetByIdAsync(id, cancellationToken)
                      ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(RewardMagazine)));
 
-            magazine.Description     = !string.IsNullOrWhiteSpace(createOrEditMagazineDto.Description) ? createOrEditMagazineDto.Description : magazine.Description;
-            magazine.MagazineOwnerId = createOrEditMagazineDto.MagazineOwnerId != Guid.Empty ? createOrEditMagazineDto.MagazineOwnerId : magazine.MagazineOwnerId;
-            magazine.RoomId          = createOrEditMagazineDto.RoomId != Guid.Empty ? createOrEditMagazineDto.RoomId : magazine.RoomId;
-            magazine.UserId          = createOrEditMagazineDto.UserId != Guid.Empty ? createOrEditMagazineDto.UserId : magazine.UserId;
+            magazine.Description = !string.IsNullOrWhiteSpace(editMagazineDto.Description) ? editMagazineDto.Description : magazine.Description;
+            magazine.TotalCost   = editMagazineDto.TotalCost;
 
             _magazineRepository.Update(magazine);
             await _magazineRepository.SaveChangesAsync(cancellationToken);

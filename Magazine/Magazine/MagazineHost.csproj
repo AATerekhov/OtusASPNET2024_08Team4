@@ -10,6 +10,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MassTransit" Version="8.3.4" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -31,6 +34,7 @@
     <ProjectReference Include="..\Magazine.BusinessLogic\Magazine.BusinessLogic.csproj" />
     <ProjectReference Include="..\Magazine.Core\Magazine.Core.csproj" />
     <ProjectReference Include="..\Magazine.DataAccess\Magazine.DataAccess.csproj" />
+    <ProjectReference Include="..\Magazine.Message\Magazine.Message.csproj" />
   </ItemGroup>
 
   <ItemGroup>

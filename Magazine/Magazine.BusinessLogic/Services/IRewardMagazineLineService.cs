@@ -31,15 +31,15 @@ namespace Magazine.BusinessLogic.Services
         /// </summary>
         /// <param name="createOrEditMagazineLineDto"> дто редактируемой строки журнала наград. </param>
         /// <param name="cancellationToken"> cancellationToken </param>
-        Task<RewardMagazineLine> CreateAsync(CreateOrEditRewardMagazineLineDto createOrEditMagazineLineDto, CancellationToken cancellationToken);
+        Task<RewardMagazineLine> CreateAsync(CreateRewardMagazineLineDto createOrEditMagazineLineDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Изменить строку дневника
         /// </summary>
         /// <param name="id"> Гуид строки </param>
-        /// <param name="createOrEditMagazineLineDto"> дто редактируемой строки журнала наград </param>
+        /// <param name="editMagazineLineDto"> дто редактируемой строки журнала наград </param>
         /// <param name="cancellationToken"> cancellationToken </param>
-        Task<RewardMagazineLine> UpdateAsync(Guid id, CreateOrEditRewardMagazineLineDto createOrEditMagazineLineDto, CancellationToken cancellationToken);
+        Task<RewardMagazineLine> UpdateAsync(Guid id, EditRewardMagazineLineDto editMagazineLineDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удалить строку журнала наград

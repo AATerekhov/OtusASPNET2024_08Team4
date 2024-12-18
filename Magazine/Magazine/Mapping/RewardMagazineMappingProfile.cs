@@ -15,8 +15,9 @@ namespace MagazineHost.Mapping
             CreateMap<RewardMagazine, RewardMagazineShortResponse>();
             CreateMap<RewardMagazineFilterRequest, RewardMagazineFilterDto>();
             CreateMap<RewardMagazineFilterDto, RewardMagazineFilterModel>();
-            CreateMap<CreateOrEditRewardMagazineRequest, CreateOrEditRewardMagazineDto>();
-            CreateMap<CreateOrEditRewardMagazineDto, RewardMagazine>()
+            CreateMap<CreateRewardMagazineRequest, CreateRewardMagazineDto>();
+            CreateMap<EditRewardMagazineRequest, EditRewardMagazineDto>();
+            CreateMap<CreateRewardMagazineDto, RewardMagazine>()
               .ForMember(j => j.Lines, opt => opt.Ignore())
               .ForMember(j => j.MagazineOwner, opt => opt.Ignore())
               .ForMember(j => j.Id, opt => opt.Ignore());
