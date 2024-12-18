@@ -34,6 +34,20 @@ services:
     networks:
       - caching-network
  
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: 'rabbit'
+    restart: always
+    hostname: rabbitmqhost    
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+ 
   redis:
     container_name: redis
     image: redis:latest

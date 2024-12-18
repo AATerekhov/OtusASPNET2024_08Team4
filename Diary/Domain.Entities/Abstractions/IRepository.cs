@@ -12,6 +12,9 @@ namespace Diary.Core.Abstractions
 
     {
         Task<List<T>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking, Expression<Func<T, bool>> filter = null, string includes = null);
+        Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
+
+        Task<T> GetFirstWhere(Expression<Func<T, bool>> predicate);
         Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken, string includes = null);
         Task<T> AddAsync(T entity, CancellationToken cancellationToken);
 

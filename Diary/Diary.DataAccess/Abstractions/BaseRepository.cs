@@ -186,5 +186,26 @@ namespace Diary.DataAccess.Abstractions
         {
             await Context.SaveChangesAsync(cancellationToken);
         }
+
+        /// <summary>
+        /// получение записей по условиям
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
+        {
+            return await Context.Set<T>().Where(predicate).ToListAsync();
+        }
+
+        /// <summary>
+        /// получение записи по условиям
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public async Task<T> GetFirstWhere(Expression<Func<T, bool>> predicate)
+        {
+            return await Context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+
     }
 }
