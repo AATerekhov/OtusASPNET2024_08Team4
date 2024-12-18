@@ -6,7 +6,7 @@ namespace Diary.Models.Request
     public class HabitDiaryLineFilterRequest
     {
         public Guid DiaryId { get; set; }
-        public Guid HabitId { get; set; }
+        public Guid EntityId { get; set; }
         public required string EventDescription { get; set; }
         public Status Status { get; set; }
 

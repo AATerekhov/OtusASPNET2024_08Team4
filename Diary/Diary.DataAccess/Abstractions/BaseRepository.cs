@@ -42,7 +42,7 @@ namespace Diary.DataAccess.Abstractions
                 }
             }
 
-            return await query.AsNoTracking().FirstOrDefaultAsync();
+            return await query.AsNoTracking().Where(x => x.Id == id).FirstAsync(cancellationToken);
         }
 
         /// <summary>

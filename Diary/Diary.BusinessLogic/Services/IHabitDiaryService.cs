@@ -1,4 +1,5 @@
 ﻿using Diary.BusinessLogic.Models.DiaryOwner;
+using Diary.BusinessLogic.Models.HabitDiary;
 using Diary.BusinessLogic.Models.UserJournal;
 using Diary.Core.Domain.Administration;
 using Diary.Core.Domain.Diary;
@@ -25,15 +26,15 @@ namespace Diary.BusinessLogic.Services
         /// </summary>
         /// <param name="createOrEditJournalDto"> дто редактируемого дневник. </param>
         /// <param name="cancellationToken"> cancellationToken </param>
-        Task<HabitDiary> CreateAsync(CreateOrEditHabitDiaryDto createOrEditJournalDto, CancellationToken cancellationToken);
+        Task<HabitDiary> CreateAsync(CreateHabitDiaryDto createOrEditJournalDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Изменить дневник
         /// </summary>
         /// <param name="id"> Иентификатор. </param>
-        /// <param name="createOrEditJournalDto"> дто редактируемого дневника </param>
-        /// <param name="cancellationToken"> CancellationToken</param>
-        Task<HabitDiary> UpdateAsync(Guid id, CreateOrEditHabitDiaryDto createOrEditJournalDto, CancellationToken cancellationToken);
+        /// <param name="editJournalDto"> дто редактируемого дневника </param>
+        /// <param name="cancellationToken">CancellationToken</param>
+        Task<HabitDiary> UpdateAsync(Guid id, EditHabitDiaryDto editJournalDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удалить дневник

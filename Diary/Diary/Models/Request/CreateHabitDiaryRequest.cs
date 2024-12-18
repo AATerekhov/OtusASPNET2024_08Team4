@@ -2,7 +2,7 @@
 
 namespace Diary.Models.Request
 {
-    public class CreateOrEditHabitDiaryRequest
+    public class CreateHabitDiaryRequest
     {
         [Required]
         public Guid RoomId { get; init; }
@@ -12,5 +12,7 @@ namespace Diary.Models.Request
 
         [Required]
         public Guid DiaryOwnerId { get; init; }
+
+        public decimal TotalCost { get; init; }
     }
 }

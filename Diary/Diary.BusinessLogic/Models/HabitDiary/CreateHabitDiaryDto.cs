@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Diary.BusinessLogic.Models.UserJournal
 {
-    public class CreateOrEditHabitDiaryDto
+    public class CreateHabitDiaryDto
     {
         public Guid RoomId { get; init; }
         public string Description { get; init; }
 
         public Guid DiaryOwnerId { get; init; }
-
+        public decimal TotalCost { get; init; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Diary.BusinessLogic.Models.DiaryOwner;
+using Diary.BusinessLogic.Models.HabitDiary;
 using Diary.BusinessLogic.Models.UserJournal;
 using Diary.Core.Domain.Administration;
 using Diary.Core.Domain.Diary;
@@ -28,9 +29,9 @@ namespace Diary.BusinessLogic.Services.Implementation
             _diaryRepository = diaryRepository;
         }
 
-        public async Task<HabitDiary> CreateAsync(CreateOrEditHabitDiaryDto createOrEditDiaryDto, CancellationToken cancellationToken)
+        public async Task<HabitDiary> CreateAsync(CreateHabitDiaryDto createOrEditDiaryDto, CancellationToken cancellationToken)
         {
-            var diary        = _mapper.Map<CreateOrEditHabitDiaryDto, HabitDiary>(createOrEditDiaryDto);
+            var diary        = _mapper.Map<CreateHabitDiaryDto, HabitDiary>(createOrEditDiaryDto);
             var createdDiary = await _diaryRepository.AddAsync(diary, cancellationToken);
 
             await _diaryRepository.SaveChangesAsync(cancellationToken);
@@ -68,14 +69,13 @@ namespace Diary.BusinessLogic.Services.Implementation
             );
         }
 
-        public async Task<HabitDiary> UpdateAsync(Guid id, CreateOrEditHabitDiaryDto createOrEditDiaryDto, CancellationToken cancellationToken)
+        public async Task<HabitDiary> UpdateAsync(Guid id, EditHabitDiaryDto editDiaryDto, CancellationToken cancellationToken)
         {
             var habitDiary = await _diaryRepository.GetByIdAsync(id, cancellationToken)
                     ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Core.Domain.Diary.HabitDiary)));
 
-            habitDiary.Description    = !string.IsNullOrWhiteSpace(createOrEditDiaryDto.Description) ? createOrEditDiaryDto.Description : habitDiary.Description;
-            habitDiary.DiaryOwnerId   = createOrEditDiaryDto.DiaryOwnerId != Guid.Empty ? createOrEditDiaryDto.DiaryOwnerId : habitDiary.DiaryOwnerId;
-            habitDiary.RoomId         = createOrEditDiaryDto.RoomId != Guid.Empty ? createOrEditDiaryDto.RoomId : habitDiary.RoomId;
+            habitDiary.Description    = !string.IsNullOrWhiteSpace(editDiaryDto.Description) ? editDiaryDto.Description : habitDiary.Description;
+            habitDiary.TotalCost      += editDiaryDto.TotalCost;
 
             _diaryRepository.Update(habitDiary);
             await _diaryRepository.SaveChangesAsync(cancellationToken);

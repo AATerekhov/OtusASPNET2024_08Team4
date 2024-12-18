@@ -1,21 +1,21 @@
 ﻿using Diary.Core.Domain.BaseTypes;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Diary.Models.Request
+namespace Diary.BusinessLogic.Models.HabitDiaryLine
 {
-    public class CreateOrEditHabitDiaryLineRequest
+    public class CreateHabitDiaryLineDto
     {
-        [Required]
         public Guid DiaryId { get; set; }
-        [Required]
-        public Guid HabitId { get; set; }
-        [Required]
+        public Guid EntityId { get; set; }
+        public EntityType entityType { get; set; }
         public required string EventDescription { get; set; }
-        [Required]
         public Status Status { get; set; }
-        [Required]
         public required string ModifiedDate { get; set; }
-
         public decimal Cost { get; set; }
     }
 }
