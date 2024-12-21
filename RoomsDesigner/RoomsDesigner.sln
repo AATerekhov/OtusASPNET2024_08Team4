@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Infrastructure.Repository.Implementations", "RoomsDesigner.Infrastructure.Repository.Implementations\RoomsDesigner.Infrastructure.Repository.Implementations.csproj", "{52D6441B-A114-4C10-AF80-74C398497CDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Application.Messages", "RoomsDesigner.Application.Messages\RoomsDesigner.Application.Messages.csproj", "{A233242C-36B5-4DCF-9D87-08778B94EE4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{52D6441B-A114-4C10-AF80-74C398497CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52D6441B-A114-4C10-AF80-74C398497CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52D6441B-A114-4C10-AF80-74C398497CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A233242C-36B5-4DCF-9D87-08778B94EE4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A233242C-36B5-4DCF-9D87-08778B94EE4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A233242C-36B5-4DCF-9D87-08778B94EE4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A233242C-36B5-4DCF-9D87-08778B94EE4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +111,7 @@ Global
 		{DE5E0B6F-FD20-4689-9A46-E13E0A0B5309} = {A307E5E1-9408-40EC-9297-16CEDA2BB37E}
 		{5A99CBD5-E55E-4324-A47A-54AB109FE7A2} = {8AEE1BD3-F8F1-4D47-BF2F-9BADB5EF8900}
 		{52D6441B-A114-4C10-AF80-74C398497CDE} = {8AEE1BD3-F8F1-4D47-BF2F-9BADB5EF8900}
+		{A233242C-36B5-4DCF-9D87-08778B94EE4B} = {693EF7F6-3C61-47BB-AA11-37B365499D11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE1A57D3-C6CB-4CE8-BC3C-D61CD132469B}

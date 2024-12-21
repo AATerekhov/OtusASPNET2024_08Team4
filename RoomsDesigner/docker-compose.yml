@@ -8,6 +8,10 @@ services:
     environment:
       "ASPNETCORE_URLS": "http://+:5100"
       ConnectionStrings:Postgres: "Host=roomsdesigner_db;Port=5432;Database=room;UserId=postgres;Password=admin24"
+      RmqSettings:Host: "habit-rabbit"
+      RmqSettings:VHost: "/"
+      RmqSettings:Login: "guest"
+      RmqSettings:Password: "guest"
     depends_on:
       - roomsdesigner_db
     ports:
@@ -21,7 +25,24 @@ services:
       POSTGRES_DB: room
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin24
+    ports:
+      - "5543:5432"
     volumes:
       - 'roomsdesigner_data:/var/lib/postgresql/data'
+  
+  habit-rabbit:
+    image: rabbitmq:3-management
+    container_name: 'habit-rabbit'
+    restart: always
+    hostname: rabbitmqhost    
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 volumes:
   roomsdesigner_data:
+  rabbitmq_data:

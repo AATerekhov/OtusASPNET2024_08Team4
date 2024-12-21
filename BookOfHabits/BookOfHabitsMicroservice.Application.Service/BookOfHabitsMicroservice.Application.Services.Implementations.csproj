@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MassTransit" Version="8.3.4" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookOfHabitsMicroservice.Application.Messages\BookOfHabitsMicroservice.Application.Messages.csproj" />
     <ProjectReference Include="..\BookOfHabitsMicroservice.Application.Model\BookOfHabitsMicroservice.Application.Models.csproj" />
     <ProjectReference Include="..\BookOfHabitsMicroservice.Application.Services.Abstractions\BookOfHabitsMicroservice.Application.Services.Abstractions.csproj" />
     <ProjectReference Include="..\BookOfHabitsMicroservice.Domain.Entity\BookOfHabitsMicroservice.Domain.Entity.csproj" />

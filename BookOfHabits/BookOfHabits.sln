@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOfHabitsMicroservice.Ap
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F15342BC-832A-4430-98D9-85B121AC7326}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOfHabitsMicroservice.Application.Messages", "BookOfHabitsMicroservice.Application.Messages\BookOfHabitsMicroservice.Application.Messages.csproj", "{EE293D2B-3E90-41B2-BE9B-5A0AF2D6BBB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{F15342BC-832A-4430-98D9-85B121AC7326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F15342BC-832A-4430-98D9-85B121AC7326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F15342BC-832A-4430-98D9-85B121AC7326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE293D2B-3E90-41B2-BE9B-5A0AF2D6BBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE293D2B-3E90-41B2-BE9B-5A0AF2D6BBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE293D2B-3E90-41B2-BE9B-5A0AF2D6BBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE293D2B-3E90-41B2-BE9B-5A0AF2D6BBB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{CBC55176-1E6C-46EE-BB36-EC243EBFBEF1} = {BA830F69-F345-4576-BF0C-EFA0566D7835}
 		{2D488056-D835-4E82-BCF6-90602E86FB8B} = {BA830F69-F345-4576-BF0C-EFA0566D7835}
 		{70A8FE6A-BED4-44A9-966B-81AA772DA09B} = {BA830F69-F345-4576-BF0C-EFA0566D7835}
+		{EE293D2B-3E90-41B2-BE9B-5A0AF2D6BBB4} = {BA830F69-F345-4576-BF0C-EFA0566D7835}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F402C2E4-96AD-407D-ABDD-5E440AD5BF3C}

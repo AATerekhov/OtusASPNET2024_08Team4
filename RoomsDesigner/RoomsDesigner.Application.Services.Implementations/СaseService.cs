@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using MassTransit;
+using RoomsDesigner.Application.Messages;
 using RoomsDesigner.Application.Models.Room;
 using RoomsDesigner.Application.Service.Abstractions;
 using RoomsDesigner.Application.Service.Abstractions.Exceptions;
@@ -7,13 +9,14 @@ using RoomsDesigner.Domain.Repository.Abstractions;
 
 namespace RoomsDesigner.Application.Services.Implementations
 {
-    public class СaseService(ICaseRepository caseRepository, IMapper mapper) : BaseService, ICaseService
+    public class СaseService(ICaseRepository caseRepository, IMapper mapper, IBusControl busControl) : BaseService, ICaseService
     {
         public async Task<CaseModel?> AddRoomAsync(CreateCaseModel roomInfo, CancellationToken token = default)
         {
             var caseEntity = new Case(roomInfo.Name, roomInfo.OwnerId);
             caseEntity = await caseRepository.AddAsync(entity: caseEntity, cancellationToken: token)
                 ?? throw new BadRequestException(FormatBadRequestErrorMessage(Guid.Empty, nameof(Case)));
+            await busControl.Publish(mapper.Map<CreateRoomMessage>(caseEntity),token);
             return mapper.Map<CaseModel>(caseEntity);
         }
 
