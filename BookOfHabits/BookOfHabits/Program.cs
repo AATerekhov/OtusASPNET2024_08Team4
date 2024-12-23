@@ -30,6 +30,7 @@ builder.Services.AddMassTransit(configurator =>
 {
     configurator.SetKebabCaseEndpointNameFormatter();
     configurator.AddConsumer<RoomDesignerRoomToBooksConsumer>();
+    configurator.AddConsumer<ParticipantAddedInRoomConsumer>();
     configurator.UsingRabbitMq((context, configurator) =>
     {
         var rmqSettings = builder.Configuration.Get<ApplicationSettings>()!.RmqSettings;

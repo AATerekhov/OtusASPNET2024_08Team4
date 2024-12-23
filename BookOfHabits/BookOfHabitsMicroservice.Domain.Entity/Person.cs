@@ -1,6 +1,5 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Base;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
-using System.Linq;
 
 namespace BookOfHabitsMicroservice.Domain.Entity
 {

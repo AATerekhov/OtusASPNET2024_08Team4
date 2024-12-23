@@ -1,5 +1,4 @@
-﻿using BookOfHabits.Infrastructure.Settings;
-using BookOfHabits.Infrastructure.Validators;
+﻿using BookOfHabits.Infrastructure.Validators;
 using BookOfHabits.Requests;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Implementations;

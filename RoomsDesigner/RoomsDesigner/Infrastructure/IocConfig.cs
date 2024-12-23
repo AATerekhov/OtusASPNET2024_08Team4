@@ -13,9 +13,9 @@ namespace RoomsDesigner.Api.Infrastructure
 	{
         public static IServiceCollection AddApplicationDataContext(this IServiceCollection services, IConfiguration configuration)
         {
+            var connections = configuration.GetConnectionString("Postgres");
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                var connections = configuration.GetConnectionString("Postgres");
                 options.UseNpgsql(connections,
                 optionsBuilder => optionsBuilder.MigrationsAssembly("RoomsDesigner.Infrastructure.EntityFramework"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
