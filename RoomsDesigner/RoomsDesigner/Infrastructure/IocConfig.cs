@@ -31,6 +31,7 @@ namespace RoomsDesigner.Api.Infrastructure
 		{
             services.AddScoped<ICaseService, СaseService>();
             services.AddScoped<IParticipantService, ParticipantService>();
+            services.AddScoped<ILaunchService, LaunchService>();
         }
 		private static void AddDataAccessLayerRepositories(this IServiceCollection services)
 		{

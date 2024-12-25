@@ -17,7 +17,9 @@ namespace RoomsDesigner.Controllers
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class CaseController(ICaseService caseService, IMapper mapper) : ControllerBase
+    public class CaseController(ICaseService caseService,
+        ILaunchService launchService,
+        IMapper mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IEnumerable<CaseShortResponse>> GetAllRooms()
@@ -51,5 +53,9 @@ namespace RoomsDesigner.Controllers
         {
             await caseService.DeleteRoom(id, HttpContext.RequestAborted);
         }
+
+        [HttpPost("launch")]
+        public async Task LaunchCase(LaunchRequest request) =>
+            await launchService.StartingCase(mapper.Map<LaunchModel>(request), HttpContext.RequestAborted);
     }
 }
