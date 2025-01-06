@@ -11,18 +11,18 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5000
       ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
-      ConnectionStrings:Postgres: "Host=postgres;Port=5432;Database=magazinedb;Username=postgres;Password=1234;Include Error Detail=true"
+      magazine_connection_db_string: "Host=magazinePostgresdb;Port=5432;Database=magazinedb;Username=postgres;Password=1234;Include Error Detail=true"
     ports:
       - 5000:5000
     networks:
       - caching-network
 
   magazinePostgresdb:
-    container_name: magazine_container_db_postgresql
+    container_name: magazinePostgresdb
     image: postgres:latest
-    hostname: postgres
+    hostname: postgres2
     ports:
-      - "5432:5432"
+      - "5433:5433"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
@@ -49,7 +49,7 @@ services:
     image: rabbitmq:3-management
     container_name: 'rabbit'
     restart: always
-    hostname: rabbitmqhost    
+    hostname: rabbitmqhost  
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -58,6 +58,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - caching-network
  
 volumes:
   db_data:
