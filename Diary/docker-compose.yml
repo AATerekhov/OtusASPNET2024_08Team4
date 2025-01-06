@@ -11,14 +11,14 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5000
       ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
-      ConnectionStrings:Postgres: "Host=postgres;Port=5432;Database=diarydb;Username=postgres;Password=1234;Include Error Detail=true"
+      diary_connection_db_string: "Host=diary_db;Port=5432;Database=diarydb;Username=postgres;Password=1234;Include Error Detail=true"
     ports:
       - 5000:5000
     networks:
       - caching-network
 
-  db:
-    container_name: diary_container_db_postgresql
+  diary_db:
+    container_name: diary_db
     image: postgres:latest
     hostname: postgres
     ports:
@@ -47,7 +47,9 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
- 
+    networks:
+      - caching-network
+
   redis:
     container_name: redis
     image: redis:latest

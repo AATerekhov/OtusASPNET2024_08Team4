@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Diary.Consumers;
 using Diary.DataAccess;
 using Diary.Mapping;
 using Diary.Settings;
@@ -23,9 +24,11 @@ namespace Diary
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Environment.GetEnvironmentVariable("diary_connection_db_string");
+
             services.AddDbContext<EfDbContext>(optionsBuilder
                => optionsBuilder
-                   .UseNpgsql(Configuration.Get<ApplicationSettings>().ConnectionString));
+                   .UseNpgsql(connectionString));
 
             services.AddStackExchangeRedisCache(options =>
             {
@@ -38,10 +41,12 @@ namespace Diary
 
             services.AddServices(Configuration);
             services.AddControllers();
-
+ 
             services.AddMassTransit(configurator =>
             {
                 configurator.SetKebabCaseEndpointNameFormatter();
+                configurator.AddConsumer<CreateDiaryLineFromMagazineConsumer>();
+
                 configurator.UsingRabbitMq((context, cfg) =>
                 {
                     var rmqSettings = Configuration.Get<ApplicationSettings>()!.RmqSettings;
@@ -52,8 +57,14 @@ namespace Diary
                                     h.Username(rmqSettings.Login);
                                     h.Password(rmqSettings.Password);
                                 });
-                    cfg.ConfigureEndpoints(context);
+                    // Настройка consumer
+                    cfg.ReceiveEndpoint("diary-magazine-line-queue", e =>
+                    {
+                        e.ConfigureConsumer<CreateDiaryLineFromMagazineConsumer>(context);
+                    });
                 });
+
+ 
             });
 
             services.AddOpenApiDocument(options =>
