@@ -2,10 +2,8 @@
 
 namespace RoomsDesigner.Api.Requests.Case
 {
-    public class UpdateCaseRequest
+    public class UpdateCaseRequest:CreateCaseRequest
     {
         public Guid Id { get; init; }
-        public Guid OwnerId { get; init; }
-        public required string Name { get; init; }
     }
 }

@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.BusinessLogic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Core", "RoomsDesigner.Core\RoomsDesigner.Core.csproj", "{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.UnitTests", "RoomsDesigner.UnitTests\RoomsDesigner.UnitTests.csproj", "{AE006C0E-8256-4F80-9008-6AF6D9C5775E}"
-EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{693EF7F6-3C61-47BB-AA11-37B365499D11}"
@@ -37,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.Application.Messages", "RoomsDesigner.Application.Messages\RoomsDesigner.Application.Messages.csproj", "{A233242C-36B5-4DCF-9D87-08778B94EE4B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{39C98139-03E8-4838-8973-54A224A4D403}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsDesigner.UnitTests", "RoomsDesigner.UnitTests\RoomsDesigner.UnitTests.csproj", "{C5A92A45-20AD-494C-BED9-8A3D3AFD0CCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,10 +61,6 @@ Global
 		{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CABD2BF3-0B9E-44BC-9E2D-6737DCFC8E98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE006C0E-8256-4F80-9008-6AF6D9C5775E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{752C5A6D-1E7F-4D1B-8AE6-A4662E55880A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -99,6 +97,10 @@ Global
 		{A233242C-36B5-4DCF-9D87-08778B94EE4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A233242C-36B5-4DCF-9D87-08778B94EE4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A233242C-36B5-4DCF-9D87-08778B94EE4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A92A45-20AD-494C-BED9-8A3D3AFD0CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A92A45-20AD-494C-BED9-8A3D3AFD0CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A92A45-20AD-494C-BED9-8A3D3AFD0CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A92A45-20AD-494C-BED9-8A3D3AFD0CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +114,7 @@ Global
 		{5A99CBD5-E55E-4324-A47A-54AB109FE7A2} = {8AEE1BD3-F8F1-4D47-BF2F-9BADB5EF8900}
 		{52D6441B-A114-4C10-AF80-74C398497CDE} = {8AEE1BD3-F8F1-4D47-BF2F-9BADB5EF8900}
 		{A233242C-36B5-4DCF-9D87-08778B94EE4B} = {693EF7F6-3C61-47BB-AA11-37B365499D11}
+		{C5A92A45-20AD-494C-BED9-8A3D3AFD0CCB} = {39C98139-03E8-4838-8973-54A224A4D403}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE1A57D3-C6CB-4CE8-BC3C-D61CD132469B}
