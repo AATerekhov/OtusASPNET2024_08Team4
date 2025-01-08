@@ -20,9 +20,9 @@ namespace RoomsDesigner.Api.Controllers
 	public class ParticipantController(IParticipantService participantService, IMapper mapper) : ControllerBase
     {
         [HttpGet("case/{id:guid}")]
-        public async Task<IEnumerable<ParticipantShortResponse>> GetAllPersons(Guid caseId)
+        public async Task<IEnumerable<ParticipantShortResponse>> GetAllPersons([FromRoute]Guid id)
         {
-            IEnumerable<ParticipantModel> persons = await participantService.GetAllParticipantsByCaseAsync(caseId,HttpContext.RequestAborted);
+            IEnumerable<ParticipantModel> persons = await participantService.GetAllParticipantsByCaseAsync(id,HttpContext.RequestAborted);
             return persons.Select(mapper.Map<ParticipantShortResponse>);
         }
 
@@ -36,8 +36,8 @@ namespace RoomsDesigner.Api.Controllers
         [HttpPost]
         public async Task<ParticipantShortResponse> AddParticipant(CreateParticipantRequest request)
         {
-            var student = await participantService.AddParticipantAsync(mapper.Map<CreateParticipantModel>(request), HttpContext.RequestAborted);
-            return mapper.Map<ParticipantShortResponse>(student);
+            var patricipant = await participantService.AddParticipantAsync(mapper.Map<CreateParticipantModel>(request), HttpContext.RequestAborted);
+            return mapper.Map<ParticipantShortResponse>(patricipant);
         }
 
         [HttpPut]

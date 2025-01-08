@@ -1,15 +1,19 @@
 ﻿using AutoMapper;
+using MassTransit;
+using RoomsDesigner.Application.Messages;
 using RoomsDesigner.Application.Models.Participant;
 using RoomsDesigner.Application.Service.Abstractions;
 using RoomsDesigner.Application.Service.Abstractions.Exceptions;
 using RoomsDesigner.Domain.Entity;
 using RoomsDesigner.Domain.Repository.Abstractions;
+using System.Threading;
 
 namespace RoomsDesigner.Application.Services.Implementations
 {
     public class ParticipantService(IParticipantRepository participanRepository,
         ICaseRepository caseRepository,
-        IMapper mapper) : BaseService, IParticipantService
+        IMapper mapper,
+        IBusControl busControl) : BaseService, IParticipantService
     {
         public async Task<ParticipantModel?> AddParticipantAsync(CreateParticipantModel participantInfo, CancellationToken token = default)
         {
@@ -17,9 +21,19 @@ namespace RoomsDesigner.Application.Services.Implementations
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(participantInfo.CaseId, nameof(Case)));
 
             var participant = new Participant(participantInfo.UserMail, caseEntity);
+
+            await caseRepository.UpdateAsync(caseEntity, token);
+
             participant = await participanRepository.AddAsync(participant, cancellationToken: token)
                 ?? throw new BadRequestException(FormatBadRequestErrorMessage(Guid.Empty, nameof(Participant)));
-            await caseRepository.UpdateAsync(caseEntity, token);
+
+            var message = new AddParticipantInRoomMessage() 
+            {
+                UserMail = participant.UserMail,  
+                CaseId = caseEntity.Id,
+                Id = participant.Id
+            };
+            await busControl.Publish(message, token);
 
             return mapper.Map<ParticipantModel>(participant);
         }
@@ -34,11 +48,13 @@ namespace RoomsDesigner.Application.Services.Implementations
 
         public async Task<IEnumerable<ParticipantModel>> GetAllParticipantsByCaseAsync(Guid caseId, CancellationToken token = default)
         {
-            return (await participanRepository.GetAllAsync(filter: x => x.Room.Id.Equals(caseId), 
-                includes: $"{nameof(Participant.Room)}",
+            var caseEntity = await caseRepository.GetByIdAsync(filter: x => x.Id.Equals(caseId),
+                includes: "_players",
                 asNoTracking: true,
-                cancellationToken: token))
-                .Select(mapper.Map<ParticipantModel>);
+                cancellationToken:token)
+                ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(caseId, nameof(Case)));
+
+            return caseEntity.Players.Select(mapper.Map<ParticipantModel>);
         }
 
         public async Task<ParticipantModel?> GetParticipantByIdAsync(Guid id, CancellationToken token = default)

@@ -11,6 +11,7 @@ namespace RoomsDesigner.Api.Mapping
         {
             CreateMap<UpdateCaseRequest, UpdateCaseModel>();
             CreateMap<CreateCaseRequest, CreateCaseModel>();
+            CreateMap<LaunchRequest, LaunchModel>();
             CreateMap<CaseModel, CaseDetailedResponse>();
             CreateMap<CaseModel, CaseShortResponse>();
         }

@@ -1,5 +1,5 @@
-@BookOfHabits_HostAddress = http://localhost:5101/api/v1
-
+@BookOfHabits_HostAddress = http://localhost:5253/api/v1
+@RoomDesigner_HostAddress = http://localhost:5263/api/v1
 
 GET {{BookOfHabits_HostAddress}}/Persons HTTP/1.1
 Accept: : application/json
@@ -65,7 +65,7 @@ Content-type: application/json; charset=utf-8
     "isActive": true
 }
 ###
-@IdRoom = 237099E8-7BAA-49C5-A212-0303C58E7701
+@IdRoom = 948fd425-fd9d-4c42-84b2-b6a21f9056e8
 
 GET {{BookOfHabits_HostAddress}}/Rooms/{{IdRoom}} HTTP/1.1
 Accept: : application/json
@@ -197,3 +197,36 @@ Content-type: application/json; charset=utf-8
 DELETE {{BookOfHabits_HostAddress}}/Coins/{{IdCoins}} HTTP/1.1
 Accept: : application/json
 ###
+
+
+###
+POST {{RoomDesigner_HostAddress}}/Case HTTP/1.1
+Content-type: application/json; charset=utf-8
+
+{
+  "ownerId": "60293540-E0D3-4DC2-BA2E-9FAA5257BB32",
+  "name": "TestRoom"
+}
+
+###
+
+GET {{RoomDesigner_HostAddress}}/Case HTTP/1.1
+Accept: : application/json
+
+@IdCase = fb2b23ec-3a82-4c5a-97da-d7ce6c90ebff
+###
+POST {{RoomDesigner_HostAddress}}/Participant HTTP/1.1
+Content-type: application/json; charset=utf-8
+
+{
+  "userMail": "pertov@mail.ru",
+  "caseId": "{{IdCase}}"
+}
+
+
+###
+GET {{RoomDesigner_HostAddress}}/Participant/case/{{IdCase}} HTTP/1.1
+Accept: : application/json
+
+###
+

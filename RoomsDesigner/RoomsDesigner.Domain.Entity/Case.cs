@@ -7,7 +7,8 @@ namespace RoomsDesigner.Domain.Entity
         private readonly ICollection<Participant> _players = [];
         public IReadOnlyCollection<Participant> Players => [.. _players];
         public Guid OwnerId { get; private set; }
-        public string? Name { get; private set; }
+        public string Name { get; private set; }
+        public bool IsActive { get; private set; } = false;
         public Case(Guid id, string name, Guid ownerId) : base(id)
         {
             Name = name;
@@ -32,5 +33,7 @@ namespace RoomsDesigner.Domain.Entity
             if (!_players.Contains(participant))
                 _players.Add(participant);
         }
+        public void Active() => IsActive = true;
+        public void Close() => IsActive = false;
     }
 }

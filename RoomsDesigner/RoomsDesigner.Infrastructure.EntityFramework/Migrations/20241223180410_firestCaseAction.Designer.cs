@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RoomsDesigner.Infrastructure.EntityFramework;
@@ -11,9 +12,11 @@ using RoomsDesigner.Infrastructure.EntityFramework;
 namespace RoomsDesigner.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241223180410_firestCaseAction")]
+    partial class firestCaseAction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +57,7 @@ namespace RoomsDesigner.Infrastructure.EntityFramework.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<Guid>("RoomId")
+                    b.Property<Guid>("RoomId1")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
@@ -67,7 +70,7 @@ namespace RoomsDesigner.Infrastructure.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("RoomId1");
 
                     b.ToTable("Participants");
                 });
@@ -76,7 +79,7 @@ namespace RoomsDesigner.Infrastructure.EntityFramework.Migrations
                 {
                     b.HasOne("RoomsDesigner.Domain.Entity.Case", "Room")
                         .WithMany("_players")
-                        .HasForeignKey("RoomId")
+                        .HasForeignKey("RoomId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

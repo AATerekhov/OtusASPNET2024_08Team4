@@ -1,5 +1,4 @@
-﻿using BookOfHabits.Infrastructure.Settings;
-using BookOfHabits.Infrastructure.Validators;
+﻿using BookOfHabits.Infrastructure.Validators;
 using BookOfHabits.Requests;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Implementations;
@@ -43,10 +42,10 @@ namespace BookOfHabits
 
         public static IServiceCollection AddApplicationDataContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var settings = configuration.Get<ApplicationSettings>();
+            var connections = configuration.GetConnectionString("Postgres");
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(settings.ConnectionString,
+                options.UseNpgsql(connections,
                 optionsBuilder => optionsBuilder.MigrationsAssembly("BookOfHabitsMicroservice.Infrastructure.EntityFramework"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });

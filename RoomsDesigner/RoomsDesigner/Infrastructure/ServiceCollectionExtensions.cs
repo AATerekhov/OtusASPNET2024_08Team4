@@ -28,9 +28,8 @@ namespace RoomsDesigner.Api.Infrastructure
 		public static void MigrateDatabase<T>(this IApplicationBuilder application) where T : ApplicationDbContext
         {
 			var scope = application.ApplicationServices.CreateScope();
-			var dbContext = scope.ServiceProvider.GetService<T>();
+			var dbContext = scope.ServiceProvider.GetRequiredService<T>();
 
-			dbContext.Database.EnsureDeleted();
 			dbContext.Database.Migrate();
 		}
 	}
