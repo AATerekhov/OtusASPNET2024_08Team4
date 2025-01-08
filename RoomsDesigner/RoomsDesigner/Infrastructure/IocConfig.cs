@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RoomsDesigner.Api.Infrastructure.Validators;
+using RoomsDesigner.Api.Requests.Case;
 using RoomsDesigner.Application.Service.Abstractions;
 using RoomsDesigner.Application.Services.Implementations;
 using RoomsDesigner.Domain.Repository.Abstractions;
@@ -38,5 +41,14 @@ namespace RoomsDesigner.Api.Infrastructure
 			services.AddScoped<ICaseRepository, CaseRepository>();
 			services.AddScoped<IParticipantRepository, ParticipantRepository>();
 		}
-	}
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssemblyContaining<CreateCaseValidator<CreateCaseRequest>>();
+            services.AddValidatorsFromAssemblyContaining<UpdateCaseValidator>();
+            services.AddValidatorsFromAssemblyContaining<LaunchValidator>();
+            services.AddValidatorsFromAssemblyContaining<CreateParticipantValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateParticipantValidator>();
+            return services;
+        }
+    }
 }

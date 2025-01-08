@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using FluentValidation.AspNetCore;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +34,10 @@ namespace RoomsDesigner.Api
             services.AddApplicationDataContext(Configuration);
 			services.AddRoomDesignerServices();
 			services.AddSwaggerServices();
+
+            services.AddFluentValidationAutoValidation()
+                            .AddValidators();
+
             services.AddMassTransit(configurator =>
             {
                 configurator.SetKebabCaseEndpointNameFormatter();
