@@ -28,7 +28,7 @@ namespace RoomsDesigner.Domain.Entity
             Name = name;
             OwnerId = ownerId;
         }
-        internal void Add(Participant participant) 
+        public void Add(Participant participant) 
         {
             if (!_players.Contains(participant))
                 _players.Add(participant);

@@ -1,21 +1,24 @@
 ﻿using RoomsDesigner.Domain.Entity.Base;
+using System.Xml.Linq;
 
 namespace RoomsDesigner.Domain.Entity
 {
     public class Participant : Entity<Guid>
     {
-        public string? UserMail { get; private set; }
-        public string? Name { get; private set; }
+        public string UserMail { get; private set; }
+        public string Name { get; private set; }
         public Guid UserId { get; private set; }
-        public Case Room { get;}
-        public Participant(Guid id, string userMail, Case room) : base(id)
+        public Case Room { get;}     
+
+        public Participant(Guid id, string userMail, Case room, string name , Guid userId) : base(id)
         {
             Room = room;
-            room.Add(this);
             UserMail = userMail;
+            Name = name;
+            UserId = userId;
         }
 
-        public Participant(string userMail, Case room) : this(Guid.NewGuid(), userMail, room) 
+        public Participant(string userMail, Case room, string name, Guid userId) : this(Guid.NewGuid(), userMail, room, name, userId) 
         {
         
         }
