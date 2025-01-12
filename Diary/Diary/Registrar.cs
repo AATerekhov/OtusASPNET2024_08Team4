@@ -25,7 +25,9 @@ namespace Diary
             serviceCollection
                  .AddScoped<IHabitDiaryService, HabitDiaryService>()
                  .AddScoped<IHabitDiaryOwnerService, HabitDiaryOwnerService>()
-                 .AddScoped<IHabitDiaryLineService, HabitDiaryLineService>(); 
+                 .AddScoped<IHabitDiaryLineService, HabitDiaryLineService>()
+                 .AddScoped<IHabitStateService, HabitStateService>()
+                 .AddScoped<IHabitService, HabitService>();
             return serviceCollection;
         }
 
@@ -34,7 +36,9 @@ namespace Diary
             serviceCollection
                 .AddScoped<IHabitDiaryOwnerRepository, HabitDiaryOwnerRepository>()
                 .AddScoped<IHabitDiaryRepository, HabitDiaryRepository>()
-                .AddScoped<IHabitDiaryLineRepository, HabitDiaryLineRepository>();
+                .AddScoped<IHabitDiaryLineRepository, HabitDiaryLineRepository>()
+                .AddScoped<IHabitRepository, HabitRepository>()
+                .AddScoped<IHabitStateRepository, HabitStateRepository>();
 
             return serviceCollection;
         }

@@ -15,6 +15,7 @@ COPY ["Diary/Diary.csproj", "Diary/"]
 COPY ["Diary.BusinessLogic/Diary.BusinessLogic.csproj", "Diary.BusinessLogic/"]
 COPY ["Diary.DataAccess/Diary.DataAccess.csproj", "Diary.DataAccess/"]
 COPY ["Domain.Entities/Diary.Core.csproj", "Domain.Entities/"]
+COPY ["Magazine.Message/Magazine.Message.csproj", "Magazine.Message/"]
 RUN dotnet restore "./Diary/Diary.csproj"
 COPY . .
 WORKDIR "/src/Diary"

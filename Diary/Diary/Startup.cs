@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Diary.Consumers;
 using Diary.DataAccess;
 using Diary.Mapping;
+using Diary.MiddleWares;
 using Diary.Settings;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,25 +26,29 @@ namespace Diary
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Environment.GetEnvironmentVariable("diary_connection_db_string");
+
             services.AddDbContext<EfDbContext>(optionsBuilder
                => optionsBuilder
-                   .UseNpgsql(Configuration.Get<ApplicationSettings>().ConnectionString));
+                   .UseNpgsql(connectionString));
 
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = Configuration.GetConnectionString("Redis"); 
+                options.Configuration = Configuration.GetConnectionString("Redis");
             });
 
             InstallAutomapper(services);
             services.AddServices(Configuration);
             services.AddControllers();
-
+            services.AddHealthChecks().AddCheck<DiaryHealthCheck>("diaryHealth", tags: new string[] { "diaryHealthCheck" });
             services.AddServices(Configuration);
             services.AddControllers();
-
+ 
             services.AddMassTransit(configurator =>
             {
                 configurator.SetKebabCaseEndpointNameFormatter();
+                configurator.AddConsumer<CreateDiaryLineFromMagazineConsumer>();
+
                 configurator.UsingRabbitMq((context, cfg) =>
                 {
                     var rmqSettings = Configuration.Get<ApplicationSettings>()!.RmqSettings;
@@ -52,8 +59,15 @@ namespace Diary
                                     h.Username(rmqSettings.Login);
                                     h.Password(rmqSettings.Password);
                                 });
-                    cfg.ConfigureEndpoints(context);
+
+                    //// Настройка consumer
+                    //cfg.ReceiveEndpoint("diary-magazine-line-queue", e =>
+                    //{
+                    //    e.ConfigureConsumer<CreateDiaryLineFromMagazineConsumer>(context);
+                    //});
                 });
+
+ 
             });
 
             services.AddOpenApiDocument(options =>
@@ -84,6 +98,9 @@ namespace Diary
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseHealthChecks("/diaryHealth", new HealthCheckOptions(){
+                Predicate = healthCheck => healthCheck.Tags.Contains("diaryHealthCheck")
+            });
 
             app.UseEndpoints(endpoints =>
             {
@@ -104,6 +121,8 @@ namespace Diary
                 cfg.AddProfile<HabitDiaryOwnerMappingsProfile>();
                 cfg.AddProfile<HabitDiaryMappingsProfile>();
                 cfg.AddProfile<HabitDiaryLineMappingsProfile>();
+                cfg.AddProfile<HabitMappingsProfile>();
+                cfg.AddProfile<HabitStateMappingsProfile>();
             });
 
             configuration.AssertConfigurationIsValid();

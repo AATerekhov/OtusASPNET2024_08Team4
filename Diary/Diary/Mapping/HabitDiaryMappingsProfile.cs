@@ -24,7 +24,8 @@ namespace Diary.Mapping
             CreateMap<CreateHabitDiaryDto, HabitDiary>()
               .ForMember(j => j.Lines, opt => opt.Ignore())
               .ForMember(j => j.DiaryOwner, opt => opt.Ignore())
-              .ForMember(j => j.Id, opt => opt.Ignore());
+              .ForMember(j => j.Id, opt => opt.Ignore())
+              .ForMember(j => j.Habits, opt => opt.Ignore());
         }
     }
 }

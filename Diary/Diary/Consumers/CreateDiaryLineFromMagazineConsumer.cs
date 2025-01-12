@@ -2,17 +2,20 @@
 using Diary.Core.Domain.BaseTypes;
 using Diary.Core.Domain.Diary;
 using Diary.Core.Exceptions;
+using Diary.DataAccess.Abstractions;
 using Magazine.Message;
 using MassTransit;
 
 namespace Diary.Consumers
 {
-    public class CreateDiaryLineFromMagazineConsumer(IRepository<HabitDiary>     _diaryRepository,
-                                                     IRepository<HabitDiaryLine> _diaryLineRepository) : IConsumer<MagazineLineMessage>
+    public class CreateDiaryLineFromMagazineConsumer(IHabitDiaryRepository     _diaryRepository,
+                                                     IHabitDiaryLineRepository _diaryLineRepository) : IConsumer<MagazineLineMessage>
 
     {
         public async Task Consume(ConsumeContext<MagazineLineMessage> context)
         {
+            Console.WriteLine("Hello, consumers");
+
             var magazineLineMessage = context.Message;
 
             HabitDiary diary        = await _diaryRepository.GetFirstWhere(r => r.RoomId == magazineLineMessage.RoomId 
@@ -26,7 +29,6 @@ namespace Diary.Consumers
                 CreatedDate      = magazineLineMessage.CreatedDate,
                 ModifiedDate     = magazineLineMessage.ModifiedDate,
                 Cost             = -magazineLineMessage.Cost,
-                Diary            = diary
             };
    
      
