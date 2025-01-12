@@ -29,7 +29,6 @@ namespace Diary.Consumers
                 CreatedDate      = magazineLineMessage.CreatedDate,
                 ModifiedDate     = magazineLineMessage.ModifiedDate,
                 Cost             = -magazineLineMessage.Cost,
-                Diary            = diary
             };
    
      

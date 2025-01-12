@@ -18,6 +18,6 @@ namespace Diary.Core.Domain.Diary
         public Status Status { get; set; }
 
         public decimal Cost { get; set; }
-        public required HabitDiary Diary { get; set; }
+        public HabitDiary Diary { get; set; }
     }
 }

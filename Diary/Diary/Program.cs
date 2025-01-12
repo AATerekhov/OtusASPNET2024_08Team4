@@ -9,7 +9,6 @@ namespace Diary
         public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            Console.WriteLine("Hello, consumers");
             await host.MigrationDataBaseAsync();
             await host.RunAsync();
         }

@@ -2,9 +2,11 @@
 using Diary.Consumers;
 using Diary.DataAccess;
 using Diary.Mapping;
+using Diary.MiddleWares;
 using Diary.Settings;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,13 +34,13 @@ namespace Diary
 
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = Configuration.GetConnectionString("Redis"); 
+                options.Configuration = Configuration.GetConnectionString("Redis");
             });
 
             InstallAutomapper(services);
             services.AddServices(Configuration);
             services.AddControllers();
-
+            services.AddHealthChecks().AddCheck<DiaryHealthCheck>("diaryHealth", tags: new string[] { "diaryHealthCheck" });
             services.AddServices(Configuration);
             services.AddControllers();
  
@@ -57,11 +59,12 @@ namespace Diary
                                     h.Username(rmqSettings.Login);
                                     h.Password(rmqSettings.Password);
                                 });
-                    // Настройка consumer
-                    cfg.ReceiveEndpoint("diary-magazine-line-queue", e =>
-                    {
-                        e.ConfigureConsumer<CreateDiaryLineFromMagazineConsumer>(context);
-                    });
+
+                    //// Настройка consumer
+                    //cfg.ReceiveEndpoint("diary-magazine-line-queue", e =>
+                    //{
+                    //    e.ConfigureConsumer<CreateDiaryLineFromMagazineConsumer>(context);
+                    //});
                 });
 
  
@@ -95,6 +98,9 @@ namespace Diary
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseHealthChecks("/diaryHealth", new HealthCheckOptions(){
+                Predicate = healthCheck => healthCheck.Tags.Contains("diaryHealthCheck")
+            });
 
             app.UseEndpoints(endpoints =>
             {
@@ -115,6 +121,8 @@ namespace Diary
                 cfg.AddProfile<HabitDiaryOwnerMappingsProfile>();
                 cfg.AddProfile<HabitDiaryMappingsProfile>();
                 cfg.AddProfile<HabitDiaryLineMappingsProfile>();
+                cfg.AddProfile<HabitMappingsProfile>();
+                cfg.AddProfile<HabitStateMappingsProfile>();
             });
 
             configuration.AssertConfigurationIsValid();

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Diary.DataAccess.Abstractions
 {
-    public interface IHabitDiaryRepository : IRepository<Diary.Core.Domain.Diary.HabitDiary>
+    public interface IHabitDiaryRepository : IRepository<HabitDiary>
     {
         /// <summary>
         /// Получить постраничный список.
