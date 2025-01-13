@@ -129,6 +129,100 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    
+     # Magazine Api
+  magazine_api:
+    build: Magazine/
+    container_name: magazineService
+    depends_on:
+      - redis
+      - magazinepostgresdb
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5100
+      ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
+      magazine_connection_db_string: "Host=magazinePostgresdb;Port=5432;Database=magazinedb;Username=postgres;Password=1234;Include Error Detail=true"
+    ports:
+      - 5200:5100
+    networks:
+      - caching-network
+
+  # Magazine Db
+  magazinepostgresdb:
+    container_name: magazinepostgresdb
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: magazinedb
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres -d magazinedb -c 'SELECT 1' || exit 1"]
+    volumes:
+      - magazine_data:/var/lib/postgresql/data
+    networks:
+      - caching-network
+
+  # Diary Api
+  diary_api:
+    build: Diary/
+    container_name: diaryService
+    depends_on:
+      - redis
+      - diarypostgresdb
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
+      diary_connection_db_string: "Host=diarypostgresdb;Port=5432;Database=diarydb;Username=postgres;Password=1234;Include Error Detail=true"
+    ports:
+      - "8080:8080"
+    networks:
+      - caching-network
+
+  # Diary Db
+  diarypostgresdb:
+    container_name: diarypostgresdb
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: diarydb
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres -d diarydb -c 'SELECT 1' || exit 1"]
+    volumes:
+      - diary_data:/var/lib/postgresql/data
+    networks:
+      - caching-network
+
+  # RabbitMQ
+  magazine_diary_rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbit
+    restart: always
+    hostname: rabbitmqhost
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - caching-network
+
+  # Redis
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - caching-network
+
 
 volumes:
   rabbitmq_data:
@@ -136,3 +230,6 @@ volumes:
   postgres-data:
   habitsbook_data:
   mongo_data:
+  magazine_data:
+  diary_data:
+  magazine_diary_rabbit_data:
