@@ -23,9 +23,11 @@ namespace MagazineHost
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Environment.GetEnvironmentVariable("magazine_connection_db_string");
+
             services.AddDbContext<EfDbContext>(optionsBuilder
                => optionsBuilder
-                   .UseNpgsql(Configuration.Get<ApplicationSettings>().ConnectionString));
+                   .UseNpgsql(connectionString));
 
             services.AddStackExchangeRedisCache(options =>
             {
@@ -52,7 +54,7 @@ namespace MagazineHost
                                     h.Username(rmqSettings.Login);
                                     h.Password(rmqSettings.Password);
                                 });
-                    cfg.ConfigureEndpoints(context);
+                   // cfg.ConfigureEndpoints(context);
                 });
             });
 
