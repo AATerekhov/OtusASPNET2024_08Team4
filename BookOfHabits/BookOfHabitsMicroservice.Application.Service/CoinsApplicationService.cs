@@ -40,10 +40,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
 
         public async Task<CoinsModel> GetCoinsByIdAsync(Guid id, CancellationToken token = default)
         {
-            Coins coins = await coinsRepository.GetByIdAsync(x => x.Id.Equals(id),
-                                                             includes: $"{nameof(Coins.Habit)},{nameof(Coins.Room)}",
-                                                             asNoTracking: true,
-                                                             cancellationToken: token)
+            Coins coins = await coinsRepository.GetCoinsByIdAsync(id, token: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Coins)));
             return mapper.Map<CoinsModel>(coins);
         }

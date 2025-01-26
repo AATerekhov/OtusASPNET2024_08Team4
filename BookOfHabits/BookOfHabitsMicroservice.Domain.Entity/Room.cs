@@ -41,7 +41,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             _habits.Add(habit);
             UpdateDate = DateTime.Now.ToUniversalTime();
         }
-        internal void GetCoins(Coins coins)
+        public void GetCoins(Coins coins)
         {
             if (_habits.Contains(coins.Habit) is false)
                 throw new InvalidOperationException($"The habit {coins.Habit.Name} is not in the room {Name}");
