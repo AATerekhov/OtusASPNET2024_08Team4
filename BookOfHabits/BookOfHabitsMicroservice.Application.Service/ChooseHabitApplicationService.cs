@@ -36,6 +36,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                                   habit: habit,
                                   description: chooseHabitModel.Description,
                                   options: CoinsOptions.None);
+            room.GetCoins(coins);
             await habitRepository.UpdateAsync(entity: habit, cancellationToken: token);
             await roomRepository.UpdateAsync(entity: room, cancellationToken: token);
             coins = await coinsRepository.AddAsync(entity: coins, cancellationToken: token);

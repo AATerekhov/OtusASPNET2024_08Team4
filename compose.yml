@@ -2,7 +2,7 @@ services:
   
   #RoomDesigner Api
   roomsdesigner.api:
-    build: RoomsDesigner/
+    image: ghcr.io/aaterekhov/roomsdesigner:latest
     container_name: roomsdesigner-service
     environment:
       "ASPNETCORE_URLS": "http://+:5100"
@@ -56,7 +56,7 @@ services:
 
   #Bookofhabits Api
   bookofhabits:
-    build: BookOfHabits/
+    image: ghcr.io/aaterekhov/bookofhabits:latest
     environment:
       "ASPNETCORE_URLS": "http://+:5100"
       ConnectionStrings:Postgres: "Host=habit_db;Port=5432;Database=Habit;UserId=postgres;Password=admin24"      
@@ -80,13 +80,13 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin24
     ports:
-      - 5435:5432
+      - 5455:5432
     volumes:
       - 'habitsbook_data:/var/lib/postgresql/data'
 
   #Broadcaster Api
   habits-broadcaster-api:
-    build: Broadcaster/
+    image: ghcr.io/aaterekhov/broadcaster:latest
     container_name: 'habits-broadcaster-api'
     restart: always 
     ports:

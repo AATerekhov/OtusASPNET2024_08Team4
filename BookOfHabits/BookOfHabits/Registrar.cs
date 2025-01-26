@@ -2,6 +2,7 @@
 using BookOfHabits.Requests;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Implementations;
+using BookOfHabitsMicroservice.Application.Services.Implementations.FactoryMethodDomain;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
@@ -37,6 +38,7 @@ namespace BookOfHabits
             services.AddScoped<IInstallCardApplicationService, InstallCardApplicationService>();
             services.AddScoped<ICoinsApplicationService, CoinsApplicationService>();
             services.AddScoped<IChooseHabitApplicationService, ChooseHabitApplicationService>();
+            services.AddScoped<IFactory<Habit>, HabitCreator>();
             return services;
         }
 
@@ -61,6 +63,7 @@ namespace BookOfHabits
             services.AddValidatorsFromAssemblyContaining<CreateHabitValidator>();
             return services;
         }
+
 
     }
 }

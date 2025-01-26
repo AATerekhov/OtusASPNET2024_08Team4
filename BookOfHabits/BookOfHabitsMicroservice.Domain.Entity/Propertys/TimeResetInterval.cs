@@ -34,12 +34,12 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
         public void SetProperty(ResetIntervalOptions options, int timeTheDay, WeekDays weekDays, int numberDayOfTheMonth)
         {
             Options = options;
-            if (timeTheDay > _day)
-                throw new InvalidTimeResetIntervalException(timeTheDay);
+            //if (timeTheDay > _day)
+            //    throw new InvalidTimeResetIntervalException(timeTheDay);
             TimeTheDay = timeTheDay;
             WeekDays = weekDays;
-            if (numberDayOfTheMonth > _daysInMonth)
-                throw new InvalidDayResetIntervalException(numberDayOfTheMonth);
+            //if (numberDayOfTheMonth > _daysInMonth)
+            //    throw new InvalidDayResetIntervalException(numberDayOfTheMonth);
             NumberDayOfTheMonth = numberDayOfTheMonth;
         }
     }
