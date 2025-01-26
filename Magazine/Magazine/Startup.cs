@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Magazine.DataAccess;
+using MagazineHost.Consumers;
 using MagazineHost.Mapping;
 using MagazineHost.Settings;
 using MassTransit;
@@ -44,6 +45,7 @@ namespace MagazineHost
             services.AddMassTransit(configurator =>
             {
                 configurator.SetKebabCaseEndpointNameFormatter();
+                configurator.AddConsumer<RoomDesignerStartingMagazineConsumer>();
                 configurator.UsingRabbitMq((context, cfg) =>
                 {
                     var rmqSettings = Configuration.Get<ApplicationSettings>()!.RmqSettings;
@@ -54,7 +56,7 @@ namespace MagazineHost
                                     h.Username(rmqSettings.Login);
                                     h.Password(rmqSettings.Password);
                                 });
-                   // cfg.ConfigureEndpoints(context);
+                    cfg.ConfigureEndpoints(context);
                 });
             });
 
