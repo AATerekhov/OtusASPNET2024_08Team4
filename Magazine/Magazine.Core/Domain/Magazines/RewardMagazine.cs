@@ -21,7 +21,7 @@ namespace Magazine.Core.Domain.Magazines
         public decimal TotalCost { get; set; }
 
         public List<RewardMagazineLine> Lines { get; set; }
-        public required RewardMagazineOwner MagazineOwner { get; set; }
+        public RewardMagazineOwner MagazineOwner { get; set; }
 
         public RewardMagazine()
         {

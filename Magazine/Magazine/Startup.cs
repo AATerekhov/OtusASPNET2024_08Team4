@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Diary.Settings;
+using FluentValidation.AspNetCore;
 using Magazine.DataAccess;
 using MagazineHost.Mapping;
 using MagazineHost.Settings;
@@ -40,6 +42,8 @@ namespace MagazineHost
 
             services.AddServices(Configuration);
             services.AddControllers();
+            services.AddFluentValidationAutoValidation();
+            services.AddValidators();
 
             services.AddMassTransit(configurator =>
             {
@@ -54,7 +58,7 @@ namespace MagazineHost
                                     h.Username(rmqSettings.Login);
                                     h.Password(rmqSettings.Password);
                                 });
-                   // cfg.ConfigureEndpoints(context);
+                     cfg.ConfigureEndpoints(context);
                 });
             });
 
