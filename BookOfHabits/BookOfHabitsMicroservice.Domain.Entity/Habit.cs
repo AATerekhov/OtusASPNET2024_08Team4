@@ -9,21 +9,19 @@ namespace BookOfHabitsMicroservice.Domain.Entity
     {
         public HabitName Name { get; private set; }
         public string Description { get; private set; }
-        public Person Owner { get; }
+        public Person Owner { get; private set; }
         public Card? Card { get; private set; }
-        public Room Room { get; }
+        public Room Room { get; private set; }
         public bool IsUsed { get; private set; }
         public HabitOptions Options { get; private set; }
         public Delay Delay { get; }
         public TimeResetInterval TimeResetInterval { get; }
         public Repetition Repetition { get; }
-        public Habit(Guid id, HabitName name, string description, Person owner, Room room, HabitOptions options, Delay delay, TimeResetInterval timeResetInterval, Repetition repetition, Card? card = null)
+        public Habit(Guid id, HabitName name, string description, HabitOptions options, Delay delay, TimeResetInterval timeResetInterval, Repetition repetition, Card? card = null)
             : base(id)
         {
             Name = name;
             Description = description;
-            Owner = owner;
-            Room = room;
             if (card is not null)
                 Card = card;
             Options = options;
@@ -31,11 +29,9 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             TimeResetInterval = timeResetInterval;
             Repetition = repetition;
             IsUsed = false;
-            Owner.GetHabit(this);
-            Room.GetHabit(this);
         }
-        public Habit(HabitName name, string description, Person owner, Room room, HabitOptions options, Delay delay, TimeResetInterval timeResetInterval, Repetition repetition, Card? card = null)
-            : this(Guid.NewGuid(), name, description,owner, room, options, delay, timeResetInterval, repetition, card)
+        public Habit(HabitName name, string description, HabitOptions options, Delay delay, TimeResetInterval timeResetInterval, Repetition repetition, Card? card = null)
+            : this(Guid.NewGuid(), name, description, options, delay, timeResetInterval, repetition, card)
         {
 
         }
@@ -46,6 +42,16 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public void UseInTheCoins(bool isUsed = true) 
         {        
             IsUsed = isUsed;
+        }
+        public void SetPerson(Person owner)
+        {
+            Owner = owner;
+            Owner.GetHabit(this);
+        }
+        public void SetRoom(Room room) 
+        {
+            Room = room;
+            Room.GetHabit(this);
         }
         public void GetCard(Card card) 
         {

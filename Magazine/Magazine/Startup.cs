@@ -2,6 +2,7 @@
 using Diary.Settings;
 using FluentValidation.AspNetCore;
 using Magazine.DataAccess;
+using MagazineHost.Consumers;
 using MagazineHost.Mapping;
 using MagazineHost.Settings;
 using MassTransit;
@@ -45,22 +46,22 @@ namespace MagazineHost
             services.AddFluentValidationAutoValidation();
             services.AddValidators();
 
-            services.AddMassTransit(configurator =>
-            {
-                configurator.SetKebabCaseEndpointNameFormatter();
-                configurator.UsingRabbitMq((context, cfg) =>
-                {
-                    var rmqSettings = Configuration.Get<ApplicationSettings>()!.RmqSettings;
-                    cfg.Host(rmqSettings.Host,
-                                rmqSettings.VHost,
-                                h =>
-                                {
-                                    h.Username(rmqSettings.Login);
-                                    h.Password(rmqSettings.Password);
-                                });
-                     cfg.ConfigureEndpoints(context);
-                });
-            });
+           services.AddMassTransit(configurator =>
+           {
+               configurator.SetKebabCaseEndpointNameFormatter();
+               configurator.UsingRabbitMq((context, cfg) =>
+               {
+                   var rmqSettings = Configuration.Get<ApplicationSettings>()!.RmqSettings;
+                   cfg.Host(rmqSettings.Host,
+                               rmqSettings.VHost,
+                               h =>
+                               {
+                                   h.Username(rmqSettings.Login);
+                                   h.Password(rmqSettings.Password);
+                               });
+                    cfg.ConfigureEndpoints(context);
+               });
+           });
 
             services.AddOpenApiDocument(options =>
             {

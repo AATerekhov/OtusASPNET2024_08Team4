@@ -26,7 +26,6 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             SetDescription(description);
             SetProperty(options, costOfWinning, forfeit, start, falls);
             Habit.UseInTheCoins();
-            Room.GetCoins(this);
         }
         public Coins(Room room, Habit habit, string description, CoinsOptions options, int costOfWinning = _defaultCost, int forfeit = _defaultForfeit, int start = _defaultStart, int falls = _defaultFalls)
             :this(Guid.NewGuid(), room, habit, description, options, costOfWinning, forfeit, start, falls)

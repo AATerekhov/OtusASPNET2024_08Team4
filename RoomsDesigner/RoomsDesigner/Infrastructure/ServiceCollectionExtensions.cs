@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using RoomsDesigner.DataAccess;
+using RoomsDesigner.Infrastructure.EntityFramework;
 
 namespace RoomsDesigner.Api.Infrastructure
 {
@@ -25,14 +25,12 @@ namespace RoomsDesigner.Api.Infrastructure
 			});
 		}
 
-		public static void MigrateDatabase<T>(this IApplicationBuilder application) where T : DatabaseContext
-		{
+		public static void MigrateDatabase<T>(this IApplicationBuilder application) where T : ApplicationDbContext
+        {
 			var scope = application.ApplicationServices.CreateScope();
-			var dbContext = scope.ServiceProvider.GetService<T>();
+			var dbContext = scope.ServiceProvider.GetRequiredService<T>();
 
-			dbContext.Database.EnsureDeleted();
 			dbContext.Database.Migrate();
-			//Seed(scope.ServiceProvider);
 		}
 	}
 }

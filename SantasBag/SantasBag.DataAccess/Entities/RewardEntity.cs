@@ -8,5 +8,6 @@ public class RewardEntity :BaseEntity
     public string Description { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
     public decimal Cost { get; set; }
+    public bool InstantBuy { get; set; } = true;
     public Guid RoomId { get; set; }
 }

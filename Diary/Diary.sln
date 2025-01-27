@@ -7,11 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diary", "Diary\Diary.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diary.Core", "Domain.Entities\Diary.Core.csproj", "{8D245DAB-3082-4AD6-89FF-0AEE71BE6666}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diary.BusinessLogic", "Diary.BusinessLogic\Diary.BusinessLogic.csproj", "{B100F9F4-837F-4A81-9A7E-F5710E2B4D84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diary.BusinessLogic", "Diary.BusinessLogic\Diary.BusinessLogic.csproj", "{B100F9F4-837F-4A81-9A7E-F5710E2B4D84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diary.DataAccess", "Diary.DataAccess\Diary.DataAccess.csproj", "{E31AAE90-B39E-4AA4-8972-B7BBAB424457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diary.DataAccess", "Diary.DataAccess\Diary.DataAccess.csproj", "{E31AAE90-B39E-4AA4-8972-B7BBAB424457}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diary.UnitTests", "Diary.UnitTests\Diary.UnitTests.csproj", "{AC45F757-6796-4605-8501-D2124D231137}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B9BAD50F-18FB-43E3-9B36-B0E9B7F2AD71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magazine.Message", "Magazine.Message\Magazine.Message.csproj", "{307183DB-9A22-4C4C-B202-918804ECF6B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diary.UnitTests", "TestProject1\Diary.UnitTests.csproj", "{04D626D3-88EF-4981-B5F4-564B6D5C6902}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +39,18 @@ Global
 		{E31AAE90-B39E-4AA4-8972-B7BBAB424457}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E31AAE90-B39E-4AA4-8972-B7BBAB424457}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E31AAE90-B39E-4AA4-8972-B7BBAB424457}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC45F757-6796-4605-8501-D2124D231137}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC45F757-6796-4605-8501-D2124D231137}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC45F757-6796-4605-8501-D2124D231137}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC45F757-6796-4605-8501-D2124D231137}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9BAD50F-18FB-43E3-9B36-B0E9B7F2AD71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9BAD50F-18FB-43E3-9B36-B0E9B7F2AD71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9BAD50F-18FB-43E3-9B36-B0E9B7F2AD71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9BAD50F-18FB-43E3-9B36-B0E9B7F2AD71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{307183DB-9A22-4C4C-B202-918804ECF6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{307183DB-9A22-4C4C-B202-918804ECF6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{307183DB-9A22-4C4C-B202-918804ECF6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{307183DB-9A22-4C4C-B202-918804ECF6B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D626D3-88EF-4981-B5F4-564B6D5C6902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D626D3-88EF-4981-B5F4-564B6D5C6902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D626D3-88EF-4981-B5F4-564B6D5C6902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D626D3-88EF-4981-B5F4-564B6D5C6902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

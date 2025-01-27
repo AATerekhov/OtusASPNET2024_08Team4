@@ -1,7 +1,9 @@
 ﻿using Diary.Core.Domain.Administration;
-using Diary.Core.Domain.UserJournals;
+using Diary.Core.Domain.Diary;
+using Diary.Core.Domain.Habits;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,60 +14,77 @@ using System.Threading.Tasks;
 
 namespace Diary.DataAccess
 {
-    public class EfDbContext : DbContext
-    {
-        public EfDbContext(DbContextOptions<EfDbContext> options) : base(options)
-        {
-          
-        }
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserJournal> UserJournals { get; set; }
-        public DbSet<UserJournalLine> UserJournalLines { get; set; }
+    public class EfDbContext(DbContextOptions<EfDbContext> options) : DbContext(options)
+    {    
+        public DbSet<HabitDiaryOwner> HabitDiaryOwners { get; set; }
+        public DbSet<HabitDiary> HabitDiaries { get; set; }
+        public DbSet<HabitDiaryLine> HabitDiaryLines { get; set; }
+        public DbSet<Habit> Habits { get; set; }
+        public DbSet<HabitState> HabitStates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<HabitDiaryOwner>(entity =>
             {
-                entity.HasMany(u => u.UserJournals)
-                      .WithOne(uj => uj.User)
-                      .HasForeignKey(uj => uj.UserId)
+                entity.HasMany(dO => dO.Diaries)
+                      .WithOne(d => d.DiaryOwner)
+                      .HasForeignKey(dO => dO.DiaryOwnerId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.Property(x => x.Id).HasColumnName("UserId");
-                entity.Property(u => u.UserName).HasMaxLength(32);
-                entity.Property(u => u.Email).HasMaxLength(32);
+                entity.Property(dO => dO.Id).HasColumnName("DiaryOwnerId");
+                entity.Property(dO => dO.Name).HasMaxLength(32);
             });
        
 
-            modelBuilder.Entity<UserJournal>(entity =>
+            modelBuilder.Entity<HabitDiary>(entity =>
             {
-                entity.HasMany(uj => uj.UserJournalLines)
-                .WithOne(ujl => ujl.UserJournal)
-                .HasForeignKey(ujl => ujl.UserJournalId)
+                entity.HasMany(d => d.Lines)
+                .WithOne(dL => dL.Diary)
+                .HasForeignKey(dL => dL.DiaryId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-                entity.Property(x => x.Id).HasColumnName("UserJournalId");
-                entity.Property(u => u.Description).HasMaxLength(100);
+                entity.HasMany(d => d.Habits)
+                .WithOne(dL => dL.Diary)
+                .HasForeignKey(dL => dL.DiaryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.Property(d => d.Id).HasColumnName("DiaryId");
+                entity.Property(d => d.Description).HasMaxLength(100);
 
             });
 
-            modelBuilder.Entity<UserJournalLine>(entity =>
+            modelBuilder.Entity<Habit>(entity =>
+            {
+                entity.HasMany(d => d.HabitStates)
+                .WithOne(dL => dL.Habit)
+                .HasForeignKey(dL => dL.HabitId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.Property(d => d.Id).HasColumnName("HabitId");
+                entity.Property(d => d.Description).HasMaxLength(100);
+
+            });
+
+
+            modelBuilder.Entity<HabitDiaryLine>(entity =>
             {
                 entity
-                    .Property(ujl => ujl.EventTypes)
-                    .HasConversion<int>(); 
+                    .Property(dL => dL.Status)
+                    .HasConversion<int>();               
 
-                entity
-                    .Property(ujl => ujl.RelatedEntityTypes)
-                    .HasConversion<int>();
-
-                entity.Property(x => x.Id).HasColumnName("UserJournalLineId");
-                entity.Property(u => u.EventDescription).HasMaxLength(100);
+                entity.Property(dL => dL.Id).HasColumnName("DiaryLineId");
+                entity.Property(dL => dL.EventDescription).HasMaxLength(100);
             });
-          
+
+            modelBuilder.Entity<HabitState>(entity =>
+            {               
+                entity.Property(dL => dL.Id).HasColumnName("HabitStateId");
+            });
+
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }

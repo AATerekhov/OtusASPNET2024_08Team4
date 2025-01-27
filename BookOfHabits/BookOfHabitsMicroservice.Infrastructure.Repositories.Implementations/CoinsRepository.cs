@@ -13,6 +13,7 @@ namespace BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations
         {
             _context = context;
         }
+
         public async Task<Coins?> GetDetailedCoinsByIdAsync(Guid id, CancellationToken token = default) 
         {
             var query = _context.Set<Coins>()
@@ -23,5 +24,11 @@ namespace BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations
             
             return await query.SingleOrDefaultAsync(token);
         }
+        public async Task<Coins?> GetCoinsByIdAsync(Guid id, CancellationToken token = default) =>
+            await base.GetByIdAsync(
+                x => x.Id.Equals(id),
+                includes: $"{nameof(Coins.Habit)},{nameof(Coins.Room)}",
+                asNoTracking: true,
+                token: token);
     }
 }

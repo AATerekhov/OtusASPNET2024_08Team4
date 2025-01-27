@@ -1,0 +1,69 @@
+services:
+  diary:
+    image: ${DOCKER_REGISTRY-}diary
+    build:
+      context: .
+      dockerfile: Diary/Dockerfile
+    depends_on:
+      - redis
+      - diary_db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5000
+      ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
+      diary_connection_db_string: "Host=diary_db;Port=5432;Database=diarydb;Username=postgres;Password=1234;Include Error Detail=true"
+    ports:
+      - 5000:5000
+    networks:
+      - caching-network
+
+  diary_db:
+    container_name: diary_db
+    image: postgres:latest
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: diarydb
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres -d diarydb -c 'SELECT 1' || exit 1"]
+    volumes:
+      - db_data:/var/lib/postgresql/data 
+    networks:
+      - caching-network
+ 
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: 'rabbit'
+    restart: always
+    hostname: rabbitmqhost    
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - caching-network
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - caching-network
+volumes:
+  db_data:
+  rabbitmq_data:
+
+networks:
+  caching-network:
+    driver: bridge

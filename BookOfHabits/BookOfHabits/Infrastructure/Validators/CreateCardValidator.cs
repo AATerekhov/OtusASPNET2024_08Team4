@@ -1,7 +1,6 @@
 ﻿using BookOfHabits.Requests.Card;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using FluentValidation;
-using System.Data;
 
 namespace BookOfHabits.Infrastructure.Validators
 {
@@ -16,6 +15,6 @@ namespace BookOfHabits.Infrastructure.Validators
                 .NotNull();
         }
         internal static bool ValidateOptionsField(CardOptions options)
-            => (int)options <= (int)CardOptions.All ? true : false;
+            => (int)options <= (int)CardOptions.All;
     }
 }

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="rlhjosi3.crf~" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Magazine.Message" Version="1.0.0" />
+    <PackageReference Include="MassTransit" Version="8.3.4" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoomsDesigner.Application.Messages\RoomsDesigner.Application.Messages.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Application.Models\RoomsDesigner.Application.Models.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Application.Service.Abstractions\RoomsDesigner.Application.Service.Abstractions.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Domain.Entity\RoomsDesigner.Domain.Entity.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Domain.Repository.Abstractions\RoomsDesigner.Domain.Repository.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -4,7 +4,9 @@ using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Abstractions.Exceptions;
 using BookOfHabitsMicroservice.Application.Services.Implementations.Base;
 using BookOfHabitsMicroservice.Application.Services.Implementations.Default_values;
+using BookOfHabitsMicroservice.Application.Services.Implementations.FactoryMethodDomain;
 using BookOfHabitsMicroservice.Domain.Entity;
+using BookOfHabitsMicroservice.Domain.Entity.Base;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
@@ -12,13 +14,15 @@ using BookOfHabitsMicroservice.Domain.ValueObjects;
 
 namespace BookOfHabitsMicroservice.Application.Services.Implementations
 {
-    public class HabitsApplicationService(IRepository<Habit, Guid> habitRepository,
-                                          IRepository<Person, Guid> personRepository,
-                                          IRoomRepository roomRepository,
-                                          IRepository<Delay, Guid> delayRepository,
-                                          IRepository<Repetition, Guid> repetitionRepository,
-                                          IRepository<TimeResetInterval, Guid> timeResetIntervalRepository,
-                                          IMapper mapper) : BaseService, IHabitsApplicationService
+    public class HabitsApplicationService(
+        IRepository<Habit, Guid> habitRepository,
+        IRepository<Person, Guid> personRepository,
+        IRoomRepository roomRepository,
+        IRepository<Delay, Guid> delayRepository,
+        IRepository<Repetition, Guid> repetitionRepository,
+        IRepository<TimeResetInterval, Guid> timeResetIntervalRepository,
+        IFactory<Habit> habitFactory,
+        IMapper mapper) : BaseService, IHabitsApplicationService
     {
         public async Task<HabitModel?> AddHabitAsync(CreateHabitModel cardInfo, CancellationToken token = default)
         {
@@ -28,14 +32,10 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
             Room room = await roomRepository.GetByIdAsync(x => x.Id.Equals(cardInfo.RoomId), includes: $"_habits", cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(cardInfo.RoomId, nameof(Room)));
 
-            var habit = new Habit(name: new HabitName(cardInfo.Name),
-                                  description: cardInfo.Description,
-                                  owner: owner,
-                                  room: room,
-                                  options: HabitOptions.None,
-                                  delay: DefaultValues.GetDefaultDelay(),
-                                  repetition: DefaultValues.GetDefaultRepetition(),
-                                  timeResetInterval: DefaultValues.GetDefaultTimeResetInterval());
+            var habit = habitFactory.FactoryMethod([cardInfo.Name, cardInfo.Description])
+                ?? throw new BadRequestException(BadRequestEntityExistsMessage(cardInfo.RoomId, nameof(Habit)));
+            habit.SetPerson(owner);
+            habit.SetRoom(room);
 
             await roomRepository.UpdateAsync(entity: room, cancellationToken: token);
             await personRepository.UpdateAsync(entity: owner, cancellationToken: token);

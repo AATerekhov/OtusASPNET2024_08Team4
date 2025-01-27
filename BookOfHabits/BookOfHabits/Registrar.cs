@@ -1,8 +1,8 @@
-﻿using BookOfHabits.Infrastructure.Settings;
-using BookOfHabits.Infrastructure.Validators;
+﻿using BookOfHabits.Infrastructure.Validators;
 using BookOfHabits.Requests;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
 using BookOfHabitsMicroservice.Application.Services.Implementations;
+using BookOfHabitsMicroservice.Application.Services.Implementations.FactoryMethodDomain;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
@@ -38,15 +38,16 @@ namespace BookOfHabits
             services.AddScoped<IInstallCardApplicationService, InstallCardApplicationService>();
             services.AddScoped<ICoinsApplicationService, CoinsApplicationService>();
             services.AddScoped<IChooseHabitApplicationService, ChooseHabitApplicationService>();
+            services.AddScoped<IFactory<Habit>, HabitCreator>();
             return services;
         }
 
         public static IServiceCollection AddApplicationDataContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var settings = configuration.Get<ApplicationSettings>();
+            var connections = configuration.GetConnectionString("Postgres");
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(settings.ConnectionString,
+                options.UseNpgsql(connections,
                 optionsBuilder => optionsBuilder.MigrationsAssembly("BookOfHabitsMicroservice.Infrastructure.EntityFramework"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
@@ -62,6 +63,7 @@ namespace BookOfHabits
             services.AddValidatorsFromAssemblyContaining<CreateHabitValidator>();
             return services;
         }
+
 
     }
 }

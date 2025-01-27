@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookOfHabitsMicroservice.Application.Models.Room;
 using BookOfHabitsMicroservice.Domain.Entity;
+using RoomsDesigner.Application.Messages;
 
 namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
 {
