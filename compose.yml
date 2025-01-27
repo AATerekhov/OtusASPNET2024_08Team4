@@ -7,7 +7,7 @@ services:
     environment:
       "ASPNETCORE_URLS": "http://+:5100"
       ConnectionStrings:Postgres: "Host=roomsdesigner_db;Port=5432;Database=room;UserId=postgres;Password=admin24"
-      RmqSettings:Host: "habit-rabbit"
+      RmqSettings:Host: "rabbit"
       RmqSettings:VHost: "/"
       RmqSettings:Login: "guest"
       RmqSettings:Password: "guest"
@@ -30,37 +30,13 @@ services:
     volumes:
       - 'roomsdesigner_data:/var/lib/postgresql/data'
 
-  #SantaBags Api
-  santasbag.webhost:
-    build: SantasBag/
-    environment:
-      "ASPNETCORE_URLS": "http://+:8080"
-      "SANTASBAG_DBCONTEXT_CONNECTION_STRING": "Host=sb_postgres;Port=5432;Database=db;UserId=postgres;Password=postgres"
-    container_name: santasbag_api
-    depends_on:
-      - sb_postgres
-    ports:
-      - "8080:8080"
-      
-  #SantaBags Db
-  sb_postgres:
-    container_name: sb_postgres
-    image: postgres:latest
-    restart: always
-    environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-
   #Bookofhabits Api
   bookofhabits:
     image: ghcr.io/aaterekhov/bookofhabits:latest
     environment:
       "ASPNETCORE_URLS": "http://+:5100"
       ConnectionStrings:Postgres: "Host=habit_db;Port=5432;Database=Habit;UserId=postgres;Password=admin24"      
-      RmqSettings:Host: "habit-rabbit"
+      RmqSettings:Host: "rabbit"
       RmqSettings:VHost: "/"
       RmqSettings:Login: "guest"
       RmqSettings:Password: "guest"
@@ -98,7 +74,7 @@ services:
       ASPNETCORE_URLS: http://+:5010
       MongoSettings:Connection: "mongodb://root:example@broadcaster-mongodb:27017/broadcasterDb?authSource=admin"
       MongoSettings:DatabaseName: "broadcasterDb"      
-      RmqSettings:Host: "habit-rabbit"
+      RmqSettings:Host: "rabbit"
       RmqSettings:VHost: "/"
       RmqSettings:Login: "guest"
       RmqSettings:Password: "guest"
@@ -116,9 +92,9 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  habit-rabbit:
+  rabbit:
     image: rabbitmq:3-management
-    container_name: 'habit-rabbit'
+    container_name: 'rabbit'
     restart: always
     hostname: rabbitmqhost    
     environment:
@@ -132,20 +108,22 @@ services:
     
      # Magazine Api
   magazine_api:
-    build: Magazine/
+    image: ghcr.io/aaterekhov/magazine:latest
     container_name: magazineService
     depends_on:
       - redis
       - magazinepostgresdb
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:5100
+      ASPNETCORE_URLS: http://+:5300
       ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
       magazine_connection_db_string: "Host=magazinePostgresdb;Port=5432;Database=magazinedb;Username=postgres;Password=1234;Include Error Detail=true"
+      RmqSettings:Host: "rabbit"
+      RmqSettings:VHost: "/"
+      RmqSettings:Login: "guest"
+      RmqSettings:Password: "guest"
     ports:
-      - 5200:5100
-    networks:
-      - caching-network
+      - 5400:5300
 
   # Magazine Db
   magazinepostgresdb:
@@ -159,25 +137,25 @@ services:
       test: ["CMD-SHELL", "psql -U postgres -d magazinedb -c 'SELECT 1' || exit 1"]
     volumes:
       - magazine_data:/var/lib/postgresql/data
-    networks:
-      - caching-network
 
   # Diary Api
   diary_api:
-    build: Diary/
+    image: ghcr.io/aaterekhov/diary:latest
     container_name: diaryService
     depends_on:
       - redis
       - diarypostgresdb
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_URLS: http://+:5500
       ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
       diary_connection_db_string: "Host=diarypostgresdb;Port=5432;Database=diarydb;Username=postgres;Password=1234;Include Error Detail=true"
+      RmqSettings:Host: "rabbit"
+      RmqSettings:VHost: "/"
+      RmqSettings:Login: "guest"
+      RmqSettings:Password: "guest"
     ports:
-      - "8080:8080"
-    networks:
-      - caching-network
+      - "5600:5500"
 
   # Diary Db
   diarypostgresdb:
@@ -191,25 +169,6 @@ services:
       test: ["CMD-SHELL", "psql -U postgres -d diarydb -c 'SELECT 1' || exit 1"]
     volumes:
       - diary_data:/var/lib/postgresql/data
-    networks:
-      - caching-network
-
-  # RabbitMQ
-  magazine_diary_rabbit:
-    image: rabbitmq:3-management
-    container_name: rabbit
-    restart: always
-    hostname: rabbitmqhost
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    networks:
-      - caching-network
 
   # Redis
   redis:
@@ -220,10 +179,31 @@ services:
       - 6379:6379
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    networks:
-      - caching-network
-
-
+      
+  #SantaBags Api
+  santasbaghost:
+    image: ghcr.io/aaterekhov/santasbag:latest
+    environment:
+      ASPNETCORE_URLS: http://+:5700
+      SANTASBAG_DBCONTEXT_CONNECTION_STRING: "Host=santasbag_db;Port=5432;Database=santasbagdb;UserId=postgres;Password=postgres;Include Error Detail=true"
+    container_name: santasbag_api
+    depends_on:
+      - santasbag_db
+    ports:
+      - "5800:5700"
+      
+  #SantaBags Db
+  santasbag_db:
+    container_name: santasbag_db
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: santasbagdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - santasbag-data:/var/lib/postgresql/data
+      
 volumes:
   rabbitmq_data:
   roomsdesigner_data:
@@ -233,3 +213,4 @@ volumes:
   magazine_data:
   diary_data:
   magazine_diary_rabbit_data:
+  santasbag-data:
