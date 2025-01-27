@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using Diary.BusinessLogic.Services.Implementation;
 using Diary.Core.Domain.Diary;
+using Diary.Core.Exceptions;
 using Diary.DataAccess.Abstractions;
 using Diary.UnitTests.Helps;
 using FluentAssertions;
@@ -25,6 +26,7 @@ namespace Diary.UnitTests.Applications
         CancellationToken token)
         {
             // Arrange
+            habitDiary.Id = id;
             habitDiaryRepositoryMock.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>()))
                 .ReturnsAsync(habitDiary);
 
@@ -34,6 +36,25 @@ namespace Diary.UnitTests.Applications
             // Assert
             result.Should().NotBeNull();
             result.Id.Should().Be(id);
+        }
+
+        [Theory, AutoMoqData]
+        public async Task GetByIdAsync_RecordNotFound_ThrowsNotFoundException(
+        Guid id,
+        [Frozen] Mock<IHabitDiaryRepository> habitDiaryRepositoryMock,
+        HabitDiaryService habitDiaryService,
+        CancellationToken token)
+        {
+            // Arrange
+            HabitDiary? habit = null;
+            habitDiaryRepositoryMock.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>()))
+                                    .ReturnsAsync(habit);
+
+            Func<Task> act = async () => await habitDiaryService.GetByIdAsync(id, token);
+            //Assert
+
+            await act.Should().ThrowAsync<NotFoundException>();
+
         }
 
     }

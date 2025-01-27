@@ -3,8 +3,7 @@ using AutoFixture.Community.AutoMapper;
 using AutoFixture;
 using AutoFixture.Xunit2;
 using Diary.Mapping;
-//using Broadcaster.UnitTests.Application.HabitNotification;
-//using Broadcaster.Application.Services.Implementations.Mapping;
+using Diary.UnitTests.Applications;
 
 
 namespace Diary.UnitTests.Helps
@@ -16,12 +15,15 @@ namespace Diary.UnitTests.Helps
         private static readonly Func<IFixture> fixtureFactory = () =>
         {
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
-           // fixture.Customize<GetHabitNotification>(c => c.OmitAutoProperties());
+            fixture.Customize<GetHabitDiary>(c => c.OmitAutoProperties());
+            fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+    .               ForEach(b => fixture.Behaviors.Remove(b));
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
             fixture.Customize(new AutoMapperCustomization(cfg =>
             {
-                cfg.AddProfile<HabitMappingsProfile>();
+                cfg.AddProfile<HabitDiaryMappingsProfile>();
             }));
-            return null;
+            return fixture;
         };
     }
 }

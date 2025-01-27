@@ -20,7 +20,6 @@ namespace Diary.Core.Domain.Diary
         public List<HabitDiaryLine> Lines { get; set; }
         public List<Habit> Habits { get; set; }
         public HabitDiaryOwner DiaryOwner { get; set; }
-        public HabitDiaryOwner DiaryOwner { get; set; }
 
         public decimal TotalCost { get; set; }
 
