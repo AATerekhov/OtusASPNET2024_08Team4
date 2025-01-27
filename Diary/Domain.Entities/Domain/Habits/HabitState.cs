@@ -22,6 +22,6 @@ namespace Diary.Core.Domain.Habits
         public bool isRated { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        public required Habit Habit { get; set; }
+        public Habit Habit { get; set; }
     }
 }

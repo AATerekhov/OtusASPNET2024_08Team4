@@ -14,8 +14,6 @@ namespace Diary.Consumers
     {
         public async Task Consume(ConsumeContext<MagazineLineMessage> context)
         {
-            Console.WriteLine("Hello, consumers");
-
             var magazineLineMessage = context.Message;
 
             HabitDiary diary        = await _diaryRepository.GetFirstWhere(r => r.RoomId == magazineLineMessage.RoomId 

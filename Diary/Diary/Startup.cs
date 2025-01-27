@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using Diary.Validators;
 
 namespace Diary
 {
@@ -38,12 +41,15 @@ namespace Diary
             });
 
             InstallAutomapper(services);
+
             services.AddServices(Configuration);
             services.AddControllers();
             services.AddHealthChecks().AddCheck<DiaryHealthCheck>("diaryHealth", tags: new string[] { "diaryHealthCheck" });
             services.AddServices(Configuration);
             services.AddControllers();
- 
+            services.AddFluentValidationAutoValidation();
+            services.AddValidators();
+
             services.AddMassTransit(configurator =>
             {
                 configurator.SetKebabCaseEndpointNameFormatter();
@@ -59,12 +65,6 @@ namespace Diary
                                     h.Username(rmqSettings.Login);
                                     h.Password(rmqSettings.Password);
                                 });
-
-                    //// Настройка consumer
-                    //cfg.ReceiveEndpoint("diary-magazine-line-queue", e =>
-                    //{
-                    //    e.ConfigureConsumer<CreateDiaryLineFromMagazineConsumer>(context);
-                    //});
                 });
 
  
@@ -127,6 +127,7 @@ namespace Diary
 
             configuration.AssertConfigurationIsValid();
             return configuration;
-        }
+        }      
+
     }
 }
