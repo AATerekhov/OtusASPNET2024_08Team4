@@ -1,8 +1,12 @@
-﻿namespace RoomsDesigner.Core.Domain.Entities
+﻿using System.Collections.Generic;
+
+namespace RoomsDesigner.Core.Domain.Entities
 {
-	public class HabitCategory : IEntity<Guid>
+	public class HabitCategory : IEntity<int>
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string Name { get; set; }
+		public string Description { get; set; }
+		public ICollection<Habit> Habits { get; set; }
 	}
 }

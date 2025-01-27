@@ -54,6 +54,7 @@ namespace Diary
             {
                 configurator.SetKebabCaseEndpointNameFormatter();
                 configurator.AddConsumer<CreateDiaryLineFromMagazineConsumer>();
+                configurator.AddConsumer<RoomDesignerStartingRoomConsumer>();
 
                 configurator.UsingRabbitMq((context, cfg) =>
                 {
@@ -65,9 +66,9 @@ namespace Diary
                                     h.Username(rmqSettings.Login);
                                     h.Password(rmqSettings.Password);
                                 });
+                  cfg.ConfigureEndpoints(context);
                 });
 
- 
             });
 
             services.AddOpenApiDocument(options =>

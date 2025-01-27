@@ -1,4 +1,6 @@
-﻿namespace RoomsDesigner.Core.Domain.Entities
+﻿using System;
+
+namespace RoomsDesigner.Core.Domain.Entities
 {
 	public class Reward : IEntity<Guid>
 	{
