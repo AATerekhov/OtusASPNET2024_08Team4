@@ -15,6 +15,6 @@ namespace Magazine.Core.Domain.Magazines
         public DateTime CreatedDate { get; init; } = DateTime.UtcNow;
         public DateTime ModifiedDate { get; set; }
         public decimal Cost { get; set; }
-        public required RewardMagazine Magazine { get; set; }
+        public RewardMagazine Magazine { get; set; }
     }
 }
