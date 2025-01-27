@@ -14,7 +14,7 @@ namespace Diary.Core.Domain.Habits
         public string Description { get; set; }
         public decimal Cost { get; set; }
         public List<HabitState> HabitStates { get; set; }
-        public required HabitDiary Diary { get; set; }
+        public HabitDiary Diary { get; set; }
         public Habit()
         {
             HabitStates = new List<HabitState>();
