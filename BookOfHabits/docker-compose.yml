@@ -1,0 +1,41 @@
+services:
+  bookofhabits:
+    image: ${DOCKER_REGISTRY-}bookofhabits
+    build:
+      context: .
+      dockerfile: BookOfHabits/Dockerfile
+    environment:
+      ConnectionStrings:Postgres: "Host=habit_db;Port=5432;Database=Habit;UserId=postgres;Password=admin24"
+      ApiGateWaySettings:ValidApiKeys: ${GATEWAY_KEY_HABIT} 
+      RmqSettings:Host: "rabbit"
+      RmqSettings:VHost: "/"
+      RmqSettings:Login: "guest"
+      RmqSettings:Password: "guest"
+    container_name: habitsbook-service
+    depends_on:
+      - habit_db
+    networks:
+      - devnet
+
+  habit_db:
+    image: postgres
+    container_name: habit_db
+    restart: always
+    environment:    
+      POSTGRES_DB: Habit
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin24
+    volumes:
+      - 'habitsbook_data:/var/lib/postgresql/data'
+    ports:
+      - '5455:5432'
+    networks:
+      - devnet
+
+volumes:
+  habitsbook_data:
+
+networks:
+  devnet:
+    name: devnet
+    driver: bridge

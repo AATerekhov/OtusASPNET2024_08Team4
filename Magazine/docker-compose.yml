@@ -1,0 +1,70 @@
+services:
+  magazinehost:
+    image: ${DOCKER_REGISTRY-}magazinehost
+    build:
+      context: .
+      dockerfile: Magazine/Dockerfile
+    depends_on:
+      - redis
+      - magazinePostgresdb
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5002
+      ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
+      magazine_connection_db_string: "Host=magazinePostgresdb;Port=5432;Database=magazinedb;Username=postgres;Password=1234;Include Error Detail=true"
+    ports:
+      - 5001:5002
+    networks:
+      - caching-network
+
+  magazinePostgresdb:
+    container_name: magazinePostgresdb
+    image: postgres:latest
+    hostname: postgres2
+    ports:
+      - "5433:5433"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: magazinedb
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres -d magazinedb -c 'SELECT 1' || exit 1"]
+    volumes:
+      - db_data:/var/lib/postgresql/data 
+    networks:
+      - caching-network
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - caching-network
+
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: 'rabbit'
+    restart: always
+    hostname: rabbitmqhost  
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - caching-network
+ 
+volumes:
+  db_data:
+  rabbitmq_data:
+
+networks:
+  caching-network:
+    driver: bridge

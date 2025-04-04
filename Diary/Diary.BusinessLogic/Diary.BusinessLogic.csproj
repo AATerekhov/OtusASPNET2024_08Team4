@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\UserJournalLine\**" />
+    <EmbeddedResource Remove="Models\UserJournalLine\**" />
+    <None Remove="Models\UserJournalLine\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Diary.DataAccess\Diary.DataAccess.csproj" />
+    <ProjectReference Include="..\Domain.Entities\Diary.Core.csproj" />
+  </ItemGroup>
+
+</Project>

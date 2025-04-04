@@ -1,0 +1,29 @@
+services:
+  santasbag.webhost:
+    image: ${DOCKER_REGISTRY-}santasbagwebhost
+    build:
+      context: .
+      dockerfile: SantasBag.WebHost/Dockerfile
+    environment:
+      "ASPNETCORE_URLS": "http://+:8080"
+      "SANTASBAG_DBCONTEXT_CONNECTION_STRING": "Host=sb_postgres;Port=5432;Database=db;UserId=postgres;Password=postgres"
+    container_name: santasbag_api
+    depends_on:
+      - sb_postgres
+    ports:
+      - "8080:8080"
+  sb_postgres:
+    container_name: sb_postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    expose:
+      - 5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      
+volumes:
+  postgres-data:

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoomsDesigner.Domain.Entity\RoomsDesigner.Domain.Entity.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Domain.Repository.Abstractions\RoomsDesigner.Domain.Repository.Abstractions.csproj" />
+    <ProjectReference Include="..\RoomsDesigner.Infrastructure.EntityFramework\RoomsDesigner.Infrastructure.EntityFramework.csproj" />
+  </ItemGroup>
+
+</Project>

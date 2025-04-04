@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Broadcaster.Application.Service.Abstractions\Broadcaster.Application.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\Broadcaster.Application.Services.Implementations\Broadcaster.Application.Services.Implementations.csproj" />
+    <ProjectReference Include="..\BroadcasterMicroservice.Domain.Repository.Abstractions\BroadcasterMicroservice.Domain.Repository.Abstractions.csproj" />
+    <ProjectReference Include="..\BroadcasterMicroservice.Infrastructure.Implementations\BroadcasterMicroservice.Infrastructure.Implementations.csproj" />
+    <ProjectReference Include="..\BroadcasterMicroservice.Infrastructure.MongoDbContext\BroadcasterMicroservice.Infrastructure.MongoDbContext.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,118 @@
+services:
+  diary:
+    image: ${DOCKER_REGISTRY-}diary
+    build:
+      context: .
+      dockerfile: Diary/Dockerfile
+    depends_on:
+      - redis
+      - diary_db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5000
+      ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
+      diary_connection_db_string: "Host=diary_db;Port=5432;Database=diarydb;Username=postgres;Password=1234;Include Error Detail=true"
+      DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2UNENCRYPTEDSUPPORT: "true"
+      SERILOG_ELASTICSEARCH_URL: "http://elasticsearch:9200"
+      SERILOG_LOGSTASH_URL: "logstash:5044"  
+    ports:
+      - 5000:5000
+    networks:
+      - caching-network
+      - elk-network    
+
+  diary_db:
+    container_name: diary_db
+    image: postgres:latest
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: diarydb
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres -d diarydb -c 'SELECT 1' || exit 1"]
+    volumes:
+      - db_data:/var/lib/postgresql/data 
+    networks:
+      - caching-network
+ 
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: 'rabbit'
+    restart: always
+    hostname: rabbitmqhost    
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - caching-network
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - caching-network
+      
+  elasticsearch:
+    image: bitnami/elasticsearch:8.12.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    networks:
+      - elk-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  logstash:
+    image: bitnami/logstash:8.12.0
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    ports:
+      - "5044:5000"
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk-network
+    environment:
+      - XPACK_MONITORING_ENABLED=false
+
+  kibana:
+    image: bitnami/kibana:8.12.0
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk-network
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+volumes:
+  db_data:
+  rabbitmq_data:
+  es_data:
+
+networks:
+  caching-network:
+    driver: bridge
+  elk-network:
+    driver: bridge

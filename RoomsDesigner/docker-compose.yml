@@ -1,0 +1,88 @@
+services:
+  roomsdesigner.api:
+    image: ghcr.io/aaterekhov/roomsdesigner:latest   
+    container_name: roomsdesigner-service
+    environment:
+      ConnectionStrings:Postgres: "Host=roomsdesigner_db;Port=5432;Database=room;UserId=postgres;Password=admin24"      
+      ApiGateWaySettings:ValidApiKeys: ${GATEWAY_KEY_HABIT} 
+      RmqSettings:Host: "rabbit"
+      RmqSettings:VHost: "/"
+      RmqSettings:Login: "guest"
+      RmqSettings:Password: "guest"
+    depends_on:
+      - roomsdesigner_db
+    networks:
+      - devnet
+  roomsdesigner_db:
+    image: postgres
+    container_name: roomsdesigner_db
+    restart: always
+    environment:    
+      POSTGRES_DB: room
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin24
+    ports:
+      - "5543:5432"
+    volumes:
+      - 'roomsdesigner_data:/var/lib/postgresql/data'
+    networks:
+      - devnet
+  
+  habit-rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbit
+    restart: always
+    hostname: rabbitmqhost    
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - devnet
+
+  bookofhabits:
+    image: ghcr.io/aaterekhov/bookofhabits:latest
+    environment:
+      ConnectionStrings:Postgres: "Host=habit_db;Port=5432;Database=Habit;UserId=postgres;Password=admin24"
+      ApiGateWaySettings:ValidApiKeys: ${GATEWAY_KEY_HABIT}
+      ASPNETCORE_HTTP_PORTS: 8080
+      RmqSettings:Host: "rabbit"
+      RmqSettings:VHost: "/"
+      RmqSettings:Login: "guest"
+      RmqSettings:Password: "guest"
+    container_name: habitsbook-service
+    depends_on:
+      - habit_db
+    ports:
+      - "5101:8080"
+    networks:
+      - devnet
+
+  habit_db:
+    image: postgres
+    container_name: habit_db
+    restart: always
+    environment:    
+      POSTGRES_DB: Habit
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin24
+    volumes:
+      - 'habitsbook_data:/var/lib/postgresql/data'
+    ports:
+      - '5455:5432'
+    networks:
+      - devnet
+
+volumes:
+  roomsdesigner_data:
+  rabbitmq_data:  
+  habitsbook_data:
+
+networks:
+  devnet:
+    name: devnet
+    driver: bridge
