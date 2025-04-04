@@ -1,6 +1,0 @@
-@Diary_HostAddress = http://localhost:5249
-
-GET {{Diary_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
