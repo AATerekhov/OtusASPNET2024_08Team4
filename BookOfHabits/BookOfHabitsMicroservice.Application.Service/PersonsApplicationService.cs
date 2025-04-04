@@ -12,17 +12,17 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
     public class PersonsApplicationService(IRepository<Person, Guid> personRepository,
                                             IMapper mapper) : BaseService, IPersonsApplicationService
     {
-        public async Task<PersonModel?> AddPersonAsync(CreatePersonModel personInfo, CancellationToken token)
-        {
-            Person? person = await personRepository.GetByIdAsync(filter: x => x.Id.Equals(personInfo.Id), cancellationToken: token);
-            if (person is not null)
-                throw new BadRequestException(BadRequestEntityExistsMessage(personInfo.Id, nameof(Person)));
+        //public async Task<PersonModel?> AddPersonAsync(CreatePersonModel personInfo, CancellationToken token)
+        //{
+        //    Person? person = await personRepository.GetByIdAsync(filter: x => x.Id.Equals(personInfo.Id), cancellationToken: token);
+        //    if (person is not null)
+        //        throw new BadRequestException(BadRequestEntityExistsMessage(personInfo.Id, nameof(Person)));
 
-            person = new Person(personInfo.Id, new PersonName(personInfo.Name));
-            person = await personRepository.AddAsync(person, token)
-                ?? throw new BadRequestException(FormatBadRequestErrorMessage(personInfo.Id, nameof(Person)));
-            return mapper.Map<PersonModel>(person);
-        }
+        //    person = new Person(personInfo.Id, new PersonName(personInfo.Name));
+        //    person = await personRepository.AddAsync(person, token)
+        //        ?? throw new BadRequestException(FormatBadRequestErrorMessage(personInfo.Id, nameof(Person)));
+        //    return mapper.Map<PersonModel>(person);
+        //}
 
         public async Task DeletePersont(Guid id, CancellationToken token)
         {

@@ -29,8 +29,9 @@ namespace Diary.DataAccess.Abstractions
         /// <param name="id">Id сущности.</param>
         /// <param name="cancellationToken">токен отмены</param>
         /// <param name="filter">фильтер</param>
+        /// <param name="asNoTracking"> Вызвать с AsNoTracking. </param>
         /// <returns> Cущность. </returns>
-        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken, string includes = null)
+        public virtual async Task<T> GetByIdAsync(Guid id,  CancellationToken cancellationToken,  string includes = null, bool asNoTracking = false)
         {
             IQueryable<T> query = _entitySet;
 
@@ -42,7 +43,12 @@ namespace Diary.DataAccess.Abstractions
                 }
             }
 
-            return await query.AsNoTracking().Where(x => x.Id == id).FirstAsync(cancellationToken);
+            if (asNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +103,7 @@ namespace Diary.DataAccess.Abstractions
                 query = query.AsNoTracking();
             }
 
-            return await query.ToListAsync();
+            return await query.ToListAsync(cancellationToken);
         }
 
         /// <summary>

@@ -10,5 +10,8 @@ namespace BookOfHabitsMicroservice.Application.Models.Habit
         public string? Name { get; init; }
         public string? Description { get; init; }
         public HabitOptions Options { get; init; }
+        public UpdateDelayModel? Delay { get; init; }
+        public UpdateTimeResetIntervalModel? TimeResetInterval { get; init; }
+        public UpdateRepetitionModel? Repetition { get; init; }
     }
 }

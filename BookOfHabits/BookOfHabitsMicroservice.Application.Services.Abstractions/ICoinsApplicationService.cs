@@ -12,7 +12,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Abstractions
     {
         Task<IEnumerable<CoinsModel>> GetAllRoomCoinsAsync(Guid roomId, CancellationToken token = default);
         Task<CoinsModel> GetCoinsByIdAsync(Guid id, CancellationToken token = default);
-        Task UpdateCoins(UpdateCoinsModel coinsInfo, CancellationToken token = default);
-        Task DeleteCoins(Guid id, CancellationToken token = default);
+        Task<bool> UpdateCoins(UpdateCoinsModel coinsInfo, CancellationToken token = default);
+        Task<bool> DeleteCoins(Guid id, CancellationToken token = default);
     }
 }

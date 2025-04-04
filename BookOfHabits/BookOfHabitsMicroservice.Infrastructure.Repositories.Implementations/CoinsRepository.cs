@@ -18,9 +18,10 @@ namespace BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations
         {
             var query = _context.Set<Coins>()
                                 .Where(x => x.Id.Equals(id))
-                                .Include(x => x.Habit)
-                                .Include(x => x.Room)
-                                .ThenInclude(x => x.Manager);
+                                .Include(x => x.Habit).ThenInclude(x => x.Card).ThenInclude(x => x.TemplateValues)
+                                .Include(x => x.Habit).ThenInclude(x => x.Room)
+                                .Include(x => x.Habit).ThenInclude(x => x.Owner)
+                                .Include(x => x.Room).ThenInclude(x => x.Manager);
             
             return await query.SingleOrDefaultAsync(token);
         }

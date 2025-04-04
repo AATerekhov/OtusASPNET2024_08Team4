@@ -5,7 +5,6 @@ namespace Diary.Models.Response
 {
     public class HabitDiaryOwnerResponse
     {
-        [Required]
         public Guid Id { get; set; }
 
         [Required]

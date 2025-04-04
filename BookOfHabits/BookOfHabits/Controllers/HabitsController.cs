@@ -2,23 +2,34 @@
 using BookOfHabits.Requests.Habit;
 using BookOfHabits.Responses.Habit;
 using BookOfHabitsMicroservice.Application.Models.Habit;
-using BookOfHabitsMicroservice.Application.Models.Card;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookOfHabits.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class HabitsController(IHabitsApplicationService habitsApplicationService,
                                   IInstallCardApplicationService installCardApplicationService,
                                   ICardsApplicationService cardsApplicationService,
                                   IMapper mapper) : ControllerBase
     {
         [HttpGet("room/{roomId:guid}")]
-        public async Task<IEnumerable<HabitShortResponse>> GetAllRoomHabits(Guid roomId)
+        public async Task<IEnumerable<HabitFullDetailedResponse>> GetAllRoomHabits(Guid roomId)
         {
             IEnumerable<HabitModel> habits = await habitsApplicationService.GetAllRoomHabitsAsync(roomId, HttpContext.RequestAborted);
+            return habits.Select(mapper.Map<HabitFullDetailedResponse>);
+        }
+
+        [HttpGet("room/person/{roomId:guid}")]
+        public async Task<IEnumerable<HabitShortResponse>> GetRoomHabitsByPerson(Guid roomId, [FromQuery] Guid personId)
+        {
+            var userNameId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = userNameId == null ? Guid.Empty : new Guid(userNameId);
+            IEnumerable<HabitModel> habits = await habitsApplicationService.GetRoomHabitsByPersonAsync(roomId, personId, userId, HttpContext.RequestAborted);
             return habits.Select(mapper.Map<HabitShortResponse>);
         }
 
@@ -29,17 +40,18 @@ namespace BookOfHabits.Controllers
             return mapper.Map<HabitDetailedResponse>(habit);
         }
 
+
         [HttpPost]
         public async Task<HabitShortResponse> CreateHabit(CreateHabitRequest request)
         {
-            var habit = await habitsApplicationService.AddHabitAsync(mapper.Map<CreateHabitModel>(request), HttpContext.RequestAborted);
+            var habit = await habitsApplicationService.AddHabitAsync(mapper.Map<CreateHabitModel>(request), HttpContext.RequestAborted);          
             return mapper.Map<HabitShortResponse>(habit);
         }
 
         [HttpPut]
-        public async Task UpdateHabitAsync(UpdateHabitRequest request)
+        public async Task<bool> UpdateHabitAsync(UpdateHabitRequest request)
         {
-            await habitsApplicationService.UpdateHabit(mapper.Map<UpdateHabitModel>(request), HttpContext.RequestAborted);
+            return await habitsApplicationService.UpdateHabit(mapper.Map<UpdateHabitModel>(request), HttpContext.RequestAborted);
         }
 
         [HttpPut("delay/{id:guid}")]
@@ -61,13 +73,14 @@ namespace BookOfHabits.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task DeleteHabit(Guid id)
+        public async Task<bool> DeleteHabit(Guid id)
         {
             var habit = await habitsApplicationService.GetHabitByIdAsync(id, HttpContext.RequestAborted);
 
-            await habitsApplicationService.DeleteHabit(id, HttpContext.RequestAborted);
+            var result = await habitsApplicationService.DeleteHabit(id, HttpContext.RequestAborted);
             if (habit?.Card is not null)
                 await cardsApplicationService.DeleteCard(habit.Card.Id, HttpContext.RequestAborted);
+            return result;
         }
 
         [HttpPost("install")]

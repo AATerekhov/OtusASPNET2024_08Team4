@@ -14,7 +14,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                                          IRepository<Habit, Guid> habitRepository,
                                          IMapper mapper) : BaseService, ICoinsApplicationService
     {
-        public async Task DeleteCoins(Guid id, CancellationToken token = default)
+        public async Task<bool> DeleteCoins(Guid id, CancellationToken token = default)
         {
             var coins = await coinsRepository.GetByIdAsync(filter: x => x.Id.Equals(id), includes:$"{nameof(Coins.Habit)}")
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Coins)));
@@ -26,6 +26,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
             }               
             if (await coinsRepository.DeleteAsync(coins) is false)
                 throw new BadRequestException(FormatBadRequestErrorMessage(id, nameof(Coins)));
+            return true;
         }
 
         public async Task<IEnumerable<CoinsModel>> GetAllRoomCoinsAsync(Guid roomId, CancellationToken token = default)
@@ -40,12 +41,12 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
 
         public async Task<CoinsModel> GetCoinsByIdAsync(Guid id, CancellationToken token = default)
         {
-            Coins coins = await coinsRepository.GetCoinsByIdAsync(id, token: token)
+            Coins coins = await coinsRepository.GetDetailedCoinsByIdAsync(id, token: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Coins)));
             return mapper.Map<CoinsModel>(coins);
         }
 
-        public async Task UpdateCoins(UpdateCoinsModel coinsInfo, CancellationToken token = default)
+        public async Task<bool> UpdateCoins(UpdateCoinsModel coinsInfo, CancellationToken token = default)
         {
             Person owner = await personRepository.GetByIdAsync(x => x.Id.Equals(coinsInfo.PersonId), cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(coinsInfo.PersonId, nameof(Person)));
@@ -63,6 +64,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                               start: coinsInfo.Start,
                               falls: coinsInfo.Falls);
             await coinsRepository.UpdateAsync(entity: coins, token);
+            return true;
         }
     }
 }

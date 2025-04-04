@@ -14,17 +14,11 @@ namespace Diary.Controllers
     /// DiaryOwner
     /// </summary>
     [ApiController]
-    [Route("api/v1/[controller]")]
-    public class HabitDiaryOwnerController : ControllerBase
-    {
-        private readonly IHabitDiaryOwnerService _service;
-        private readonly IMapper _mapper;
-
-        public HabitDiaryOwnerController(IHabitDiaryOwnerService service, IMapper mapper)
-        {
-            _service = service;
-            _mapper = mapper;
-        }
+    [Route("api/[controller]")]
+    public class HabitDiaryOwnerController(IHabitDiaryOwnerService _service, 
+                                           IMapper _mapper,
+                                           ILogger<HabitDiaryOwnerController> _logger) : ControllerBase
+    {       
 
         /// <summary>
         /// Получение списка владельцев дневникнов постранично
@@ -47,6 +41,7 @@ namespace Diary.Controllers
         [HttpGet("GetDiaryOwner{id}")]
         public async Task<ActionResult<HabitDiaryOwnerResponse>> GetDiaryOwnerAsync(Guid id)
         {
+            _logger.LogInformation("Getting diary owner by ID: {Id}", id);
             return Ok(_mapper.Map<HabitDiaryOwnerResponse>(await _service.GetByIdAsync(id, HttpContext.RequestAborted)));
         }
 
@@ -70,6 +65,7 @@ namespace Diary.Controllers
         [HttpPost("CreateDiaryOwner")]
         public async Task<ActionResult<HabitDiaryOwnerResponse>> CreateJournalOwnerAsync(CreateOrEditHabitDiaryOwnerRequest request)
         {
+            _logger.LogInformation("Creating new diary owner with data {@Request}", request);
             return Ok(await _service.CreateAsync(_mapper.Map<CreateOrEditHabitDiaryOwnerDto>(request), HttpContext.RequestAborted));
         }
 
@@ -83,6 +79,7 @@ namespace Diary.Controllers
         [HttpPut("UpdateDiaryOwner/{id}")]
         public async Task<ActionResult<HabitDiaryOwnerResponse>> EditJournalOwnerAsync(Guid id, CreateOrEditHabitDiaryOwnerRequest request)
         {
+            _logger.LogInformation("Diary ownerd updated with data {@Request}", request);
             return Ok(await _service.UpdateAsync(id, _mapper.Map<CreateOrEditHabitDiaryOwnerRequest, CreateOrEditHabitDiaryOwnerDto>(request), HttpContext.RequestAborted));
         }
 
@@ -94,6 +91,7 @@ namespace Diary.Controllers
         [HttpDelete("DeleteDiaryOwner/{id}")]
         public async Task<IActionResult> DeleteJournalOwner(Guid id)
         {
+            _logger.LogInformation("Delting diary owner by ID: {Id}", id);
             await _service.DeleteAsync(id, HttpContext.RequestAborted);
             return Ok($"Владелец дневника с id {id} удален");
         }

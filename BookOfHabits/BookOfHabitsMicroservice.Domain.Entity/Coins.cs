@@ -10,6 +10,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         const int _defaultStart = 100;
         const int _defaultFalls = 10;
         public Room Room { get; }
+        public Guid HabitId { get; private set; }
         public Habit Habit { get; private set; }
         public string? Description { get; private set; }
         public CoinsOptions Options { get; private set; }

@@ -185,8 +185,8 @@ services:
     image: ghcr.io/aaterekhov/santasbag:latest
     environment:
       ASPNETCORE_URLS: http://+:5700
-      SANTASBAG_DBCONTEXT_CONNECTION_STRING: "Host=santasbag_db;Port=5432;Database=santasbagdb;UserId=postgres;Password=postgres;Include Error Detail=true"
-    container_name: santasbag_api
+      SANTASBAG_DBCONTEXT_CONNECTION_STRING: "Host=santasbag_db;Port=5432;Database=santasbagdb;UserId=postgres;Password=postgres"        
+    container_name: santasbaghost
     depends_on:
       - santasbag_db
     ports:

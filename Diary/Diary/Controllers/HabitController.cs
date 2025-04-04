@@ -16,7 +16,7 @@ namespace Diary.Controllers
     /// Habit
     /// </summary>
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     public class HabitController(IHabitService      _service,
                                  IMapper            _mapper,
                                  IDistributedCache  _distributedCache) : ControllerBase
@@ -112,8 +112,9 @@ namespace Diary.Controllers
         [HttpPost("CreateHabit")]
         public async Task<ActionResult<HabitShortResponse>> CreateHabitAsync(CreateHabitRequest request)
         {
-            var diary = await _service.CreateAsync(_mapper.Map<CreateHabitDto>(request), HttpContext.RequestAborted);
-            return Ok(_mapper.Map<HabitShortResponse>(diary));
+            var habit = await _service.CreateAsync(_mapper.Map<CreateHabitDto>(request), HttpContext.RequestAborted);
+            await _distributedCache.RemoveAsync(KeyForCache.DiariesByDiaryOwnerIdKey(habit.DiaryId));
+            return Ok(_mapper.Map<HabitShortResponse>(habit));
         }
 
         /// <summary>
@@ -126,9 +127,10 @@ namespace Diary.Controllers
         [HttpPut("UpdateHabit/{id}")]
         public async Task<ActionResult<HabitResponse>> EditHabitAsync(Guid id, EditHabitRequest request)
         {
-            var diary = await _service.UpdateAsync(id, _mapper.Map<EditHabitRequest, EditHabitDto>(request), HttpContext.RequestAborted);
-
-            return Ok(_mapper.Map<HabitResponse>(diary));
+            var habit = await _service.UpdateAsync(id, _mapper.Map<EditHabitRequest, EditHabitDto>(request), HttpContext.RequestAborted);
+            await _distributedCache.RemoveAsync(KeyForCache.HabitKey(id));
+            await _distributedCache.RemoveAsync(KeyForCache.HabitsByDiaryIdKey(habit.DiaryId));
+            return Ok(_mapper.Map<HabitResponse>(habit));
         }
 
         /// <summary>
@@ -140,6 +142,7 @@ namespace Diary.Controllers
         public async Task<IActionResult> DeleteHabit(Guid id)
         {
             await _service.DeleteAsync(id, HttpContext.RequestAborted);
+            await _distributedCache.RemoveAsync(KeyForCache.HabitKey(id));
             return Ok($"Привычка с id {id} удалена");
         }
     }

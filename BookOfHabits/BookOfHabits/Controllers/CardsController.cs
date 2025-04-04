@@ -3,6 +3,7 @@ using BookOfHabits.Requests.Card;
 using BookOfHabits.Responses.Card;
 using BookOfHabitsMicroservice.Application.Models.Card;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookOfHabits.Controllers
@@ -15,8 +16,8 @@ namespace BookOfHabits.Controllers
         [HttpGet]
         public async Task<IEnumerable<CardShortResponse>> GetAllCards()
         {
-            IEnumerable<CardModel> persons = await cardsApplicationService.GetAllCardsAsync(HttpContext.RequestAborted);
-            return persons.Select(mapper.Map<CardShortResponse>);
+            IEnumerable<CardModel> cards = await cardsApplicationService.GetAllCardsAsync(HttpContext.RequestAborted);
+            return cards.Select(mapper.Map<CardShortResponse>);
         }
 
         [HttpGet("{id:guid}")]
@@ -27,6 +28,7 @@ namespace BookOfHabits.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<CardShortResponse> CreateCard(CreateCardRequest request)
         {
             var card = await cardsApplicationService.AddCardAsync(mapper.Map<CreateCardModel>(request), HttpContext.RequestAborted);
@@ -34,22 +36,25 @@ namespace BookOfHabits.Controllers
         }
 
         [HttpPut]
-        public async Task UpdateCardAsync(UpdateCardRequest request)
+        [Authorize]
+        public async Task<bool> UpdateCardAsync(UpdateCardRequest request)
         {
-            await cardsApplicationService.UpdateCard(mapper.Map<UpdateCardModel>(request), HttpContext.RequestAborted);
+            return await cardsApplicationService.UpdateCard(mapper.Map<UpdateCardModel>(request), HttpContext.RequestAborted);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task UpdateTemplateValueAsync(Guid id, UpdateTemplateValuesRequest request)
+        [Authorize]
+        public async Task<bool> UpdateTemplateValueAsync(Guid id, UpdateTemplateValuesRequest request)
         {
-            await cardsApplicationService.UpdateTemplateValues(id, mapper.Map<UpdateTemplateValuesModel>(request), HttpContext.RequestAborted);
+           return await cardsApplicationService.UpdateTemplateValues(id, mapper.Map<UpdateTemplateValuesModel>(request), HttpContext.RequestAborted);
         }
 
 
         [HttpDelete("{id:guid}")]
-        public async Task DeleteCard(Guid id)
+        [Authorize]
+        public async Task<bool> DeleteCard(Guid id)
         {
-            await cardsApplicationService.DeleteCard(id, HttpContext.RequestAborted);
+           return await cardsApplicationService.DeleteCard(id, HttpContext.RequestAborted);
         }
     }
 }

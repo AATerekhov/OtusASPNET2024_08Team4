@@ -1,5 +1,4 @@
 ﻿using BookOfHabits.Responses.Card;
-using BookOfHabits.Responses.Person;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
 
 namespace BookOfHabits.Responses.Habit

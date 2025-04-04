@@ -11,6 +11,8 @@ namespace BookOfHabits.Responses.Card
         public CardOptions Options { get; init; }
         public required TemplateValuesResponse TemplateValues { get; init; }
         public required byte[] Image { get; init; }
+        public required string[] Status { get; init; }
         public required string[] TitleCheckElements { get; init; }
+        public required string[] Tags { get; init; }
     }
 }

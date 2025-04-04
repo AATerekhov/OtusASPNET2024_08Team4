@@ -39,9 +39,5 @@ namespace RoomsDesigner.UnitTests.Application
             //Assert
             await Assert.ThrowsAsync<NotFoundException>(async () => await сaseService.GetRoomByIdAsync(caseId));
         }
-
-
-
-
     }
 }

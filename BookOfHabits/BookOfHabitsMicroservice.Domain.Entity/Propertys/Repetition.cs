@@ -1,4 +1,5 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Base;
+using BookOfHabitsMicroservice.Domain.Entity.Enums;
 
 namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
@@ -30,6 +31,13 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
             MaxCountNegative = maxCountNegative;
             IsLimit = isLimit;
             CountLimit = countLimit;
+        }
+        internal void Update(Repetition updateRepetition)
+        {
+            MaxCountPositive = updateRepetition.MaxCountPositive;
+            MaxCountNegative = updateRepetition.MaxCountNegative;
+            IsLimit = updateRepetition.IsLimit;
+            CountLimit = updateRepetition.CountLimit;
         }
     }
 }

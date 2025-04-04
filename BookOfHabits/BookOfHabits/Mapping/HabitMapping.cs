@@ -12,7 +12,8 @@ namespace BookOfHabits.Mapping
             CreateMap<CreateHabitRequest, CreateHabitModel>();
             CreateMap<UpdateHabitRequest, UpdateHabitModel>();
             CreateMap<HabitModel, HabitShortResponse>();
-            CreateMap<HabitModel, HabitDetailedResponse>();            
+            CreateMap<HabitModel, HabitDetailedResponse>();
+            CreateMap<HabitModel, HabitFullDetailedResponse>();
 
             CreateMap<DelayRequest, UpdateDelayModel>();
             CreateMap<RepetitionRequest, UpdateRepetitionModel>();

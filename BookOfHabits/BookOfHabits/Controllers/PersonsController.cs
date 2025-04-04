@@ -26,12 +26,12 @@ namespace BookOfHabits.Controllers
             return mapper.Map<PersonDetailedResponse>(person);
         }
 
-        [HttpPost]
-        public async Task<PersonShortResponse> CreatePerson(CreatePersonRequest request)
-        {
-            var student = await personsApplicationService.AddPersonAsync(mapper.Map<CreatePersonModel>(request), HttpContext.RequestAborted);
-            return mapper.Map<PersonShortResponse>(student);
-        }
+        //[HttpPost]
+        //public async Task<PersonShortResponse> CreatePerson(CreatePersonRequest request)
+        //{
+        //    var student = await personsApplicationService.AddPersonAsync(mapper.Map<CreatePersonModel>(request), HttpContext.RequestAborted);
+        //    return mapper.Map<PersonShortResponse>(student);
+        //}
 
         [HttpPut]
         public async Task UpdatePersonAsync(UpdatePersonRequest request)

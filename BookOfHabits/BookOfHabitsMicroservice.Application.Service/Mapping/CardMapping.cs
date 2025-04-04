@@ -11,11 +11,11 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
         {
             CreateMap<Card, CardModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name.Name))
-                .ForMember(dest => dest.TitleCheckElements, opt => opt.MapFrom(src => src.TitleCheckElements));
-
-            CreateMap<TemplateValues, TemplateValuesModel>()
+                .ForMember(dest => dest.TitleCheckElements, opt => opt.MapFrom(src => src.TitleCheckElements))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+
+            CreateMap<TemplateValues, TemplateValuesModel>();
         }
     }
 }
