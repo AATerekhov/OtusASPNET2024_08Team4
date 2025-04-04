@@ -26,18 +26,16 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
                                                           cancellationToken: token)
                  ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(chooseHabitModel.RoomId, nameof(Room)));
             if (room.Manager.Equals(owner) is false)
-                throw new ForbiddenException(FormatForbiddenErrorMessage(chooseHabitModel.PersonId, nameof(Room)));
+                throw new BadRequestException(FormatBadRequestErrorMessage(chooseHabitModel.PersonId, nameof(Person)));
 
             Habit habit = await habitRepository.GetByIdAsync(filter: x => x.Id.Equals(chooseHabitModel.HabitId),
                                                              cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(chooseHabitModel.HabitId, nameof(Habit)));
 
-            Coins coins = new(
-                room: room,
-                habit: habit,
-                description: "obsolete",
-                options: CoinsOptions.None,
-                costOfWinning: chooseHabitModel.CostOfWinning);
+            var coins = new Coins(room: room,
+                                  habit: habit,
+                                  description: chooseHabitModel.Description,
+                                  options: CoinsOptions.None);
             room.GetCoins(coins);
             await habitRepository.UpdateAsync(entity: habit, cancellationToken: token);
             await roomRepository.UpdateAsync(entity: room, cancellationToken: token);

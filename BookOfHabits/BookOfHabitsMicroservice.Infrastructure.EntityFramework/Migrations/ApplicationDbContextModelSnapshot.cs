@@ -48,16 +48,6 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Migrations
                     b.Property<int>("Options")
                         .HasColumnType("integer");
 
-                    b.Property<string>("StatusString")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
-
-                    b.Property<string>("TagsString")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
-
                     b.Property<Guid>("TemplateValuesId")
                         .HasColumnType("uuid");
 
@@ -147,7 +137,7 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("RepetitionId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RoomId")
+                    b.Property<Guid>("RoomId1")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("TimeResetIntervalId")
@@ -163,7 +153,7 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Migrations
 
                     b.HasIndex("RepetitionId");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("RoomId1");
 
                     b.HasIndex("TimeResetIntervalId");
 
@@ -180,9 +170,6 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
-
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -256,15 +243,20 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("StatusString")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("TagsString")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<string>("TitleCheck")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
-
-                    b.Property<string>("TitleFileReceiver")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("TitleNegative")
                         .IsRequired()
@@ -280,16 +272,6 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
-
-                    b.Property<string>("TitleStatus")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.Property<string>("TitleTags")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("TitleValue")
                         .IsRequired()
@@ -415,7 +397,7 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Migrations
 
                     b.HasOne("BookOfHabitsMicroservice.Domain.Entity.Room", "Room")
                         .WithMany("_habits")
-                        .HasForeignKey("RoomId")
+                        .HasForeignKey("RoomId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

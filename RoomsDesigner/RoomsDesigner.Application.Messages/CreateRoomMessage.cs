@@ -2,9 +2,8 @@
 {
     public class CreateRoomMessage
     {
-        public Guid CaseId { get; init; }
-        public required string CaseName { get; init; }
-        public required string UserMail { get; init; }
+        public Guid Id { get; init; }
         public Guid OwnerId { get; init; }
+        public required string Name { get; init; }
     }
 }

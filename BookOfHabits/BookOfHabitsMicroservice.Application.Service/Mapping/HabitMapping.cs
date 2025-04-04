@@ -5,7 +5,7 @@ using BookOfHabitsMicroservice.Domain.Entity.Propertys;
 
 namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
 {
-    public class HabitMapping : Profile
+    public class HabitMapping : Profile 
     {
         public HabitMapping()
         {
@@ -15,12 +15,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations.Mapping
 
             CreateMap<Repetition, RepetitionModel>();
             CreateMap<Delay, DelayModel>();
-            CreateMap<TimeResetInterval, TimeResetIntervalModel>();
-
-            CreateMap<UpdateRepetitionModel, Repetition>();
-            CreateMap<UpdateDelayModel, Delay>();
-            CreateMap<UpdateTimeResetIntervalModel, TimeResetInterval>();
-
+            CreateMap<TimeResetInterval, TimeResetIntervalModel>();       
         }
     }
 }

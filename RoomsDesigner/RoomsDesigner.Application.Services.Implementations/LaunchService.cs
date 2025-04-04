@@ -17,7 +17,7 @@ namespace RoomsDesigner.Application.Services.Implementations
             Case? caseEmtity = await caseRepository.GetByIdAsync(filter: s => s.Id.Equals(launchInfo.Id),includes: "_players", cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(launchInfo.Id, nameof(Case)));
             if (!caseEmtity.OwnerId.Equals(launchInfo.OwnerId))
-                throw new ForbiddenException("The user is not the owner this room.");
+                throw new BadRequestException("The user is not the owner this room.");
 
             var magazineMessage = new StartMagazineMessage()
             {
@@ -28,8 +28,7 @@ namespace RoomsDesigner.Application.Services.Implementations
 
             await busControl.Publish(magazineMessage, token);
 
-            caseEmtity.Players.ToList().ForEach(async p =>
-            {
+            caseEmtity.Players.ToList().ForEach(async p => {
                 await busControl.Publish(new StartDiaryMessage()
                 {
                     RoomId = caseEmtity.Id,

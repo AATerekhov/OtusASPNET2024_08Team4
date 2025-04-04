@@ -42,12 +42,5 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
             //    throw new InvalidDayResetIntervalException(numberDayOfTheMonth);
             NumberDayOfTheMonth = numberDayOfTheMonth;
         }
-        internal void Update(TimeResetInterval updateTimeResetInterval)
-        {
-            Options = updateTimeResetInterval.Options;
-            TimeTheDay = updateTimeResetInterval.TimeTheDay;
-            WeekDays = updateTimeResetInterval.WeekDays;
-            NumberDayOfTheMonth = updateTimeResetInterval.NumberDayOfTheMonth;
-        }
     }
 }

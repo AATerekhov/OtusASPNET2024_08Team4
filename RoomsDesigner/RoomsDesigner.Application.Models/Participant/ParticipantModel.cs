@@ -1,5 +1,4 @@
 ﻿using RoomsDesigner.Application.Models.Base;
-using RoomsDesigner.Application.Models.Room;
 
 namespace RoomsDesigner.Application.Models.Participant
 {

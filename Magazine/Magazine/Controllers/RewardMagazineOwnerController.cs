@@ -11,7 +11,7 @@ namespace MagazineHost.Controllers
     /// Magazine Owner
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class RewardMagazineOwnerController : ControllerBase
     {
         private readonly IRewardMagazineOwnerService _service;

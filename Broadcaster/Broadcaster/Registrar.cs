@@ -1,8 +1,5 @@
-﻿using Broadcaster.Application.Models.HabitNotification;
-using Broadcaster.Application.Services.Abstractions;
+﻿using Broadcaster.Application.Services.Abstractions;
 using Broadcaster.Application.Services.Implementations;
-using Broadcaster.Application.Services.Implementations.FactoryMethodDomain;
-using BroadcasterMicroservice.Domain.Entity.MongoModel;
 using BroadcasterMicroservice.Domain.Repository.Abstractions;
 using BroadcasterMicroservice.Infrastructure.Implementations;
 using BroadcasterMicroservice.Infrastructure.MongoDbContext;
@@ -27,7 +24,6 @@ namespace Broadcaster
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IHabitNotificationService, HabitNotificationService>();
-            services.AddScoped<IFactory<CreateHabitNotificationModel, HabitNotifucationMongo>, HabitNotificationCreator>();
             return services;
         }
 

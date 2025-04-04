@@ -5,17 +5,13 @@ services:
       context: .
       dockerfile: BookOfHabits/Dockerfile
     environment:
-      ConnectionStrings:Postgres: "Host=habit_db;Port=5432;Database=Habit;UserId=postgres;Password=admin24"
-      ApiGateWaySettings:ValidApiKeys: ${GATEWAY_KEY_HABIT} 
-      RmqSettings:Host: "rabbit"
-      RmqSettings:VHost: "/"
-      RmqSettings:Login: "guest"
-      RmqSettings:Password: "guest"
+      "ASPNETCORE_URLS": "http://+:5100"
+      "ConnectionString": "Host=habit_db;Port=5432;Database=Habit;UserId=postgres;Password=admin24"
     container_name: habitsbook-service
     depends_on:
       - habit_db
-    networks:
-      - devnet
+    ports:
+      - "5101:5100"
 
   habit_db:
     image: postgres
@@ -28,14 +24,6 @@ services:
     volumes:
       - 'habitsbook_data:/var/lib/postgresql/data'
     ports:
-      - '5455:5432'
-    networks:
-      - devnet
-
+      - '5445:5432'
 volumes:
   habitsbook_data:
-
-networks:
-  devnet:
-    name: devnet
-    driver: bridge

@@ -11,7 +11,5 @@ namespace BookOfHabitsMicroservice.Application.Models.Card
         public CardOptions Options { get; init; }
         public byte[]? Image { get; init; }
         public required string[] TitleCheckElements { get; init; }
-        public required string[] Status { get; init; }
-        public required string[] Tags { get; init; }
     }
 }

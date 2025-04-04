@@ -3,7 +3,6 @@ using Diary.BusinessLogic.Models.HabitDiaryLine;
 using Diary.BusinessLogic.Models.UserJournal;
 using Diary.BusinessLogic.Services;
 using Diary.Cache;
-using Diary.Core.Domain.Habits;
 using Diary.Models.Request;
 using Diary.Models.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +15,7 @@ namespace Diary.Controllers
     /// Diary Lines
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class HabitDiaryLineController(IHabitDiaryLineService _service,
                                           IMapper                _mapper,
                                           IDistributedCache      _distributedCache) : ControllerBase
@@ -127,7 +126,7 @@ namespace Diary.Controllers
         public async Task<ActionResult<HabitDiaryLineResponse>> CreateDiaryLineAsync(CreateHabitDiaryLineRequest request)
         {
             var diaryLine = await _service.CreateAsync(_mapper.Map<CreateHabitDiaryLineDto>(request), HttpContext.RequestAborted);
-            await _distributedCache.RemoveAsync(KeyForCache.DiaryLinesByDiaryIdKey(diaryLine.DiaryId));
+
             return Ok(_mapper.Map<HabitDiaryLineResponse>(diaryLine));
         }
 
@@ -142,8 +141,7 @@ namespace Diary.Controllers
         public async Task<ActionResult<HabitDiaryLineResponse>> EditDiaryLineAsync(Guid id, EditHabitDiaryLineRequest request)
         {
             var diaryLine = await _service.UpdateAsync(id, _mapper.Map<EditHabitDiaryLineRequest, EditHabitDiaryLineDto>(request), HttpContext.RequestAborted);
-            await _distributedCache.RemoveAsync(KeyForCache.DiaryLineKey(id));
-            await _distributedCache.RemoveAsync(KeyForCache.DiaryLinesByDiaryIdKey(diaryLine.DiaryId));
+
             return Ok(_mapper.Map<HabitDiaryLineResponse>(diaryLine));
         }
 
@@ -156,7 +154,6 @@ namespace Diary.Controllers
         public async Task<IActionResult> DeleteDiaryLine(Guid id)
         {
             await _service.DeleteAsync(id, HttpContext.RequestAborted);
-            await _distributedCache.RemoveAsync(KeyForCache.DiaryLineKey(id));
             return Ok($"Строка дневника с id {id} удален");
         }
     }

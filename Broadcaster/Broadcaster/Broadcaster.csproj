@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\Settings\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Broadcaster.Application.Service.Abstractions\Broadcaster.Application.Services.Abstractions.csproj" />
     <ProjectReference Include="..\Broadcaster.Application.Services.Implementations\Broadcaster.Application.Services.Implementations.csproj" />
     <ProjectReference Include="..\BroadcasterMicroservice.Domain.Repository.Abstractions\BroadcasterMicroservice.Domain.Repository.Abstractions.csproj" />

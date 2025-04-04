@@ -10,14 +10,12 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public IReadOnlyCollection<Habit> SuggestedHabits => [.. _habits];
         public IReadOnlyCollection<Room> RoomManager => [.. _rooms];
         public PersonName Name { get; private set; }
-        public Guid OwnerId { get; private set; }
-        public Person(Guid id, PersonName name, Guid ownerId) : base(id)
+        public Person(Guid id, PersonName name) : base(id)
         {
             Name = name;
-            OwnerId = ownerId;
         }
-        public Person(PersonName name, Guid ownerId)
-            :this(Guid.NewGuid(), name, ownerId)
+        public Person(PersonName name)
+            :this(Guid.NewGuid(), name)
         {
                 
         }

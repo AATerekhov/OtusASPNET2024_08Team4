@@ -4,29 +4,30 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
 {
     public class TemplateValues : Property
     {
-        public string TitleStatus { get; private set; }
+        //public Card Card { get; }
+        public string StatusString { get; private set; } //List
+        public string[] Status => StatusString.Split(';', StringSplitOptions.RemoveEmptyEntries);
         public string TitleValue { get; private set; }
         public string TitleCheck { get; private set; }
         public string TitleReportField { get; private set; }
-        public string TitleTags { get; private set; }
+        public string TagsString { get; private set; } //List
+        public string[] Tags => TagsString.Split(';', StringSplitOptions.RemoveEmptyEntries);
         public string TitlePositive { get; private set; }
         public string TitleNegative { get; private set; }
-        public string TitleFileReceiver { get; private set; }
 
-        public TemplateValues(Guid id , string titleStatus, string titleValue, string titleCheck, string titleReportField, string titleTags, string titlePositive, string titleNegative, string titleFileReceiver)
+        public TemplateValues(Guid id , string status, string titleValue, string titleCheck, string titleReportField, string tags, string titlePositive, string titleNegative)
             :base(id, "TemplateValues")
         {
-            TitleStatus = titleStatus;
+            StatusString = status;
             TitleValue = titleValue;
             TitleCheck = titleCheck;
             TitleReportField = titleReportField;
-            TitleTags = titleTags;
+            TagsString = tags;
             TitlePositive = titlePositive;
             TitleNegative = titleNegative;
-            TitleFileReceiver = titleFileReceiver;
         }
-        public TemplateValues(string titleStatus, string titleValue, string titleCheck, string titleReportField, string titleTags, string titlePositive, string titleNegative, string titleFileReceiver)
-            :this(Guid.NewGuid(), titleStatus, titleValue,titleCheck,titleReportField,titleTags,titlePositive, titleNegative, titleFileReceiver)
+        public TemplateValues(string status, string titleValue, string titleCheck, string titleReportField, string tags, string titlePositive, string titleNegative)
+            :this(Guid.NewGuid(), status, titleValue,titleCheck,titleReportField,tags,titlePositive, titleNegative)
         {
                 
         }
@@ -36,24 +37,22 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
         {
 
         }
-        public void SetTitleStatus(string titleStatus) => TitleStatus = titleStatus;
+        public void SetStatus(string[] status) => StatusString = string.Join(";", status);
+        public void SetTags(string[] tags) => TagsString = string.Join(";", tags);
         public void SetTitleValue(string titleValue) => TitleValue = titleValue;
         public void SetTitleCheck(string titleCheck) => TitleCheck = titleCheck;
         public void SetTitleReportField(string titleReportField) => TitleReportField = titleReportField;
-        public void SetTitleTags(string titleTags) => TitleTags = titleTags;
         public void SetTitlePositive(string titlePositive) => TitlePositive = titlePositive;
         public void SetTitleNegative(string titleNegative) => TitleNegative = titleNegative;
-        public void SetTItleFileReceiver(string titleFIleReceiver) => TitleFileReceiver = titleFIleReceiver;
         internal TemplateValues DeepCopy() 
         {
-            return new TemplateValues(titleStatus: this.TitleStatus,
+            return new TemplateValues(status: this.StatusString,
                                       titleValue: this.TitleValue,
                                       titleCheck: this.TitleCheck,
                                       titleReportField: this.TitleReportField,
-                                      titleTags: this.TitleTags,
+                                      tags: this.TagsString,
                                       titlePositive: this.TitlePositive,
-                                      titleNegative: this.TitleNegative,
-                                      titleFileReceiver: this.TitleFileReceiver);
+                                      titleNegative: this.TitleNegative);
         }
     }
 }

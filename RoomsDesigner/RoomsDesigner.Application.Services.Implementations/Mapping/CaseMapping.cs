@@ -10,6 +10,7 @@ namespace RoomsDesigner.Application.Services.Implementations.Mapping
         public CaseMapping()
         {                
             CreateMap<Case, CaseModel>();
+            CreateMap<Case, CreateRoomMessage>();
         }
     }
 }

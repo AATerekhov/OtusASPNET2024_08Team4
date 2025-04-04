@@ -1,19 +1,24 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.Entity.Propertys;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BookOfHabitsMicroservice.Application.Services.Implementations.Default_values
 {
     public static class DefaultValues
     {
         public static TemplateValues GetDefaultTemplateValues() 
-            => new TemplateValues(titleStatus: "State",
-                                  titleValue: "Value result",
+            => new TemplateValues(status: "ToDo;Doing;Done",
+                                  titleValue: "Result",
                                   titleCheck: "Tasks",
-                                  titleReportField: "Text report",
-                                  titleTags: "Metks",
+                                  titleReportField: "Report",
+                                  tags: "Achievement;Important;Regular;Ordinary",
                                   titlePositive: "Healthy",
-                                  titleNegative: "Damage",
-                                  titleFileReceiver: "File report");
+                                  titleNegative: "Damage");
         public static Delay GetDefaultDelay() 
             => new Delay(isAfterATime: false,
                          afterTime: 0,

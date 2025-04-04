@@ -9,8 +9,5 @@ namespace BookOfHabits.Requests.Habit
         public string? Name { get; init; }
         public string? Description { get; init; }
         public HabitOptions Options { get; init; }
-        public DelayRequest? Delay { get; init; }
-        public TimeResetIntervalRequest? TimeResetInterval { get; init; }
-        public RepetitionRequest? Repetition { get; init; }
     }
 }

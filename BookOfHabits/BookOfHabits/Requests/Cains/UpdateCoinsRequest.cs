@@ -1,4 +1,5 @@
 ﻿using BookOfHabitsMicroservice.Domain.Entity.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookOfHabits.Requests.Cains
 {

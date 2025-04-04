@@ -2,9 +2,8 @@
 {
     public class AddParticipantInRoomMessage
     {
-        public Guid PartisipantId { get; init; }
-        public Guid CaseId { get; init; }
+        public Guid Id { get; init; }
         public required string UserMail { get; init; }
-        public Guid OwnerId { get; init; }
+        public Guid CaseId { get; init; }
     }
 }

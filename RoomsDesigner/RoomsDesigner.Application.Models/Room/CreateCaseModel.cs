@@ -3,7 +3,6 @@
     public class CreateCaseModel
     {
         public Guid OwnerId { get; init; }
-        public required string UserMail { get; init; }
         public required string Name { get; init; }
     }
 }

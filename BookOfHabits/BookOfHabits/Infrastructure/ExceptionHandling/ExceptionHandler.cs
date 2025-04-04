@@ -36,7 +36,6 @@ namespace BookOfHabits.Infrastructure.ExceptionHandling
             {
                 ArgumentException or BadRequestException => (int)HttpStatusCode.BadRequest,
                 NotFoundException => (int)HttpStatusCode.NotFound,
-                ForbiddenException => (int)HttpStatusCode.Forbidden,
                 _ => (int)HttpStatusCode.InternalServerError,
             };
 

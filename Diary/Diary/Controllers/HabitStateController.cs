@@ -15,7 +15,7 @@ namespace Diary.Controllers
     /// HabitState
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class HabitStateController(IHabitStateService _service,
                                       IMapper _mapper,
                                       IDistributedCache _distributedCache) : ControllerBase
@@ -124,10 +124,9 @@ namespace Diary.Controllers
         [HttpPut("UpdateHabitState/{id}")]
         public async Task<ActionResult<HabitStateResponse>> EditHabitAsync(Guid id, EditHabitStateRequest request)
         {
-            var habitState = await _service.UpdateAsync(id, _mapper.Map<EditHabitStateRequest, EditHabitStateDto>(request), HttpContext.RequestAborted);
-            await _distributedCache.RemoveAsync(KeyForCache.HabitStateKey(id));
-            await _distributedCache.RemoveAsync(KeyForCache.HabitStatesByHabitIdKey(habitState.HabitId));
-            return Ok(_mapper.Map<HabitStateResponse>(habitState));
+            var diary = await _service.UpdateAsync(id, _mapper.Map<EditHabitStateRequest, EditHabitStateDto>(request), HttpContext.RequestAborted);
+
+            return Ok(_mapper.Map<HabitStateResponse>(diary));
         }
 
         /// <summary>
@@ -139,7 +138,6 @@ namespace Diary.Controllers
         public async Task<IActionResult> DeleteHabitState(Guid id)
         {
             await _service.DeleteAsync(id, HttpContext.RequestAborted);
-            await _distributedCache.RemoveAsync(KeyForCache.HabitStateKey(id));
             return Ok($"Состояние привычки с id {id} удалено");
         }
     }

@@ -10,7 +10,6 @@ namespace BookOfHabitsMicroservice.Application.Models.Coins
         public Guid Id { get; init; }
         public Guid RoomId { get; init; }
         public HabitModel Habit { get; init; }
-        public RoomModel Room { get; init; }
         public string? Description { get; init; }
         public CoinsOptions Options { get; init; }
         public int CostOfWinning { get; init; }

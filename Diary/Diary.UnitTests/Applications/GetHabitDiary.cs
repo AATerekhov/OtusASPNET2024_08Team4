@@ -27,7 +27,7 @@ namespace Diary.UnitTests.Applications
         {
             // Arrange
             habitDiary.Id = id;
-            habitDiaryRepositoryMock.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>(), false))
+            habitDiaryRepositoryMock.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>()))
                 .ReturnsAsync(habitDiary);
 
             // Act
@@ -47,12 +47,8 @@ namespace Diary.UnitTests.Applications
         {
             // Arrange
             HabitDiary? habit = null;
-            habitDiaryRepositoryMock.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>(), false))
+            habitDiaryRepositoryMock.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>()))
                                     .ReturnsAsync(habit);
-
-            // Act & Assert: проверка, что вызывается исключение
-            var exception = await Assert.ThrowsAsync<NotFoundException>(
-                () => habitDiaryService.GetByIdAsync(id, token));
 
             Func<Task> act = async () => await habitDiaryService.GetByIdAsync(id, token);
             //Assert

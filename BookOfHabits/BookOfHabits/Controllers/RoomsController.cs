@@ -3,9 +3,7 @@ using BookOfHabits.Requests.Room;
 using BookOfHabits.Responses.Room;
 using BookOfHabitsMicroservice.Application.Models.Room;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BookOfHabits.Controllers
 {
@@ -23,12 +21,9 @@ namespace BookOfHabits.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        [Authorize]
         public async Task<RoomDetailedResponse> GetRoomById(Guid id)
         {
-            var userNameId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var userId = userNameId == null ? Guid.Empty : new Guid(userNameId);
-            var room = await roomsApplicationService.GetRoomByIdAsync(id, userId, HttpContext.RequestAborted);
+            var room = await roomsApplicationService.GetRoomByIdAsync(id, HttpContext.RequestAborted);
             return mapper.Map<RoomDetailedResponse>(room);
         }
 

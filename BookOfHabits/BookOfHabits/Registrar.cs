@@ -26,7 +26,6 @@ namespace BookOfHabits
             services.AddScoped<IRepository<Repetition, Guid>, RepetitionRepository>();
             services.AddScoped<IRepository<TimeResetInterval, Guid>, TimeResetIntervalRepository>();
             services.AddScoped<IRepository<Habit, Guid>, HabitRepository>();
-            services.AddScoped<IHabitsRepository, HabitRepository>();
             services.AddScoped<ICoinsRepository, CoinsRepository>();
             return services;
         }

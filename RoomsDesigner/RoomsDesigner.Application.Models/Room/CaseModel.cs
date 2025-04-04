@@ -9,6 +9,5 @@ namespace RoomsDesigner.Application.Models.Room
         public Guid OwnerId { get; init; }
         public required string Name { get; init; }
         public required IEnumerable<ParticipantModel> Players { get; init; }
-        public bool IsActive { get; init; }
     }
 }

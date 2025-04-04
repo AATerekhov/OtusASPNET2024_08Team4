@@ -27,7 +27,7 @@ namespace RoomsDesigner.Domain.Entity
         {
 
         }
-        public void Update(Guid userId, string userMail, string name) 
+        public void Update(Guid userId, string name, string userMail) 
         {
             UserId = userId;
             Name = name;

@@ -2,6 +2,7 @@
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Entity.Enums;
 using BookOfHabitsMicroservice.Domain.ValueObjects;
+using System.Dynamic;
 
 namespace BookOfHabitsMicroservice.Application.Services.Implementations.FactoryMethodDomain
 {
@@ -13,7 +14,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations.FactoryM
             {
                 return new Habit(name: new HabitName(vars[0]),
                           description: string.Empty,
-                          options: HabitOptions.Delayed,
+                          options: HabitOptions.None,
                           delay: DefaultValues.GetDefaultDelay(),
                           repetition: DefaultValues.GetDefaultRepetition(),
                           timeResetInterval: DefaultValues.GetDefaultTimeResetInterval());
@@ -22,7 +23,7 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations.FactoryM
             {
                 return new Habit(name: new HabitName(vars[0]),
                           description: vars[1],
-                          options: HabitOptions.Delayed,
+                          options: HabitOptions.None,
                           delay: DefaultValues.GetDefaultDelay(),
                           repetition: DefaultValues.GetDefaultRepetition(),
                           timeResetInterval: DefaultValues.GetDefaultTimeResetInterval());

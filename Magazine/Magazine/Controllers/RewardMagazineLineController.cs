@@ -11,7 +11,6 @@ using System.Text.Json;
 using MassTransit;
 using Magazine.Message;
 using MagazineHost.Mappers;
-using GrpcDiaryClient;
 
 namespace MagazineHost.Controllers
 {
@@ -19,13 +18,12 @@ namespace MagazineHost.Controllers
     /// Magazine Lines
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class RewardMagazineLineController(IRewardMagazineLineService _service,
                                               IRewardMagazineService     _magazineService,
                                               IMapper                    _mapper,
                                               IDistributedCache _distributedCache,
-                                              IBusControl      _busControl,
-                                              DiaryGrpcService.DiaryGrpcServiceClient _diaryGrpcClient) : ControllerBase
+                                              IBusControl      _busControl) : ControllerBase
     {
        
         /// <summary>
@@ -134,10 +132,7 @@ namespace MagazineHost.Controllers
             var magazineLine = await _service.CreateAsync(_mapper.Map<CreateRewardMagazineLineDto>(request), HttpContext.RequestAborted);
             var magazine    = await _magazineService.GetByIdAsync(magazineLine.MagazineId, HttpContext.RequestAborted);
 
-            //await _busControl.Publish<MagazineLineMessage>(MagazineLineMessageMapper.MapInMessage(magazine, magazineLine), HttpContext.RequestAborted);
-            await _diaryGrpcClient.CreateDiaryLineFromMagazineAsync(MagazineLineMessageMapper.MapInMessage(magazine, magazineLine));
-
-            await _distributedCache.RemoveAsync(KeyForCache.MagazineLinesByMagazineIdKey(magazine.Id));
+            await _busControl.Publish<MagazineLineMessage>(MagazineLineMessageMapper.MapInMessage(magazine, magazineLine), HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<RewardMagazineLineResponse>(magazineLine));
         }
@@ -155,11 +150,7 @@ namespace MagazineHost.Controllers
             var magazineLine = await _service.UpdateAsync(id, _mapper.Map<EditRewardMagazineLineRequest, EditRewardMagazineLineDto>(request), HttpContext.RequestAborted);
             var magazine     = await _magazineService.GetByIdAsync(magazineLine.MagazineId, HttpContext.RequestAborted);
 
-            //await _busControl.Publish<MagazineLineMessage>(MagazineLineMessageMapper.MapInMessage(magazine, magazineLine), HttpContext.RequestAborted);
-            await _diaryGrpcClient.CreateDiaryLineFromMagazineAsync(MagazineLineMessageMapper.MapInMessage(magazine, magazineLine));
-
-            await _distributedCache.RemoveAsync(KeyForCache.MagazineLineKey(id));
-            await _distributedCache.RemoveAsync(KeyForCache.MagazineLinesByMagazineIdKey(magazine.Id));
+            await _busControl.Publish<MagazineLineMessage>(MagazineLineMessageMapper.MapInMessage(magazine, magazineLine), HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<RewardMagazineLineResponse>(magazineLine));
         }
@@ -173,7 +164,6 @@ namespace MagazineHost.Controllers
         public async Task<IActionResult> DeleteMagazineLine(Guid id)
         {
             await _service.DeleteAsync(id, HttpContext.RequestAborted);
-            await _distributedCache.RemoveAsync(KeyForCache.MagazineLineKey(id));
             return Ok($"Строка журнала с id {id} удален");
         }
     }
