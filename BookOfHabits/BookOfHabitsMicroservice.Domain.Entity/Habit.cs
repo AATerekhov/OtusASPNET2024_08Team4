@@ -9,8 +9,11 @@ namespace BookOfHabitsMicroservice.Domain.Entity
     {
         public HabitName Name { get; private set; }
         public string Description { get; private set; }
+        public Guid OwnerId { get; set; }
         public Person Owner { get; private set; }
+        public Guid CardId { get; set; }
         public Card? Card { get; private set; }
+        public Guid RoomId { get; set; }
         public Room Room { get; private set; }
         public bool IsUsed { get; private set; }
         public HabitOptions Options { get; private set; }
@@ -46,6 +49,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         public void SetPerson(Person owner)
         {
             Owner = owner;
+            OwnerId = owner.Id;
             Owner.GetHabit(this);
         }
         public void SetRoom(Room room) 
@@ -53,6 +57,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             Room = room;
             Room.GetHabit(this);
         }
+        [Obsolete]
         public void GetCard(Card card) 
         {
             if (Card is not null)
@@ -61,8 +66,27 @@ namespace BookOfHabitsMicroservice.Domain.Entity
             newCard.Close();
             Card = newCard;
         }
+        public void SetCard(Card card)
+        {
+            Card = card;
+        }
         public void SetName(string name) => Name = new HabitName(name);
         public void SetDescription(string description) => Description = description;
         public void SetOptions(HabitOptions options) => Options = options;
+        public void UpdateDelay(Delay updateDelay) 
+        {
+            if (Delay.Id.Equals(updateDelay.Id))
+                Delay.Update(updateDelay);
+        }
+        public void UpdateTimeResetInterval(TimeResetInterval updateTimeResetInterval)
+        {
+            if (TimeResetInterval.Id.Equals(updateTimeResetInterval.Id))
+                TimeResetInterval.Update(updateTimeResetInterval);
+        }
+        public void UpdateRepetition(Repetition updateRepetition)
+        {
+            if (Repetition.Id.Equals(updateRepetition.Id))
+                Repetition.Update(updateRepetition);
+        }
     }
 }

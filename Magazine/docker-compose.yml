@@ -9,11 +9,11 @@ services:
       - magazinePostgresdb
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:5000
+      ASPNETCORE_URLS: http://+:5002
       ConnectionStrings:Redis: redis:6379,ssl=False,abortConnect=False
       magazine_connection_db_string: "Host=magazinePostgresdb;Port=5432;Database=magazinedb;Username=postgres;Password=1234;Include Error Detail=true"
     ports:
-      - 5000:5000
+      - 5001:5002
     networks:
       - caching-network
 

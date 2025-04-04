@@ -23,9 +23,15 @@ namespace BookOfHabitsMicroservice.Infrastructure.EntityFramework.Configurations
                     .HasMaxLength(250);
             builder.Property(x => x.TitlesCheck)
                     .HasMaxLength(1500);
+            builder.Property(x => x.StatusString)
+                .HasMaxLength(512);
+            builder.Property(x => x.TagsString)
+                .HasMaxLength(512);
             builder.Property(x => x.Image)
                     .HasMaxLength(25000);
             builder.Ignore(x => x.TitleCheckElements);
+            builder.Ignore(x => x.Status);
+            builder.Ignore(x => x.Tags);
         }
     }
 }

@@ -32,5 +32,12 @@ namespace BookOfHabitsMicroservice.Domain.Entity.Propertys
         public void SetAfterTime(int afterTime) => AfterTime = afterTime;
         public void SetIsEndless(bool isEndless) => IsEndless = isEndless;
         public void SetDurationTime(int durationTime) => DurationTime = durationTime;
+        internal void Update(Delay updateDelay) 
+        {
+            IsAfterATime = updateDelay.IsAfterATime;
+            AfterTime = updateDelay.AfterTime;
+            IsEndless = updateDelay.IsEndless;
+            DurationTime = updateDelay.DurationTime;
+        }
     }
 }

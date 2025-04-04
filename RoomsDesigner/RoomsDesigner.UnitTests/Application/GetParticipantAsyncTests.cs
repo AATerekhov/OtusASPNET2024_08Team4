@@ -64,7 +64,7 @@ namespace RoomsDesigner.UnitTests.Application
             caseRepositoryMock.Setup(repo => repo.GetCaseByIdAsync(caseId, default)).ReturnsAsync(room);
 
             //Act
-            var result = await participantService.AddParticipantAsync(createParticipantModel);
+            var result = await participantService.AddParticipantAsync(createParticipantModel, room.OwnerId);
 
             //Assert
 

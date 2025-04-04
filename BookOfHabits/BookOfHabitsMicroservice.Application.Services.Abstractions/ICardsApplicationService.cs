@@ -13,8 +13,8 @@ namespace BookOfHabitsMicroservice.Application.Services.Abstractions
         Task<IEnumerable<CardModel>> GetAllCardsAsync(CancellationToken token = default);
         Task<CardModel?> GetCardByIdAsync(Guid id, CancellationToken token = default);
         Task<CardModel?> AddCardAsync(CreateCardModel cardInfo, CancellationToken token = default);
-        Task UpdateCard(UpdateCardModel cardInfo, CancellationToken token = default);
-        Task UpdateTemplateValues(Guid cardId, UpdateTemplateValuesModel tempateValuesInfo, CancellationToken token = default);
-        Task DeleteCard(Guid id, CancellationToken token = default);
+        Task<bool> UpdateCard(UpdateCardModel cardInfo, CancellationToken token = default);
+        Task<bool> UpdateTemplateValues(Guid templateId, UpdateTemplateValuesModel tempateValuesInfo, CancellationToken token = default);
+        Task<bool> DeleteCard(Guid id, CancellationToken token = default);
     }
 }

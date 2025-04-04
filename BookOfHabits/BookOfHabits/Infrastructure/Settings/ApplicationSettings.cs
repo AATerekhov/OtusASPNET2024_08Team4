@@ -2,7 +2,8 @@
 {
     public class ApplicationSettings
     {
-        public string? ConnectionString { get; set; }
+        public ApiGateWaySettings ApiGateWaySettings { get; set; }
+        //public string ConnectionString { get; set; }
         public RmqSettings RmqSettings { get; set; }
     }
 }

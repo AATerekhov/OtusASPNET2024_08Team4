@@ -4,12 +4,9 @@ namespace MagazineHost.Models.Request
 {
     public class CreateRewardMagazineLineRequest
     {
-        [Required]
         public Guid MagazineId { get; set; }
-        [Required]
         public Guid RewardId { get; set; }
         public required string EventDescription { get; set; }
-        [Required]
         public required string ModifiedDate { get; set; }
         public decimal Cost { get; set; }
     }

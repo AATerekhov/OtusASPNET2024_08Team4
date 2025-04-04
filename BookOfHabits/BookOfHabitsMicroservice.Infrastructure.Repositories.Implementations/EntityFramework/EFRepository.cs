@@ -11,10 +11,11 @@ namespace BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations.E
         where TId : struct
     {
         private static readonly char[] IncludeSeparator = [','];
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter = null,
-                                                                    string? includes = null,
-                                                                    bool asNoTracking = false,
-                                                                    CancellationToken token = default)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
+            Expression<Func<TEntity, bool>>? filter = null,
+            string? includes = null,
+            bool asNoTracking = false,
+            CancellationToken token = default)
         {
             IQueryable<TEntity> query = context.Set<TEntity>();
 
@@ -28,10 +29,12 @@ namespace BookOfHabitsMicroservice.Infrastructure.Repositories.Implementations.E
                 query = query.AsNoTracking();
             return await query.ToListAsync(token);
         }
-        public virtual async Task<TEntity?> GetByIdAsync(Expression<Func<TEntity, bool>> filter,
-                                                  string? includes = null,
-                                                  bool asNoTracking = false,
-                                                  CancellationToken token = default)
+
+        public virtual async Task<TEntity?> GetByIdAsync(
+            Expression<Func<TEntity, bool>> filter,
+            string? includes = null,
+            bool asNoTracking = false,
+            CancellationToken token = default)
         {
             IQueryable<TEntity> query = context.Set<TEntity>();
 

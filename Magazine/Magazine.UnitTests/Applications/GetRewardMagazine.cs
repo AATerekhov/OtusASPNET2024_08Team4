@@ -26,7 +26,7 @@ namespace Magazine.UnitTests.Applications
         {
             // Arrange
             rewardMagazine.Id = id;
-            habitMagazineRepositoryMoc.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>()))
+            habitMagazineRepositoryMoc.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>(), false))
                 .ReturnsAsync(rewardMagazine);
 
             // Act
@@ -46,7 +46,7 @@ namespace Magazine.UnitTests.Applications
         {
             // Arrange
             RewardMagazine? rewardMagazine = null;
-            habitMagazineRepositoryMock.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>()))
+            habitMagazineRepositoryMock.Setup(repo => repo.GetByIdAsync(id, token, It.IsAny<string>(), false))
                                     .ReturnsAsync(rewardMagazine);
 
             // Act & Assert

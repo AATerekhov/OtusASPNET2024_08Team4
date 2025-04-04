@@ -28,8 +28,9 @@ namespace Magazine.DataAccess.Abstractions
         /// <param name="id">Id сущности.</param>
         /// <param name="cancellationToken">токен отмены</param>
         /// <param name="filter">фильтер</param>
+        /// <param name="asNoTracking"> Вызвать с AsNoTracking. </param>
         /// <returns> Cущность. </returns>
-        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken, string includes = null)
+        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken, string includes = null, bool asNoTracking = false)
         {
             IQueryable<T> query = _entitySet;
 
@@ -41,7 +42,12 @@ namespace Magazine.DataAccess.Abstractions
                 }
             }
 
-            return await query.AsNoTracking().Where(x => x.Id == id).FirstAsync(cancellationToken);
+            if (asNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +102,7 @@ namespace Magazine.DataAccess.Abstractions
                 query = query.AsNoTracking();
             }
 
-            return await query.ToListAsync();
+            return await query.ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -184,6 +190,26 @@ namespace Magazine.DataAccess.Abstractions
         public virtual async Task SaveChangesAsync(CancellationToken cancellationToken)
         {
             await Context.SaveChangesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// получение записей по условиям
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
+        {
+            return await Context.Set<T>().Where(predicate).ToListAsync();
+        }
+
+        /// <summary>
+        /// получение записи по условиям
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public async Task<T> GetFirstWhere(Expression<Func<T, bool>> predicate)
+        {
+            return await Context.Set<T>().FirstOrDefaultAsync(predicate);
         }
     }
 }

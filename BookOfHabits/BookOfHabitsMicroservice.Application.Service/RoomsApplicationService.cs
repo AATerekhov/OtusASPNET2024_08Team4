@@ -43,15 +43,16 @@ namespace BookOfHabitsMicroservice.Application.Services.Implementations
             return rooms.Select(mapper.Map<RoomModel>);
         }
 
-        public async Task<RoomModel?> GetRoomByIdAsync(Guid id, CancellationToken token = default)
-        {
-            
-            var room = await roomRepository.GetByIdAsync(filter: x => x.Id.Equals(id),
-                                                         includes: $"{nameof(Room.Manager)},_habits,_bags",
-                                                         asNoTracking: true,
-                                                         cancellationToken: token)
+        public async Task<RoomModel?> GetRoomByIdAsync(Guid id, Guid userId, CancellationToken token = default)
+        {            
+            var room = await roomRepository.GetByIdAsync(
+                filter: x => x.Id.Equals(id),
+                includes: $"{nameof(Room.Manager)},_habits,_bags",
+                asNoTracking: true,
+                cancellationToken: token)
                 ?? throw new NotFoundException(FormatFullNotFoundErrorMessage(id, nameof(Room)));
-            
+            if (!room.Manager.OwnerId.Equals(userId))
+                throw new ForbiddenException(FormatForbiddenErrorMessage(userId, nameof(Room)));
             var result = mapper.Map<RoomModel>(room);
             return result;
         }

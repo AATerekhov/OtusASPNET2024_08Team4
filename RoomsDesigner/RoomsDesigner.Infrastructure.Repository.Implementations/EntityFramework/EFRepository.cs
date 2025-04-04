@@ -53,10 +53,11 @@ namespace RoomsDesigner.Infrastructure.Repository.Implementations.EntityFramewor
             await context.SaveChangesAsync(token);
             return entity;
         }
-        public virtual async Task UpdateAsync(TEntity entity, CancellationToken token = default)
+        public virtual async Task<bool> UpdateAsync(TEntity entity, CancellationToken token = default)
         {
             context.Entry(entity).State = EntityState.Modified;
             await context.SaveChangesAsync(token);
+            return true;
         }
         public virtual async Task<bool> DeleteAsync(TEntity entity, CancellationToken token = default)
         {

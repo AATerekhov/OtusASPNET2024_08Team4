@@ -3,12 +3,14 @@ using BookOfHabits.Requests.Cains;
 using BookOfHabits.Responses.Coins;
 using BookOfHabitsMicroservice.Application.Models.Coins;
 using BookOfHabitsMicroservice.Application.Services.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookOfHabits.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class CoinsController(ICoinsApplicationService coinsApplicationService,
                                  IChooseHabitApplicationService chooseHabitApplicationService,
                                  IMapper mapper) : ControllerBase
@@ -21,25 +23,25 @@ namespace BookOfHabits.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<CoinsDetailedResponse> GetHabitById(Guid id)
+        public async Task<CoinsDetailedResponse> GetCoinsById(Guid id)
         {
             var coins = await coinsApplicationService.GetCoinsByIdAsync(id, HttpContext.RequestAborted);
             return mapper.Map<CoinsDetailedResponse>(coins);
         }
 
         [HttpPut]
-        public async Task UpdateCoinsAsync(UpdateCoinsRequest request)
+        public async Task<bool> UpdateCoinsAsync(UpdateCoinsRequest request)
         {
-            await coinsApplicationService.UpdateCoins(mapper.Map<UpdateCoinsModel>(request), HttpContext.RequestAborted);
+            return await coinsApplicationService.UpdateCoins(mapper.Map<UpdateCoinsModel>(request), HttpContext.RequestAborted);
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task DeleteCoins(Guid id)
+        public async Task<bool> DeleteCoins(Guid id)
         {
-            await coinsApplicationService.DeleteCoins(id, HttpContext.RequestAborted);
+            return await coinsApplicationService.DeleteCoins(id, HttpContext.RequestAborted);
         }
 
-        [HttpPost("choose")]
+        [HttpPost]
         public async Task<CoinsShortResponse> ChooseHabitInTheRoomAsync(ChooseHabitRequest request)
         {
             var coins = await chooseHabitApplicationService.ChooseHabitInTheRoomAsync(mapper.Map<ChooseHabitModel>(request), HttpContext.RequestAborted);

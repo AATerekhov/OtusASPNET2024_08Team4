@@ -40,7 +40,8 @@ namespace RoomsDesigner.Api.Infrastructure.ExceptionHandling
 			{
 				ArgumentException or BadRequestException => (int)HttpStatusCode.BadRequest,
 				NotFoundException => (int)HttpStatusCode.NotFound,
-				_ => (int)HttpStatusCode.InternalServerError,
+                ForbiddenException => (int)HttpStatusCode.Forbidden,
+                _ => (int)HttpStatusCode.InternalServerError,
 			};
 
 			await response.WriteAsync(new ErrorModel

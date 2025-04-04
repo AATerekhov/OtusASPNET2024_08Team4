@@ -10,6 +10,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         private readonly ICollection<Coins> _bags = [];
         public IReadOnlyCollection<Habit> SuggestedHabits => _habits.Where(habit => !habit.IsUsed).ToList().AsReadOnly();
         public IReadOnlyCollection<Coins> AssignedCoins => [.. _bags];
+        public Guid ManagerId { get; set; }
         public Person Manager { get; }
         public RoomName Name { get; private set; }
         public DateTime CreateDate { get; }
@@ -45,7 +46,7 @@ namespace BookOfHabitsMicroservice.Domain.Entity
         {
             if (_habits.Contains(coins.Habit) is false)
                 throw new InvalidOperationException($"The habit {coins.Habit.Name} is not in the room {Name}");
-            if (_bags.FirstOrDefault(c => c.Habit.Equals(coins.Habit)) is not null)
+            if (_bags.FirstOrDefault(c => c.HabitId.Equals(coins.HabitId)) is not null)
                 throw new DoubleCoinsRoomException(this, coins);
             _bags.Add(coins);
         }

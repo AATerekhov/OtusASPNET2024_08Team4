@@ -6,7 +6,6 @@ using BookOfHabitsMicroservice.Application.Services.Implementations;
 using BookOfHabitsMicroservice.Application.Services.Implementations.FactoryMethodDomain;
 using BookOfHabitsMicroservice.Domain.Entity;
 using BookOfHabitsMicroservice.Domain.Repository.Abstractions;
-using BookOfHabitsMicroservice.Domain.ValueObjects;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -19,14 +18,14 @@ namespace BookOfHabits.UnitTests.Application.HabitTests
         [Theory, AutoMoqDataHabit]
         public async Task GetHabit_GettingHabit_NotBeNull(
             Habit entity,
-            [Frozen] Mock<IRepository<Habit, Guid>> habitRepositoryMock,
+            [Frozen] Mock<IHabitsRepository> habitRepositoryMock,
             HabitsApplicationService habitsApplicationService,
-            CancellationToken token) 
+            CancellationToken token)
         {
             //Arrange
-            var entityId = entity.Id;            
+            var entityId = entity.Id;
             habitRepositoryMock.Setup(repo => repo.GetByIdAsync(x => x.Id.Equals(entityId),
-                $"{nameof(Habit.Card)},{nameof(Habit.Owner)},{nameof(Habit.Delay)},{nameof(Habit.Repetition)},{nameof(Habit.TimeResetInterval)}", 
+                $"{nameof(Habit.Card)},{nameof(Habit.Owner)},{nameof(Habit.Delay)},{nameof(Habit.Repetition)},{nameof(Habit.TimeResetInterval)}",
                 true,
                 token)).ReturnsAsync(entity);
             //Act
@@ -39,9 +38,9 @@ namespace BookOfHabits.UnitTests.Application.HabitTests
         [Theory, AutoMoqDataHabit]
         public async Task GetHabit_GettingHabit_NotFound(
             Guid id,
-            [Frozen] Mock<IRepository<Habit, Guid>> habitRepositoryMock,
+            [Frozen] Mock<IHabitsRepository> habitRepositoryMock,
             HabitsApplicationService habitsApplicationService,
-            CancellationToken token) 
+            CancellationToken token)
         {
             //Arrenge
             Habit? entity = null;
@@ -59,20 +58,33 @@ namespace BookOfHabits.UnitTests.Application.HabitTests
         public async Task GetHabit_AddingHabit_ResultIsNotNull(
            CreateHabitModel habitModel,
            Habit entity,
-           [Frozen] Mock<IRepository<Habit, Guid>> habitRepositoryMock,
+           Person owner,
+           Room room,
+           Card card,
+           [Frozen] Mock<IHabitsRepository> habitRepositoryMock,
+           [Frozen] Mock<IRepository<Person, Guid>> personRepositoryMock,
+           [Frozen] Mock<IRoomRepository> roomRepositoryMock,
+           [Frozen] Mock<IRepository<Card, Guid>> cardRepositoryMock,
            [Frozen] Mock<IFactory<Habit>> factoryMock,
            HabitsApplicationService habitsApplicationService,
            CancellationToken token)
         {
+
             //Arrenge
+
             string[] args = [habitModel.Name, habitModel.Description];
             factoryMock.Setup(f => f.FactoryMethod(args)).Returns(entity);
-            habitRepositoryMock.Setup(repo => repo.AddAsync(entity, token)).ReturnsAsync(entity); ;
+            habitRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Habit>(), It.IsAny<CancellationToken>())).ReturnsAsync(entity);
+            personRepositoryMock.Setup(repo => repo.GetByIdAsync(x => x.Id.Equals(habitModel.PersonId), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<CancellationToken>())).ReturnsAsync(owner);
+            roomRepositoryMock.Setup(repo => repo.GetByIdAsync(x => x.Id.Equals(habitModel.RoomId), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<CancellationToken>())).ReturnsAsync(room);
+            cardRepositoryMock.Setup(repo => repo.GetByIdAsync(x => x.Id.Equals(habitModel.CardId), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<CancellationToken>())).ReturnsAsync(card);
+
             //Act
-            var result = await habitsApplicationService.AddHabitAsync(habitModel, token);
+            var result = await habitsApplicationService.AddHabitAsync(habitModel);
 
             //Assert
             result.Should().NotBeNull();
-        }
+            result?.Name.Should().Be(entity.Name.Name);
+        }        
     }
 }

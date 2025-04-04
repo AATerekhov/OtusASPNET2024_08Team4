@@ -2,7 +2,7 @@
 
 # Этот этап используется при запуске из VS в быстром режиме (по умолчанию для конфигурации отладки)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 
@@ -15,6 +15,7 @@ COPY ["Magazine/MagazineHost.csproj", "Magazine/"]
 COPY ["Magazine.BusinessLogic/Magazine.BusinessLogic.csproj", "Magazine.BusinessLogic/"]
 COPY ["Magazine.Core/Magazine.Core.csproj", "Magazine.Core/"]
 COPY ["Magazine.DataAccess/Magazine.DataAccess.csproj", "Magazine.DataAccess/"]
+COPY ["Magazine.Message/Magazine.Message.csproj", "Magazine.Message/"]
 RUN dotnet restore "./Magazine/MagazineHost.csproj"
 COPY . .
 WORKDIR "/src/Magazine"

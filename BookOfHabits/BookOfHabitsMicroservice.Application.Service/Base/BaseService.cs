@@ -8,5 +8,7 @@
             => $"The {nameOfEntity} with id: {id} is not active.";
         public static string BadRequestEntityExistsMessage(Guid id, string nameOfEntity)
        => $"The {nameOfEntity} with id:{id} already exists.";
+        public static string FormatForbiddenErrorMessage(Guid userId, string nameOfEntity)
+            => $"The user {userId} does not have the right to perform the action on {nameOfEntity}.";
     }
 }

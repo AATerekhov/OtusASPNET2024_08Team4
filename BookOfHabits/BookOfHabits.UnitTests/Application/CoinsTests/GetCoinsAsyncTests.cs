@@ -21,10 +21,10 @@ namespace BookOfHabits.UnitTests.Application.CoinsTests
         {
             //Arrange
             var entityId = entity.Id;
-            coinsRepositoryMock.Setup(repo => repo.GetCoinsByIdAsync(entityId, token)).ReturnsAsync(entity);
+            coinsRepositoryMock.Setup(repo => repo.GetDetailedCoinsByIdAsync(entityId, It.IsAny<CancellationToken>())).ReturnsAsync(entity);
 
             //Act
-            var result = await coinsApplicationService.GetCoinsByIdAsync(entityId, token);
+            var result = await coinsApplicationService.GetCoinsByIdAsync(entityId);
 
             //Assert
             result.Should().NotBeNull();
@@ -40,12 +40,12 @@ namespace BookOfHabits.UnitTests.Application.CoinsTests
         {
             //Arrange
             Coins? entity = null;
-            coinsRepositoryMock.Setup(repo => repo.GetCoinsByIdAsync(id, token)).ReturnsAsync(entity);
+            coinsRepositoryMock.Setup(repo => repo.GetDetailedCoinsByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync(entity);
 
             //Act
 
             //Assert
-            await Assert.ThrowsAsync<NotFoundException>(async () => await coinsApplicationService.GetCoinsByIdAsync(id, token));
+            await Assert.ThrowsAsync<NotFoundException>(async () => await coinsApplicationService.GetCoinsByIdAsync(id));
         }
 
         [Theory, AutoMoqData]

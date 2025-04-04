@@ -10,7 +10,8 @@ namespace BookOfHabits.Mapping
     {
         public CoinsMapping()
         {
-            CreateMap<UpdateCoinsRequest, CoinsModel>();
+            
+            CreateMap<UpdateCoinsRequest, UpdateCoinsModel>();
             CreateMap<ChooseHabitRequest, ChooseHabitModel>();
             CreateMap<CoinsModel, CoinsShortResponse>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Habit.Name));

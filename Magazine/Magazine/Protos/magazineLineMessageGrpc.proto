@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcDiaryClient";
+
+package greet;
+
+service DiaryGrpcService {
+  rpc CreateDiaryLineFromMagazine (MagazineLineMessageGrpc) returns (Empty);
+}
+
+message MagazineLineMessageGrpc {
+  string room_id = 1;
+  string user_id = 2;
+  string reward_id = 3;
+  string event_description = 4;
+  string created_date = 5;
+  string modified_date = 6;
+  double cost = 7;
+}
+
+message Empty {}
